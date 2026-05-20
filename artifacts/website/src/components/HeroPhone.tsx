@@ -1,12 +1,43 @@
-import { useEffect, useRef } from "react";
+import { useEffect, useRef, useState } from "react";
 import { Link } from "wouter";
 
-const words = ["Experiences.", "Websites.", "Brands.", "Systems.", "Stores."];
+const words = ["Experiences.", "Websites.", "Stores.", "Systems.", "Brands."];
+
+const services = [
+  {
+    name: "Web Development",
+    title: "Premium Website Build",
+    tag: "Launch-ready website",
+    desc: "High-end responsive websites with clear structure, strong CTAs, fast performance, and a premium visual identity.",
+    points: ["Responsive UI", "SEO structure", "Fast deployment"],
+  },
+  {
+    name: "eCommerce",
+    title: "Online Store Setup",
+    tag: "Sell online professionally",
+    desc: "Complete eCommerce setup with product pages, checkout flow, multiple payment options, and launch support.",
+    points: ["Product pages", "Checkout setup", "Order flow"],
+  },
+  {
+    name: "AI Automation",
+    title: "AI Workflow System",
+    tag: "Automate operations",
+    desc: "Smart workflows and AI tools that reduce repetitive work, organize leads, and support daily business operations.",
+    points: ["Lead workflows", "AI assistant", "Integrations"],
+  },
+  {
+    name: "Brand Systems",
+    title: "Premium Brand Interface",
+    tag: "Look trusted instantly",
+    desc: "A sharper digital presence with consistent visuals, better messaging, and a professional brand experience.",
+    points: ["Visual direction", "Messaging", "Design system"],
+  },
+];
 
 export function HeroPhone() {
   const canvasRef = useRef<HTMLCanvasElement | null>(null);
-  const phoneRef = useRef<HTMLDivElement | null>(null);
   const wordRef = useRef<HTMLSpanElement | null>(null);
+  const [active, setActive] = useState(0);
 
   useEffect(() => {
     const el = wordRef.current;
@@ -15,10 +46,11 @@ export function HeroPhone() {
     const chars = "ABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789";
     let wordIndex = 0;
     let timeoutId: number;
+    let frameId: number;
 
     function scramble(target: string) {
       let frame = 0;
-      const total = 28;
+      const total = 24;
 
       function update() {
         let output = "";
@@ -35,13 +67,13 @@ export function HeroPhone() {
 
         if (frame < total) {
           frame++;
-          requestAnimationFrame(update);
+          frameId = requestAnimationFrame(update);
         } else {
           el.textContent = target;
           timeoutId = window.setTimeout(() => {
             wordIndex = (wordIndex + 1) % words.length;
             scramble(words[wordIndex]);
-          }, 2300);
+          }, 2500);
         }
       }
 
@@ -50,7 +82,10 @@ export function HeroPhone() {
 
     scramble(words[0]);
 
-    return () => window.clearTimeout(timeoutId);
+    return () => {
+      window.clearTimeout(timeoutId);
+      cancelAnimationFrame(frameId);
+    };
   }, []);
 
   useEffect(() => {
@@ -78,15 +113,15 @@ export function HeroPhone() {
       h = canvas.height = section.clientHeight;
       dots.length = 0;
 
-      const count = window.innerWidth < 700 ? 18 : 34;
+      const count = window.innerWidth < 700 ? 16 : 30;
 
       for (let i = 0; i < count; i++) {
         dots.push({
           x: Math.random() * w,
           y: Math.random() * h,
-          vx: (Math.random() - 0.5) * 0.1,
-          vy: (Math.random() - 0.5) * 0.1,
-          r: Math.random() * 1.1 + 0.35,
+          vx: (Math.random() - 0.5) * 0.08,
+          vy: (Math.random() - 0.5) * 0.08,
+          r: Math.random() * 1 + 0.35,
         });
       }
     }
@@ -102,7 +137,7 @@ export function HeroPhone() {
         if (d.y < 0 || d.y > h) d.vy *= -1;
       }
 
-      const max = 130;
+      const max = 125;
 
       for (let i = 0; i < dots.length; i++) {
         for (let j = i + 1; j < dots.length; j++) {
@@ -111,12 +146,12 @@ export function HeroPhone() {
           const dist = Math.sqrt(dx * dx + dy * dy);
 
           if (dist < max) {
-            const opacity = (1 - dist / max) * 0.16;
+            const opacity = (1 - dist / max) * 0.14;
             ctx.beginPath();
             ctx.moveTo(dots[i].x, dots[i].y);
             ctx.lineTo(dots[j].x, dots[j].y);
             ctx.strokeStyle = `rgba(255,117,31,${opacity})`;
-            ctx.lineWidth = 0.7;
+            ctx.lineWidth = 0.65;
             ctx.stroke();
           }
         }
@@ -125,8 +160,8 @@ export function HeroPhone() {
       for (const d of dots) {
         ctx.beginPath();
         ctx.arc(d.x, d.y, d.r, 0, Math.PI * 2);
-        ctx.fillStyle = "rgba(255,117,31,0.48)";
-        ctx.shadowColor = "rgba(255,117,31,0.3)";
+        ctx.fillStyle = "rgba(255,117,31,0.42)";
+        ctx.shadowColor = "rgba(255,117,31,0.24)";
         ctx.shadowBlur = 4;
         ctx.fill();
         ctx.shadowBlur = 0;
@@ -146,41 +181,7 @@ export function HeroPhone() {
     };
   }, []);
 
-  useEffect(() => {
-    const phone = phoneRef.current;
-    if (!phone) return;
-
-    const desktop =
-      window.matchMedia("(hover: hover)").matches &&
-      window.matchMedia("(pointer: fine)").matches;
-
-    if (!desktop) return;
-
-    function move(e: MouseEvent) {
-      const rect = phone.getBoundingClientRect();
-      const x = (e.clientX - rect.left) / rect.width - 0.5;
-      const y = (e.clientY - rect.top) / rect.height - 0.5;
-
-      phone.style.transform = `
-        rotateZ(2deg)
-        rotateX(${-y * 8}deg)
-        rotateY(${x * 10}deg)
-        translateY(-8px)
-      `;
-    }
-
-    function leave() {
-      phone.style.transform = "rotateZ(2deg) rotateX(0deg) rotateY(0deg)";
-    }
-
-    phone.addEventListener("mousemove", move);
-    phone.addEventListener("mouseleave", leave);
-
-    return () => {
-      phone.removeEventListener("mousemove", move);
-      phone.removeEventListener("mouseleave", leave);
-    };
-  }, []);
+  const selected = services[active];
 
   return (
     <>
@@ -198,16 +199,16 @@ export function HeroPhone() {
           position: absolute;
           inset: 0;
           background:
-            radial-gradient(circle at 76% 42%, rgba(255,117,31,0.13), transparent 34%),
-            radial-gradient(circle at 20% 78%, rgba(255,117,31,0.08), transparent 32%),
-            linear-gradient(180deg, #07070f 0%, #080811 52%, #05050a 100%);
+            radial-gradient(circle at 74% 42%, rgba(255,117,31,0.105), transparent 35%),
+            radial-gradient(circle at 18% 78%, rgba(255,117,31,0.07), transparent 33%),
+            linear-gradient(180deg, #07070f 0%, #080811 55%, #05050a 100%);
         }
 
         .hp-vignette {
           position: absolute;
           inset: 0;
           pointer-events: none;
-          background: radial-gradient(circle at center, transparent 20%, rgba(0,0,0,0.58) 100%);
+          background: radial-gradient(circle at center, transparent 24%, rgba(0,0,0,0.60) 100%);
           z-index: 2;
         }
 
@@ -217,7 +218,7 @@ export function HeroPhone() {
           width: 100%;
           height: 100%;
           z-index: 1;
-          opacity: 0.55;
+          opacity: 0.48;
           pointer-events: none;
         }
 
@@ -227,7 +228,7 @@ export function HeroPhone() {
           max-width: 1240px;
           margin: 0 auto;
           display: grid;
-          grid-template-columns: 1.05fr 0.95fr;
+          grid-template-columns: 1.02fr 0.98fr;
           gap: 80px;
           align-items: center;
         }
@@ -238,8 +239,8 @@ export function HeroPhone() {
           gap: 10px;
           padding: 9px 18px;
           border-radius: 999px;
-          border: 1px solid rgba(255,117,31,0.35);
-          background: rgba(255,117,31,0.07);
+          border: 1px solid rgba(255,117,31,0.32);
+          background: rgba(255,117,31,0.065);
           color: #ff751f;
           font-size: 11px;
           letter-spacing: 0.24em;
@@ -253,7 +254,7 @@ export function HeroPhone() {
           height: 7px;
           border-radius: 50%;
           background: #ff751f;
-          box-shadow: 0 0 14px rgba(255,117,31,0.9);
+          box-shadow: 0 0 14px rgba(255,117,31,0.8);
         }
 
         .hp-title {
@@ -265,13 +266,20 @@ export function HeroPhone() {
           text-shadow: 0 22px 80px rgba(0,0,0,0.72);
         }
 
+        .hp-word-box {
+          display: block;
+          width: min(720px, 100%);
+          height: 1.08em;
+          overflow: hidden;
+        }
+
         .hp-word {
           display: block;
-          min-height: 1.05em;
           color: #ff751f;
           text-shadow:
-            0 0 34px rgba(255,117,31,0.52),
-            0 0 90px rgba(255,117,31,0.16);
+            0 0 28px rgba(255,117,31,0.42),
+            0 0 70px rgba(255,117,31,0.12);
+          white-space: nowrap;
         }
 
         .hp-sub {
@@ -306,12 +314,12 @@ export function HeroPhone() {
         .hp-btn-primary {
           background: linear-gradient(135deg, #ff9448, #ff5c00);
           color: white;
-          box-shadow: 0 0 34px rgba(255,117,31,0.34);
+          box-shadow: 0 0 30px rgba(255,117,31,0.28);
         }
 
         .hp-btn-secondary {
-          border: 1px solid rgba(255,255,255,0.15);
-          background: rgba(255,255,255,0.045);
+          border: 1px solid rgba(255,255,255,0.14);
+          background: rgba(255,255,255,0.04);
           color: rgba(255,255,255,0.82);
           backdrop-filter: blur(16px);
         }
@@ -321,22 +329,31 @@ export function HeroPhone() {
           transform: translateY(-3px);
         }
 
-        .hp-tags {
+        .hp-services {
           display: flex;
           flex-wrap: wrap;
           gap: 10px;
           margin-top: 30px;
         }
 
-        .hp-tags span {
-          padding: 8px 13px;
+        .hp-service-btn {
+          cursor: pointer;
+          padding: 9px 14px;
           border-radius: 999px;
           border: 1px solid rgba(255,255,255,0.10);
           background: rgba(255,255,255,0.032);
-          color: rgba(255,255,255,0.42);
+          color: rgba(255,255,255,0.44);
           font-size: 10px;
           letter-spacing: 0.13em;
           text-transform: uppercase;
+          transition: 0.22s ease;
+        }
+
+        .hp-service-btn:hover,
+        .hp-service-btn.active {
+          border-color: rgba(255,117,31,0.45);
+          background: rgba(255,117,31,0.10);
+          color: #ff751f;
         }
 
         .hp-visual {
@@ -345,7 +362,6 @@ export function HeroPhone() {
           display: flex;
           justify-content: center;
           align-items: center;
-          perspective: 1200px;
         }
 
         .hp-light {
@@ -353,27 +369,34 @@ export function HeroPhone() {
           width: 520px;
           height: 520px;
           border-radius: 50%;
-          background: rgba(255,117,31,0.13);
-          filter: blur(90px);
+          background: rgba(255,117,31,0.105);
+          filter: blur(92px);
         }
 
         .hp-phone {
           position: relative;
           z-index: 3;
-          width: 355px;
+          width: 365px;
           padding: 12px;
           border-radius: 58px;
           background:
-            linear-gradient(145deg, rgba(255,255,255,0.28), rgba(255,255,255,0.06) 18%, #030306 72%);
+            linear-gradient(145deg, rgba(255,255,255,0.30), rgba(255,255,255,0.07) 18%, #030306 72%);
           border: 1px solid rgba(255,255,255,0.22);
           box-shadow:
-            0 60px 150px rgba(0,0,0,0.9),
-            0 0 64px rgba(255,117,31,0.15),
+            0 60px 150px rgba(0,0,0,0.90),
+            0 0 54px rgba(255,117,31,0.12),
             inset 0 1px 0 rgba(255,255,255,0.18);
-          transform: rotateZ(2deg);
-          transform-style: preserve-3d;
-          transition: transform 0.16s ease-out;
-          will-change: transform;
+          transform: rotate(1.5deg);
+          animation: hpPhoneFloat 6.5s ease-in-out infinite;
+        }
+
+        @keyframes hpPhoneFloat {
+          0%, 100% {
+            transform: rotate(1.5deg) translateY(0);
+          }
+          50% {
+            transform: rotate(1.5deg) translateY(-9px);
+          }
         }
 
         .hp-phone::before {
@@ -384,21 +407,20 @@ export function HeroPhone() {
           width: 10px;
           height: 125px;
           border-radius: 0 10px 10px 0;
-          background: linear-gradient(180deg, rgba(255,255,255,0.25), rgba(255,255,255,0.04));
-          opacity: 0.5;
+          background: linear-gradient(180deg, rgba(255,255,255,0.22), rgba(255,255,255,0.04));
+          opacity: 0.48;
         }
 
         .hp-screen {
-          min-height: 630px;
+          min-height: 635px;
           padding: 24px;
           border-radius: 47px;
           overflow: hidden;
           background:
-            radial-gradient(circle at 50% 0%, rgba(255,117,31,0.20), transparent 34%),
-            linear-gradient(180deg, rgba(255,255,255,0.06), rgba(255,255,255,0.018)),
+            radial-gradient(circle at 50% 0%, rgba(255,117,31,0.16), transparent 34%),
+            linear-gradient(180deg, rgba(255,255,255,0.075), rgba(255,255,255,0.018)),
             #090911;
           border: 1px solid rgba(255,255,255,0.10);
-          transform: translateZ(24px);
         }
 
         .hp-notch {
@@ -418,18 +440,18 @@ export function HeroPhone() {
         }
 
         .hp-phone-title {
-          font-size: 25px;
+          font-size: 24px;
           line-height: 1.08;
-          letter-spacing: -0.04em;
-          margin-bottom: 18px;
+          letter-spacing: -0.035em;
+          margin-bottom: 8px;
+          color: #ffffff;
         }
 
-        .hp-phone-title span {
-          display: block;
-          margin-top: 6px;
-          color: rgba(255,255,255,0.50);
+        .hp-phone-tag {
+          color: rgba(255,255,255,0.54);
           font-size: 13px;
-          letter-spacing: 0;
+          line-height: 1.5;
+          margin-bottom: 18px;
         }
 
         .hp-preview {
@@ -438,14 +460,26 @@ export function HeroPhone() {
           border: 1px solid rgba(255,255,255,0.12);
           background: linear-gradient(135deg, rgba(255,255,255,0.085), rgba(255,255,255,0.028));
           backdrop-filter: blur(20px);
+          animation: hpContentIn 0.35s ease;
+        }
+
+        @keyframes hpContentIn {
+          from {
+            opacity: 0;
+            transform: translateY(8px);
+          }
+          to {
+            opacity: 1;
+            transform: translateY(0);
+          }
         }
 
         .hp-browser {
-          height: 165px;
+          height: 150px;
           border-radius: 24px;
           background:
-            radial-gradient(circle at 78% 24%, rgba(255,117,31,0.32), transparent 32%),
-            linear-gradient(135deg, rgba(255,117,31,0.13), rgba(255,255,255,0.035));
+            radial-gradient(circle at 78% 24%, rgba(255,117,31,0.24), transparent 32%),
+            linear-gradient(135deg, rgba(255,117,31,0.11), rgba(255,255,255,0.035));
           border: 1px solid rgba(255,255,255,0.11);
           position: relative;
           overflow: hidden;
@@ -459,7 +493,7 @@ export function HeroPhone() {
           right: 18px;
           height: 18px;
           border-radius: 999px;
-          background: rgba(0,0,0,0.22);
+          background: rgba(0,0,0,0.24);
         }
 
         .hp-browser-line {
@@ -471,65 +505,58 @@ export function HeroPhone() {
         }
 
         .hp-browser-line.one {
-          top: 60px;
+          top: 58px;
           width: 55%;
         }
 
         .hp-browser-line.two {
-          top: 84px;
+          top: 82px;
           width: 38%;
         }
 
         .hp-browser-line.three {
-          bottom: 28px;
+          bottom: 27px;
           width: 76%;
           background: #ff751f;
-          box-shadow: 0 0 16px rgba(255,117,31,0.45);
+          box-shadow: 0 0 14px rgba(255,117,31,0.36);
         }
 
-        .hp-features {
-          display: grid;
-          gap: 10px;
-        }
-
-        .hp-feature {
-          display: grid;
-          grid-template-columns: 36px 1fr;
-          gap: 12px;
-          align-items: center;
-          padding: 13px;
-          border-radius: 18px;
+        .hp-description {
+          min-height: 96px;
+          padding: 16px;
+          border-radius: 22px;
           border: 1px solid rgba(255,255,255,0.09);
           background: rgba(255,255,255,0.04);
-        }
-
-        .hp-icon {
-          width: 36px;
-          height: 36px;
-          border-radius: 13px;
-          border: 1px solid rgba(255,117,31,0.18);
-          background: rgba(255,117,31,0.10);
-          position: relative;
-        }
-
-        .hp-icon::after {
-          content: "";
-          position: absolute;
-          inset: 11px;
-          border-radius: 6px;
-          border: 1px solid rgba(255,117,31,0.8);
-        }
-
-        .hp-feature strong {
-          display: block;
+          color: rgba(255,255,255,0.70);
           font-size: 13px;
-          color: white;
-          margin-bottom: 4px;
+          line-height: 1.7;
+          margin-bottom: 13px;
         }
 
-        .hp-feature span {
-          color: rgba(255,255,255,0.45);
-          font-size: 10px;
+        .hp-point-list {
+          display: grid;
+          gap: 8px;
+        }
+
+        .hp-point {
+          display: flex;
+          align-items: center;
+          gap: 10px;
+          padding: 10px 12px;
+          border-radius: 15px;
+          background: rgba(255,255,255,0.035);
+          border: 1px solid rgba(255,255,255,0.07);
+          color: rgba(255,255,255,0.72);
+          font-size: 12px;
+        }
+
+        .hp-point-dot {
+          width: 6px;
+          height: 6px;
+          border-radius: 99px;
+          background: #ff751f;
+          box-shadow: 0 0 10px rgba(255,117,31,0.6);
+          flex-shrink: 0;
         }
 
         .hp-launch {
@@ -541,7 +568,7 @@ export function HeroPhone() {
           font-size: 13px;
           letter-spacing: 0.10em;
           text-transform: uppercase;
-          box-shadow: 0 0 30px rgba(255,117,31,0.30);
+          box-shadow: 0 0 28px rgba(255,117,31,0.24);
         }
 
         @media (max-width: 980px) {
@@ -562,12 +589,12 @@ export function HeroPhone() {
           }
 
           .hp-actions,
-          .hp-tags {
+          .hp-services {
             justify-content: center;
           }
 
           .hp-phone {
-            transform: rotateZ(0deg) !important;
+            transform: rotate(0deg);
           }
         }
 
@@ -576,13 +603,24 @@ export function HeroPhone() {
             font-size: 44px;
           }
 
+          .hp-word-box {
+            height: 1.15em;
+          }
+
           .hp-phone {
-            width: 286px;
+            width: 290px;
           }
 
           .hp-screen {
-            min-height: 570px;
+            min-height: 590px;
             padding: 19px;
+          }
+        }
+
+        @media (prefers-reduced-motion: reduce) {
+          .hp-phone,
+          .hp-preview {
+            animation: none !important;
           }
         }
       `}</style>
@@ -601,8 +639,10 @@ export function HeroPhone() {
 
             <h1 className="hp-title">
               We build digital
-              <span className="hp-word" ref={wordRef}>
-                Experiences.
+              <span className="hp-word-box">
+                <span className="hp-word" ref={wordRef}>
+                  Experiences.
+                </span>
               </span>
             </h1>
 
@@ -622,29 +662,33 @@ export function HeroPhone() {
               </Link>
             </div>
 
-            <div className="hp-tags">
-              <span>Web Development</span>
-              <span>eCommerce</span>
-              <span>Automation</span>
-              <span>Brand Systems</span>
+            <div className="hp-services">
+              {services.map((service, index) => (
+                <button
+                  key={service.name}
+                  type="button"
+                  className={`hp-service-btn ${active === index ? "active" : ""}`}
+                  onClick={() => setActive(index)}
+                >
+                  {service.name}
+                </button>
+              ))}
             </div>
           </div>
 
           <div className="hp-visual">
             <div className="hp-light" />
 
-            <div className="hp-phone" ref={phoneRef}>
+            <div className="hp-phone">
               <div className="hp-screen">
                 <div className="hp-notch" />
 
                 <div className="hp-app-label">AHOS Studio</div>
 
-                <div className="hp-phone-title">
-                  Premium Web Build
-                  <span>Landing page · eCommerce · Automation</span>
-                </div>
+                <div key={selected.name} className="hp-preview">
+                  <div className="hp-phone-title">{selected.title}</div>
+                  <div className="hp-phone-tag">{selected.tag}</div>
 
-                <div className="hp-preview">
                   <div className="hp-browser">
                     <div className="hp-browser-top"></div>
                     <div className="hp-browser-line one"></div>
@@ -652,30 +696,15 @@ export function HeroPhone() {
                     <div className="hp-browser-line three"></div>
                   </div>
 
-                  <div className="hp-features">
-                    <div className="hp-feature">
-                      <div className="hp-icon"></div>
-                      <div>
-                        <strong>Conversion-first pages</strong>
-                        <span>Clear structure, strong CTAs, responsive UX.</span>
-                      </div>
-                    </div>
+                  <div className="hp-description">{selected.desc}</div>
 
-                    <div className="hp-feature">
-                      <div className="hp-icon"></div>
-                      <div>
-                        <strong>Store & payment setup</strong>
-                        <span>Products, checkout, payments, and launch support.</span>
+                  <div className="hp-point-list">
+                    {selected.points.map((point) => (
+                      <div className="hp-point" key={point}>
+                        <span className="hp-point-dot" />
+                        {point}
                       </div>
-                    </div>
-
-                    <div className="hp-feature">
-                      <div className="hp-icon"></div>
-                      <div>
-                        <strong>Automation-ready systems</strong>
-                        <span>Workflows, integrations, and smart business tools.</span>
-                      </div>
-                    </div>
+                    ))}
                   </div>
 
                   <div className="hp-launch">Ready for Launch</div>
