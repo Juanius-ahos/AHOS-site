@@ -1,711 +1,659 @@
-import { useEffect, useRef, useState, useCallback } from "react";
+import { useRef } from "react";
+import { Link } from "wouter";
+import { Footer } from "../components/Footer";
 
-const SERVICES = [
-  { num: "01", title: "Web Development", text: "Premium websites built to feel sharp, fast, responsive, and conversion-focused." },
-  { num: "02", title: "E-commerce", text: "Online stores with clean product flows, payments, checkout, and launch support." },
-  { num: "03", title: "AI Automation", text: "Smart workflows that reduce manual work and make businesses move faster." },
-  { num: "04", title: "Custom Systems", text: "Dashboards, platforms, portals, and internal tools built around real operations." },
-  { num: "05", title: "Branding", text: "Visual identities and digital systems that make brands look serious everywhere." },
-  { num: "06", title: "Web3", text: "Modern interfaces and digital products for blockchain, crypto, and DeFi ideas." },
+const services = [
+  ["Web Development", "High-end websites built for speed, clarity, and conversion."],
+  ["E-commerce", "Online stores with clean buying flows and polished product experiences."],
+  ["AI Automation", "Smart workflows that reduce repetitive work and help teams move faster."],
+  ["Custom Systems", "Dashboards, platforms, and tools built around your operations."],
+  ["Branding", "Visual systems that make your business look serious everywhere."],
+  ["Web3", "Modern digital products for crypto, blockchain, and DeFi ideas."],
 ];
 
-const PROCESS = [
-  { num: "01", title: "Discover", text: "We understand your business, offer, users, and goals before designing anything." },
-  { num: "02", title: "Design", text: "We create a premium interface direction that makes the brand feel sharp and credible." },
-  { num: "03", title: "Build", text: "We develop the website, platform, automation, or system with clean execution." },
-  { num: "04", title: "Launch", text: "We help deploy, test, optimize, and support the product after it goes live." },
+const process = [
+  ["01", "Strategy", "We define the business goal, audience, offer, and structure."],
+  ["02", "Design", "We create the visual direction and interface experience."],
+  ["03", "Build", "We develop the website, platform, automation, or system."],
+  ["04", "Launch", "We test, optimize, deploy, and support after going live."],
 ];
 
-const STATS = [
-  { value: 120, suffix: "+", label: "Projects Delivered" },
-  { value: 98, suffix: "%", label: "Client Satisfaction" },
-  { value: 4, suffix: "x", label: "Avg. Revenue Lift" },
-  { value: 14, suffix: "d", label: "Average Turnaround" },
-];
+export default function Home() {
+  const heroRef = useRef<HTMLElement | null>(null);
 
-const TICKER_ITEMS = [
-  "Web Development", "E-commerce", "AI Automation", "Branding", "Web3", "Custom Systems",
-  "Web Development", "E-commerce", "AI Automation", "Branding", "Web3", "Custom Systems",
-];
+  function handleMouseMove(e: React.MouseEvent<HTMLElement>) {
+    const rect = e.currentTarget.getBoundingClientRect();
+    heroRef.current?.style.setProperty("--x", `${e.clientX - rect.left}px`);
+    heroRef.current?.style.setProperty("--y", `${e.clientY - rect.top}px`);
+  }
 
-function useInView(threshold = 0.15) {
-  const ref = useRef<HTMLDivElement>(null);
-  const [inView, setInView] = useState(false);
-  useEffect(() => {
-    const el = ref.current;
-    if (!el) return;
-    const obs = new IntersectionObserver(([e]) => { if (e.isIntersecting) { setInView(true); obs.disconnect(); } }, { threshold });
-    obs.observe(el);
-    return () => obs.disconnect();
-  }, [threshold]);
-  return { ref, inView };
-}
-
-function useCounter(target: number, active: boolean, duration = 1800) {
-  const [val, setVal] = useState(0);
-  useEffect(() => {
-    if (!active) return;
-    const start = performance.now();
-    const raf = (t: number) => {
-      const p = Math.min((t - start) / duration, 1);
-      const ease = 1 - Math.pow(1 - p, 3);
-      setVal(Math.round(ease * target));
-      if (p < 1) requestAnimationFrame(raf);
-    };
-    requestAnimationFrame(raf);
-  }, [active, target, duration]);
-  return val;
-}
-
-function StatItem({ value, suffix, label }: { value: number; suffix: string; label: string }) {
-  const { ref, inView } = useInView(0.4);
-  const count = useCounter(value, inView);
   return (
-    <div ref={ref} style={{ textAlign: "center", opacity: inView ? 1 : 0, transform: inView ? "translateY(0)" : "translateY(32px)", transition: "opacity 0.7s ease, transform 0.7s ease" }}>
-      <div style={{ fontSize: "clamp(52px,6vw,88px)", fontWeight: 900, letterSpacing: "-0.06em", lineHeight: 1, background: "linear-gradient(135deg,#fff 30%,rgba(255,117,31,0.9))", WebkitBackgroundClip: "text", WebkitTextFillColor: "transparent" }}>
-        {count}{suffix}
-      </div>
-      <div style={{ marginTop: 10, color: "rgba(255,255,255,0.5)", fontSize: 13, textTransform: "uppercase", letterSpacing: "0.14em" }}>{label}</div>
-    </div>
-  );
-}
+    <>
+      <style>{`
+        .home {
+          background: #050509;
+          color: #fff;
+          overflow: hidden;
+          font-family: Inter, system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+        }
 
-function Particles() {
-  const canvasRef = useRef<HTMLCanvasElement>(null);
-  useEffect(() => {
-    const canvas = canvasRef.current;
-    if (!canvas) return;
-    const ctx = canvas.getContext("2d");
-    if (!ctx) return;
-    let animId: number;
-    const dpr = window.devicePixelRatio || 1;
-    const resize = () => {
-      canvas.width = canvas.offsetWidth * dpr;
-      canvas.height = canvas.offsetHeight * dpr;
-      ctx.scale(dpr, dpr);
-    };
-    resize();
-    window.addEventListener("resize", resize);
+        .wrap {
+          width: min(1240px, calc(100% - 48px));
+          margin: 0 auto;
+          position: relative;
+          z-index: 2;
+        }
 
-    const COUNT = 110;
-    const particles = Array.from({ length: COUNT }, () => ({
-      x: Math.random() * canvas.offsetWidth,
-      y: Math.random() * canvas.offsetHeight,
-      r: Math.random() * 1.4 + 0.3,
-      vx: (Math.random() - 0.5) * 0.18,
-      vy: (Math.random() - 0.5) * 0.18,
-      alpha: Math.random() * 0.6 + 0.2,
-      pulse: Math.random() * Math.PI * 2,
-    }));
+        .hero {
+          --x: 50%;
+          --y: 50%;
+          min-height: 100vh;
+          position: relative;
+          display: flex;
+          align-items: center;
+          padding: 160px 0 110px;
+          background:
+            radial-gradient(circle at var(--x) var(--y), rgba(255,117,31,.18), transparent 28%),
+            radial-gradient(circle at 50% 30%, rgba(255,117,31,.14), transparent 36%),
+            #050509;
+        }
 
-    const draw = () => {
-      const w = canvas.offsetWidth;
-      const h = canvas.offsetHeight;
-      ctx.clearRect(0, 0, w, h);
+        .hero::before {
+          content: "";
+          position: absolute;
+          inset: 0;
+          background-image:
+            linear-gradient(rgba(255,255,255,.04) 1px, transparent 1px),
+            linear-gradient(90deg, rgba(255,255,255,.04) 1px, transparent 1px);
+          background-size: 80px 80px;
+          mask-image: radial-gradient(circle at center, black, transparent 72%);
+          animation: gridMove 22s linear infinite;
+        }
 
-      particles.forEach((p, i) => {
-        p.pulse += 0.012;
-        p.x += p.vx;
-        p.y += p.vy;
-        if (p.x < 0) p.x = w;
-        if (p.x > w) p.x = 0;
-        if (p.y < 0) p.y = h;
-        if (p.y > h) p.y = 0;
+        .hero::after {
+          content: "";
+          position: absolute;
+          inset: 0;
+          background: linear-gradient(to bottom, transparent 65%, #050509);
+        }
 
-        const a = p.alpha * (0.6 + 0.4 * Math.sin(p.pulse));
-        ctx.beginPath();
-        ctx.arc(p.x, p.y, p.r, 0, Math.PI * 2);
-        ctx.fillStyle = `rgba(255,117,31,${a})`;
-        ctx.fill();
+        @keyframes gridMove {
+          from { transform: translateY(0); }
+          to { transform: translateY(80px); }
+        }
 
-        for (let j = i + 1; j < particles.length; j++) {
-          const q = particles[j];
-          const dx = p.x - q.x;
-          const dy = p.y - q.y;
-          const dist = Math.sqrt(dx * dx + dy * dy);
-          if (dist < 140) {
-            ctx.beginPath();
-            ctx.moveTo(p.x, p.y);
-            ctx.lineTo(q.x, q.y);
-            ctx.strokeStyle = `rgba(255,117,31,${0.09 * (1 - dist / 140)})`;
-            ctx.lineWidth = 0.5;
-            ctx.stroke();
+        .network {
+          position: absolute;
+          inset: 0;
+          pointer-events: none;
+          opacity: .9;
+        }
+
+        .network svg {
+          position: absolute;
+          width: 520px;
+          max-width: 42vw;
+          filter: drop-shadow(0 0 18px rgba(255,117,31,.32));
+        }
+
+        .network-left {
+          left: -90px;
+          top: 18%;
+        }
+
+        .network-right {
+          right: -90px;
+          bottom: 12%;
+          transform: scaleX(-1);
+        }
+
+        .network line {
+          stroke: rgba(255,117,31,.35);
+          stroke-width: 1;
+          stroke-dasharray: 8 12;
+          animation: dash 9s linear infinite;
+        }
+
+        .network circle {
+          fill: #ff751f;
+          animation: pulseNode 3.4s ease-in-out infinite;
+        }
+
+        .network circle:nth-child(even) {
+          animation-delay: 1.2s;
+        }
+
+        @keyframes dash {
+          to { stroke-dashoffset: -140; }
+        }
+
+        @keyframes pulseNode {
+          0%,100% { opacity: .45; r: 4; }
+          50% { opacity: 1; r: 6; }
+        }
+
+        .hero-content {
+          max-width: 1050px;
+          text-align: center;
+          margin: 0 auto;
+        }
+
+        .badge {
+          display: inline-flex;
+          align-items: center;
+          gap: 10px;
+          padding: 10px 18px;
+          border-radius: 999px;
+          background: rgba(255,117,31,.08);
+          border: 1px solid rgba(255,117,31,.32);
+          color: #ff9448;
+          text-transform: uppercase;
+          letter-spacing: .18em;
+          font-size: 11px;
+          font-weight: 800;
+          margin-bottom: 34px;
+          backdrop-filter: blur(18px);
+        }
+
+        .badge span {
+          width: 7px;
+          height: 7px;
+          border-radius: 50%;
+          background: #ff751f;
+          box-shadow: 0 0 18px rgba(255,117,31,1);
+        }
+
+        .hero h1 {
+          margin: 0;
+          font-size: clamp(58px, 9vw, 132px);
+          line-height: .86;
+          letter-spacing: -.09em;
+          font-weight: 950;
+        }
+
+        .hero h1 em {
+          font-style: normal;
+          color: #ff751f;
+          text-shadow:
+            0 0 45px rgba(255,117,31,.5),
+            0 0 120px rgba(255,117,31,.2);
+        }
+
+        .hero p {
+          max-width: 740px;
+          margin: 34px auto 0;
+          color: rgba(255,255,255,.66);
+          font-size: 19px;
+          line-height: 1.8;
+        }
+
+        .actions {
+          display: flex;
+          justify-content: center;
+          flex-wrap: wrap;
+          gap: 14px;
+          margin-top: 44px;
+        }
+
+        .btn {
+          min-height: 56px;
+          padding: 0 34px;
+          border-radius: 16px;
+          display: inline-flex;
+          align-items: center;
+          justify-content: center;
+          text-decoration: none;
+          text-transform: uppercase;
+          letter-spacing: .09em;
+          font-size: 12px;
+          font-weight: 900;
+          transition: .28s ease;
+        }
+
+        .btn-primary {
+          color: #fff;
+          background: linear-gradient(135deg, #ff9448, #ff4d00);
+          box-shadow: 0 22px 70px rgba(255,117,31,.38);
+        }
+
+        .btn-secondary {
+          color: rgba(255,255,255,.84);
+          background: rgba(255,255,255,.045);
+          border: 1px solid rgba(255,255,255,.13);
+          backdrop-filter: blur(18px);
+        }
+
+        .btn:hover {
+          transform: translateY(-4px);
+        }
+
+        .hero-strip {
+          margin-top: 70px;
+          display: flex;
+          justify-content: center;
+          flex-wrap: wrap;
+          gap: 12px;
+        }
+
+        .hero-strip span {
+          padding: 12px 18px;
+          border-radius: 999px;
+          color: rgba(255,255,255,.68);
+          background: rgba(255,255,255,.045);
+          border: 1px solid rgba(255,255,255,.09);
+          font-size: 13px;
+        }
+
+        .section {
+          padding: 120px 0;
+          position: relative;
+        }
+
+        .section::before {
+          content: "";
+          position: absolute;
+          inset: 0;
+          background: radial-gradient(circle at 80% 30%, rgba(255,117,31,.08), transparent 34%);
+          pointer-events: none;
+        }
+
+        .section-head {
+          max-width: 780px;
+          margin-bottom: 56px;
+        }
+
+        .eyebrow {
+          color: #ff751f;
+          text-transform: uppercase;
+          letter-spacing: .2em;
+          font-size: 11px;
+          font-weight: 900;
+          margin-bottom: 18px;
+        }
+
+        h2 {
+          margin: 0;
+          font-size: clamp(40px, 5vw, 72px);
+          line-height: .96;
+          letter-spacing: -.065em;
+          font-weight: 950;
+        }
+
+        .section-head p {
+          margin: 22px 0 0;
+          color: rgba(255,255,255,.58);
+          font-size: 17px;
+          line-height: 1.75;
+        }
+
+        .services-grid {
+          display: grid;
+          grid-template-columns: repeat(3, 1fr);
+          gap: 18px;
+        }
+
+        .service {
+          min-height: 280px;
+          padding: 30px;
+          border-radius: 32px;
+          position: relative;
+          overflow: hidden;
+          background:
+            linear-gradient(145deg, rgba(255,255,255,.08), rgba(255,255,255,.025));
+          border: 1px solid rgba(255,255,255,.095);
+          transition: .35s ease;
+        }
+
+        .service::after {
+          content: "";
+          position: absolute;
+          right: -70px;
+          bottom: -80px;
+          width: 220px;
+          height: 220px;
+          border-radius: 50%;
+          background: rgba(255,117,31,.18);
+          filter: blur(55px);
+          opacity: 0;
+          transition: .35s ease;
+        }
+
+        .service:hover {
+          transform: translateY(-10px);
+          border-color: rgba(255,117,31,.42);
+        }
+
+        .service:hover::after {
+          opacity: 1;
+        }
+
+        .service small {
+          color: #ff751f;
+          letter-spacing: .16em;
+          text-transform: uppercase;
+          font-size: 11px;
+          font-weight: 900;
+        }
+
+        .service h3 {
+          margin: 24px 0 14px;
+          font-size: 28px;
+          line-height: 1.05;
+          letter-spacing: -.045em;
+        }
+
+        .service p {
+          color: rgba(255,255,255,.56);
+          line-height: 1.75;
+          margin: 0;
+        }
+
+        .split {
+          display: grid;
+          grid-template-columns: .95fr 1.05fr;
+          gap: 70px;
+          align-items: center;
+        }
+
+        .studio-panel {
+          padding: 34px;
+          border-radius: 38px;
+          background:
+            radial-gradient(circle at 80% 20%, rgba(255,117,31,.18), transparent 36%),
+            linear-gradient(145deg, rgba(255,255,255,.09), rgba(255,255,255,.025));
+          border: 1px solid rgba(255,255,255,.12);
+          box-shadow: 0 60px 160px rgba(0,0,0,.58);
+        }
+
+        .panel-line {
+          display: flex;
+          justify-content: space-between;
+          gap: 20px;
+          padding: 20px 0;
+          border-bottom: 1px solid rgba(255,255,255,.08);
+          color: rgba(255,255,255,.76);
+        }
+
+        .panel-line:last-child {
+          border-bottom: 0;
+        }
+
+        .panel-line span {
+          color: #ff9448;
+        }
+
+        .process {
+          display: grid;
+          grid-template-columns: repeat(4, 1fr);
+          gap: 16px;
+        }
+
+        .process-card {
+          padding: 28px;
+          border-radius: 30px;
+          background: rgba(255,255,255,.045);
+          border: 1px solid rgba(255,255,255,.09);
+        }
+
+        .process-card strong {
+          color: #ff751f;
+          display: block;
+          margin-bottom: 26px;
+        }
+
+        .process-card h3 {
+          margin: 0 0 12px;
+          font-size: 24px;
+          letter-spacing: -.04em;
+        }
+
+        .process-card p {
+          margin: 0;
+          color: rgba(255,255,255,.55);
+          line-height: 1.7;
+          font-size: 14px;
+        }
+
+        .cta {
+          margin-top: 80px;
+          padding: 60px;
+          border-radius: 42px;
+          display: flex;
+          justify-content: space-between;
+          align-items: center;
+          gap: 40px;
+          background:
+            radial-gradient(circle at 85% 25%, rgba(255,117,31,.34), transparent 34%),
+            linear-gradient(135deg, rgba(255,255,255,.105), rgba(255,255,255,.035));
+          border: 1px solid rgba(255,255,255,.13);
+        }
+
+        .cta p {
+          color: rgba(255,255,255,.6);
+          line-height: 1.75;
+          max-width: 620px;
+        }
+
+        @media (max-width: 980px) {
+          .network {
+            opacity: .3;
+          }
+
+          .services-grid,
+          .split,
+          .process {
+            grid-template-columns: 1fr;
+          }
+
+          .cta {
+            flex-direction: column;
+            align-items: flex-start;
           }
         }
-      });
 
-      animId = requestAnimationFrame(draw);
-    };
-    draw();
-    return () => { cancelAnimationFrame(animId); window.removeEventListener("resize", resize); };
-  }, []);
-  return <canvas ref={canvasRef} style={{ position: "absolute", inset: 0, width: "100%", height: "100%", pointerEvents: "none" }} />;
-}
+        @media (max-width: 620px) {
+          .wrap {
+            width: min(100% - 36px, 1240px);
+          }
 
-function FilmGrain() {
-  return (
-    <div style={{
-      position: "fixed", inset: 0, pointerEvents: "none", zIndex: 9999, opacity: 0.032,
-      backgroundImage: `url("data:image/svg+xml,%3Csvg viewBox='0 0 256 256' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E")`,
-      backgroundRepeat: "repeat", backgroundSize: "128px 128px",
-    }} />
-  );
-}
+          .hero {
+            padding: 130px 0 80px;
+          }
 
-function CursorGlow() {
-  const ref = useRef<HTMLDivElement>(null);
-  const pos = useRef({ x: -300, y: -300 });
-  const curr = useRef({ x: -300, y: -300 });
-  useEffect(() => {
-    const move = (e: MouseEvent) => { pos.current = { x: e.clientX, y: e.clientY }; };
-    window.addEventListener("mousemove", move);
-    let raf: number;
-    const animate = () => {
-      curr.current.x += (pos.current.x - curr.current.x) * 0.08;
-      curr.current.y += (pos.current.y - curr.current.y) * 0.08;
-      if (ref.current) {
-        ref.current.style.transform = `translate(${curr.current.x - 300}px,${curr.current.y - 300}px)`;
-      }
-      raf = requestAnimationFrame(animate);
-    };
-    animate();
-    return () => { window.removeEventListener("mousemove", move); cancelAnimationFrame(raf); };
-  }, []);
-  return (
-    <div ref={ref} style={{
-      position: "fixed", top: 0, left: 0, width: 600, height: 600, borderRadius: "50%",
-      background: "radial-gradient(circle, rgba(255,117,31,0.09) 0%, transparent 70%)",
-      pointerEvents: "none", zIndex: 1, willChange: "transform",
-    }} />
-  );
-}
+          .hero h1 {
+            font-size: 48px;
+          }
 
-function SectionReveal({ children, delay = 0 }: { children: React.ReactNode; delay?: number }) {
-  const { ref, inView } = useInView(0.1);
-  return (
-    <div ref={ref} style={{
-      opacity: inView ? 1 : 0,
-      transform: inView ? "translateY(0)" : "translateY(48px)",
-      transition: `opacity 0.9s cubic-bezier(0.16,1,0.3,1) ${delay}ms, transform 0.9s cubic-bezier(0.16,1,0.3,1) ${delay}ms`,
-    }}>
-      {children}
-    </div>
-  );
-}
+          .hero p {
+            font-size: 16px;
+          }
 
-function ServiceCard({ service, index }: { service: typeof SERVICES[0]; index: number }) {
-  const { ref, inView } = useInView(0.1);
-  const [hovered, setHovered] = useState(false);
-  return (
-    <div
-      ref={ref}
-      onMouseEnter={() => setHovered(true)}
-      onMouseLeave={() => setHovered(false)}
-      style={{
-        position: "relative", padding: "36px 32px", borderRadius: 28,
-        background: hovered
-          ? "linear-gradient(145deg,rgba(255,117,31,0.12),rgba(255,255,255,0.06))"
-          : "linear-gradient(145deg,rgba(255,255,255,0.06),rgba(255,255,255,0.02))",
-        border: `1px solid ${hovered ? "rgba(255,117,31,0.45)" : "rgba(255,255,255,0.08)"}`,
-        transition: "all 0.4s cubic-bezier(0.16,1,0.3,1)",
-        transform: inView
-          ? hovered ? "translateY(-10px) scale(1.02)" : "translateY(0) scale(1)"
-          : "translateY(40px)",
-        opacity: inView ? 1 : 0,
-        transitionDelay: `${index * 80}ms`,
-        cursor: "default", overflow: "hidden",
-      }}
-    >
-      <div style={{
-        position: "absolute", right: -40, bottom: -40, width: 200, height: 200,
-        background: "rgba(255,117,31,0.18)", filter: "blur(60px)",
-        opacity: hovered ? 1 : 0, transition: "opacity 0.4s ease",
-      }} />
-      <div style={{ position: "relative", zIndex: 1 }}>
-        <div style={{ display: "flex", justifyContent: "space-between", alignItems: "flex-start", marginBottom: 24 }}>
-          <span style={{ color: "#ff751f", fontFamily: "monospace", fontSize: 11, letterSpacing: "0.2em", opacity: 0.8 }}>{service.num}</span>
-          <div style={{
-            width: 32, height: 32, borderRadius: "50%",
-            border: "1px solid rgba(255,117,31,0.3)",
-            display: "flex", alignItems: "center", justifyContent: "center",
-            opacity: hovered ? 1 : 0.3, transition: "opacity 0.3s ease",
-          }}>
-            <svg width="12" height="12" viewBox="0 0 12 12" fill="none">
-              <path d="M2 10L10 2M10 2H4M10 2v6" stroke="#ff751f" strokeWidth="1.5" strokeLinecap="round" />
-            </svg>
-          </div>
-        </div>
-        <h3 style={{ margin: "0 0 14px", fontSize: "clamp(20px,2vw,26px)", fontWeight: 800, letterSpacing: "-0.04em", lineHeight: 1.1 }}>{service.title}</h3>
-        <p style={{ margin: 0, color: "rgba(255,255,255,0.52)", lineHeight: 1.75, fontSize: 14 }}>{service.text}</p>
-      </div>
-    </div>
-  );
-}
+          .network {
+            display: none;
+          }
 
-function ProcessStep({ step, index }: { step: typeof PROCESS[0]; index: number }) {
-  const { ref, inView } = useInView(0.1);
-  const [hovered, setHovered] = useState(false);
-  return (
-    <div
-      ref={ref}
-      onMouseEnter={() => setHovered(true)}
-      onMouseLeave={() => setHovered(false)}
-      style={{
-        display: "flex", gap: 28, alignItems: "flex-start",
-        opacity: inView ? 1 : 0,
-        transform: inView ? "translateX(0)" : "translateX(-30px)",
-        transition: `all 0.8s cubic-bezier(0.16,1,0.3,1) ${index * 120}ms`,
-        padding: "28px 0",
-        borderBottom: "1px solid rgba(255,255,255,0.07)",
-      }}
-    >
-      <div style={{
-        flexShrink: 0, width: 52, height: 52, borderRadius: "50%",
-        background: hovered ? "rgba(255,117,31,0.2)" : "rgba(255,255,255,0.05)",
-        border: `1px solid ${hovered ? "rgba(255,117,31,0.5)" : "rgba(255,255,255,0.1)"}`,
-        display: "flex", alignItems: "center", justifyContent: "center",
-        fontSize: 11, color: "#ff751f", fontFamily: "monospace", letterSpacing: "0.1em",
-        transition: "all 0.35s ease",
-      }}>
-        {step.num}
-      </div>
-      <div>
-        <h3 style={{ margin: "0 0 8px", fontSize: "clamp(18px,2vw,24px)", fontWeight: 800, letterSpacing: "-0.04em" }}>{step.title}</h3>
-        <p style={{ margin: 0, color: "rgba(255,255,255,0.52)", lineHeight: 1.75, fontSize: 14 }}>{step.text}</p>
-      </div>
-    </div>
-  );
-}
+          .section {
+            padding: 88px 0;
+          }
 
-function HeroTitle() {
-  const [revealed, setRevealed] = useState(false);
-  useEffect(() => { setTimeout(() => setRevealed(true), 200); }, []);
-  const line1 = "We build digital";
-  const line2 = "experiences that make";
-  const line3 = "brands impossible";
-  const line4 = "to ignore.";
-  return (
-    <h1 style={{
-      margin: "0 auto", fontSize: "clamp(52px,7.5vw,118px)", lineHeight: 0.9,
-      letterSpacing: "-0.08em", fontWeight: 900, overflow: "hidden",
-    }}>
-      {[line1, line2, line3, line4].map((line, li) => (
-        <span key={li} style={{ display: "block", overflow: "hidden" }}>
-          <span style={{
-            display: "block",
-            transform: revealed ? "translateY(0)" : "translateY(110%)",
-            transition: `transform 1s cubic-bezier(0.16,1,0.3,1) ${li * 100 + 300}ms`,
-            color: li === 3 ? "#ff751f" : "#fff",
-            textShadow: li === 3 ? "0 0 60px rgba(255,117,31,0.45), 0 0 140px rgba(255,117,31,0.2)" : "none",
-          }}>
-            {line}
-          </span>
-        </span>
-      ))}
-    </h1>
-  );
-}
-
-function Ticker() {
-  return (
-    <div style={{ overflow: "hidden", borderTop: "1px solid rgba(255,255,255,0.07)", borderBottom: "1px solid rgba(255,255,255,0.07)", padding: "18px 0", margin: "80px 0 0" }}>
-      <div style={{ display: "flex", gap: 56, animation: "ticker 22s linear infinite", whiteSpace: "nowrap" }}>
-        {TICKER_ITEMS.map((item, i) => (
-          <span key={i} style={{ display: "flex", alignItems: "center", gap: 20, color: "rgba(255,255,255,0.38)", fontSize: 13, textTransform: "uppercase", letterSpacing: "0.18em", flexShrink: 0 }}>
-            <span style={{ width: 5, height: 5, borderRadius: "50%", background: "#ff751f", flexShrink: 0, boxShadow: "0 0 10px rgba(255,117,31,0.8)" }} />
-            {item}
-          </span>
-        ))}
-      </div>
-    </div>
-  );
-}
-
-function ShowcasePanel() {
-  const { ref, inView } = useInView(0.1);
-  const items = [
-    ["Visual Identity", "Premium"],
-    ["Website Structure", "Conversion-focused"],
-    ["Responsive Design", "All devices"],
-    ["Automation Layer", "Optional"],
-    ["Launch Support", "Included"],
-  ];
-  return (
-    <div
-      ref={ref}
-      style={{
-        padding: "2px", borderRadius: 36,
-        background: "linear-gradient(145deg,rgba(255,117,31,0.35),rgba(255,255,255,0.08),rgba(255,117,31,0.12))",
-        opacity: inView ? 1 : 0, transform: inView ? "translateX(0) rotateY(0deg)" : "translateX(40px) rotateY(8deg)",
-        transition: "all 1s cubic-bezier(0.16,1,0.3,1) 0.2s",
-        perspective: "1000px",
-      }}
-    >
-      <div style={{
-        borderRadius: 35, padding: "32px",
-        background: "radial-gradient(circle at 80% 15%,rgba(255,117,31,0.14),transparent 40%), linear-gradient(145deg,rgba(14,14,22,0.97),rgba(8,8,14,0.99))",
-        backdropFilter: "blur(30px)",
-      }}>
-        <div style={{ marginBottom: 28, display: "flex", alignItems: "center", gap: 10 }}>
-          <div style={{ width: 10, height: 10, borderRadius: "50%", background: "#ff5c5c" }} />
-          <div style={{ width: 10, height: 10, borderRadius: "50%", background: "#ffbd2e" }} />
-          <div style={{ width: 10, height: 10, borderRadius: "50%", background: "#28c840" }} />
-          <div style={{ flex: 1, height: 1, background: "rgba(255,255,255,0.07)", marginLeft: 12 }} />
-        </div>
-        {items.map(([label, val], i) => (
-          <div key={i} style={{
-            display: "flex", justifyContent: "space-between", alignItems: "center",
-            padding: "18px 0", borderBottom: i < items.length - 1 ? "1px solid rgba(255,255,255,0.07)" : "none",
-          }}>
-            <span style={{ color: "rgba(255,255,255,0.75)", fontSize: 15, fontWeight: 500 }}>{label}</span>
-            <span style={{
-              padding: "5px 14px", borderRadius: 999,
-              background: "rgba(255,117,31,0.12)", border: "1px solid rgba(255,117,31,0.3)",
-              color: "#ff9448", fontSize: 12, letterSpacing: "0.06em",
-            }}>{val}</span>
-          </div>
-        ))}
-      </div>
-    </div>
-  );
-}
-
-export default function AhosHome() {
-  const [scrollY, setScrollY] = useState(0);
-  const [heroReady, setHeroReady] = useState(false);
-
-  useEffect(() => {
-    setHeroReady(true);
-    const onScroll = () => setScrollY(window.scrollY);
-    window.addEventListener("scroll", onScroll, { passive: true });
-    return () => window.removeEventListener("scroll", onScroll);
-  }, []);
-
-  return (
-    <div style={{ background: "#06060e", color: "#fff", minHeight: "100vh", fontFamily: "'Inter',system-ui,sans-serif", overflowX: "hidden" }}>
-
-      <style>{`
-        @import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;500;700;800;900&display=swap');
-        * { box-sizing: border-box; }
-        @keyframes ticker { from { transform: translateX(0); } to { transform: translateX(-50%); } }
-        @keyframes floatBadge { 0%,100%{transform:translateY(0)} 50%{transform:translateY(-5px)} }
-        @keyframes scanline {
-          0% { transform: translateY(-100%); }
-          100% { transform: translateY(100vh); }
+          .cta {
+            padding: 34px;
+          }
         }
-        @keyframes orb1 { 0%,100%{transform:translate(0,0) scale(1)} 33%{transform:translate(40px,-30px) scale(1.1)} 66%{transform:translate(-20px,20px) scale(0.95)} }
-        @keyframes orb2 { 0%,100%{transform:translate(0,0) scale(1)} 33%{transform:translate(-50px,40px) scale(1.05)} 66%{transform:translate(30px,-20px) scale(1.12)} }
-        @keyframes orb3 { 0%,100%{transform:translate(0,0) scale(1)} 33%{transform:translate(20px,50px) scale(0.9)} 66%{transform:translate(-40px,-30px) scale(1.08)} }
-        @keyframes badgePulse { 0%,100%{box-shadow:0 0 0 0 rgba(255,117,31,0.4)} 50%{box-shadow:0 0 0 8px rgba(255,117,31,0)} }
-        ::-webkit-scrollbar { width: 4px; }
-        ::-webkit-scrollbar-track { background: #06060e; }
-        ::-webkit-scrollbar-thumb { background: rgba(255,117,31,0.4); border-radius: 2px; }
+
+        @media (prefers-reduced-motion: reduce) {
+          .hero::before,
+          .network line,
+          .network circle {
+            animation: none !important;
+          }
+        }
       `}</style>
 
-      <FilmGrain />
-      <CursorGlow />
+      <main className="home">
+        <section ref={heroRef} onMouseMove={handleMouseMove} className="hero">
+          <div className="network">
+            <svg className="network-left" viewBox="0 0 500 500">
+              <line x1="70" y1="110" x2="230" y2="70" />
+              <line x1="230" y1="70" x2="380" y2="160" />
+              <line x1="70" y1="110" x2="150" y2="290" />
+              <line x1="150" y1="290" x2="340" y2="340" />
+              <line x1="380" y1="160" x2="340" y2="340" />
+              <circle cx="70" cy="110" r="5" />
+              <circle cx="230" cy="70" r="5" />
+              <circle cx="380" cy="160" r="5" />
+              <circle cx="150" cy="290" r="5" />
+              <circle cx="340" cy="340" r="5" />
+            </svg>
 
-      {/* Scanline */}
-      <div style={{
-        position: "fixed", top: 0, left: 0, right: 0, height: 2,
-        background: "linear-gradient(90deg,transparent,rgba(255,117,31,0.15),transparent)",
-        animation: "scanline 8s linear infinite", pointerEvents: "none", zIndex: 10, opacity: 0.6,
-      }} />
-
-      {/* Nav */}
-      <nav style={{
-        position: "fixed", top: 0, left: 0, right: 0, zIndex: 100,
-        padding: "20px 48px", display: "flex", justifyContent: "space-between", alignItems: "center",
-        background: scrollY > 60 ? "rgba(6,6,14,0.88)" : "transparent",
-        backdropFilter: scrollY > 60 ? "blur(24px)" : "none",
-        borderBottom: scrollY > 60 ? "1px solid rgba(255,255,255,0.06)" : "none",
-        transition: "all 0.5s ease",
-      }}>
-        <div style={{ fontWeight: 900, fontSize: 20, letterSpacing: "-0.04em" }}>
-          <span style={{ color: "#ff751f" }}>AHOS</span>
-          <span style={{ color: "rgba(255,255,255,0.55)", marginLeft: 6, fontWeight: 400, fontSize: 13, letterSpacing: "0.1em", textTransform: "uppercase" }}>Studio</span>
-        </div>
-        <div style={{ display: "flex", gap: 36, alignItems: "center" }}>
-          {["Services", "Work", "Process", "Contact"].map(item => (
-            <a key={item} href="#" style={{
-              color: "rgba(255,255,255,0.5)", fontSize: 13, textDecoration: "none",
-              textTransform: "uppercase", letterSpacing: "0.1em", fontWeight: 500,
-              transition: "color 0.2s ease",
-            }}
-              onMouseEnter={e => (e.currentTarget.style.color = "#fff")}
-              onMouseLeave={e => (e.currentTarget.style.color = "rgba(255,255,255,0.5)")}
-            >{item}</a>
-          ))}
-          <a href="#" style={{
-            padding: "10px 24px", borderRadius: 12,
-            background: "linear-gradient(135deg,#ff9448,#ff5c00)",
-            color: "#fff", fontSize: 12, textDecoration: "none", fontWeight: 800,
-            textTransform: "uppercase", letterSpacing: "0.08em",
-            boxShadow: "0 8px 32px rgba(255,117,31,0.35)",
-            transition: "all 0.3s ease",
-          }}
-            onMouseEnter={e => { e.currentTarget.style.transform = "translateY(-2px)"; e.currentTarget.style.boxShadow = "0 14px 40px rgba(255,117,31,0.5)"; }}
-            onMouseLeave={e => { e.currentTarget.style.transform = "translateY(0)"; e.currentTarget.style.boxShadow = "0 8px 32px rgba(255,117,31,0.35)"; }}
-          >Start a Project</a>
-        </div>
-      </nav>
-
-      {/* HERO */}
-      <section style={{ minHeight: "100vh", position: "relative", display: "flex", alignItems: "center", justifyContent: "center", padding: "160px 48px 0", overflow: "hidden" }}>
-
-        {/* Background orbs */}
-        <div style={{ position: "absolute", inset: 0, pointerEvents: "none", overflow: "hidden" }}>
-          <div style={{ position: "absolute", width: 900, height: 900, borderRadius: "50%", background: "radial-gradient(circle,rgba(255,117,31,0.13),transparent 70%)", top: "50%", left: "50%", transform: "translate(-50%,-55%)", animation: "orb1 18s ease-in-out infinite" }} />
-          <div style={{ position: "absolute", width: 600, height: 600, borderRadius: "50%", background: "radial-gradient(circle,rgba(255,117,31,0.10),transparent 70%)", top: "20%", left: "10%", animation: "orb2 24s ease-in-out infinite" }} />
-          <div style={{ position: "absolute", width: 500, height: 500, borderRadius: "50%", background: "radial-gradient(circle,rgba(255,60,0,0.08),transparent 70%)", bottom: "10%", right: "8%", animation: "orb3 20s ease-in-out infinite" }} />
-        </div>
-
-        {/* Grid */}
-        <div style={{
-          position: "absolute", inset: 0, pointerEvents: "none",
-          backgroundImage: "linear-gradient(rgba(255,255,255,0.04) 1px,transparent 1px),linear-gradient(90deg,rgba(255,255,255,0.04) 1px,transparent 1px)",
-          backgroundSize: "72px 72px",
-          maskImage: "radial-gradient(ellipse 80% 80% at 50% 50%,black,transparent)",
-          transform: `translateY(${scrollY * 0.15}px)`,
-        }} />
-
-        <Particles />
-
-        <div style={{ position: "relative", zIndex: 2, textAlign: "center", maxWidth: 1200, width: "100%", margin: "0 auto" }}>
-
-          {/* Badge */}
-          <div style={{
-            display: "inline-flex", alignItems: "center", gap: 10,
-            padding: "10px 20px", borderRadius: 999,
-            border: "1px solid rgba(255,117,31,0.35)",
-            background: "rgba(255,117,31,0.08)",
-            backdropFilter: "blur(20px)", marginBottom: 44,
-            opacity: heroReady ? 1 : 0, transform: heroReady ? "translateY(0)" : "translateY(-20px)",
-            transition: "all 0.8s cubic-bezier(0.16,1,0.3,1) 0.1s",
-            animation: "floatBadge 5s ease-in-out infinite",
-          }}>
-            <span style={{ width: 7, height: 7, borderRadius: "50%", background: "#ff751f", boxShadow: "0 0 12px rgba(255,117,31,1)", animation: "badgePulse 2s ease-in-out infinite" }} />
-            <span style={{ color: "#ff9448", fontSize: 11, textTransform: "uppercase", letterSpacing: "0.2em", fontWeight: 700 }}>AHOS Digital Studio</span>
+            <svg className="network-right" viewBox="0 0 500 500">
+              <line x1="70" y1="110" x2="230" y2="70" />
+              <line x1="230" y1="70" x2="380" y2="160" />
+              <line x1="70" y1="110" x2="150" y2="290" />
+              <line x1="150" y1="290" x2="340" y2="340" />
+              <line x1="380" y1="160" x2="340" y2="340" />
+              <circle cx="70" cy="110" r="5" />
+              <circle cx="230" cy="70" r="5" />
+              <circle cx="380" cy="160" r="5" />
+              <circle cx="150" cy="290" r="5" />
+              <circle cx="340" cy="340" r="5" />
+            </svg>
           </div>
 
-          <HeroTitle />
+          <div className="wrap hero-content">
+            <div className="badge">
+              <span />
+              AHOS Digital Studio
+            </div>
 
-          <div style={{
-            maxWidth: 680, margin: "40px auto 0",
-            color: "rgba(255,255,255,0.58)", fontSize: 19, lineHeight: 1.85,
-            opacity: heroReady ? 1 : 0, transform: heroReady ? "translateY(0)" : "translateY(20px)",
-            transition: "all 0.9s cubic-bezier(0.16,1,0.3,1) 0.8s",
-          }}>
-            AHOS creates premium websites, e-commerce platforms, brand systems,
-            automations, and custom digital products for ambitious businesses.
+            <h1>
+              Digital experiences that make brands <em>impossible to ignore.</em>
+            </h1>
+
+            <p>
+              We design and build premium websites, e-commerce platforms, brand systems,
+              automations, and custom digital products for ambitious businesses.
+            </p>
+
+            <div className="actions">
+              <Link href="/contact" className="btn btn-primary">
+                Start a Project
+              </Link>
+              <Link href="/services" className="btn btn-secondary">
+                Explore Services
+              </Link>
+            </div>
+
+            <div className="hero-strip">
+              <span>Websites</span>
+              <span>E-commerce</span>
+              <span>AI Automation</span>
+              <span>Branding</span>
+              <span>Web3</span>
+              <span>Custom Systems</span>
+            </div>
           </div>
+        </section>
 
-          <div style={{
-            display: "flex", justifyContent: "center", gap: 14, flexWrap: "wrap", marginTop: 48,
-            opacity: heroReady ? 1 : 0, transform: heroReady ? "translateY(0)" : "translateY(20px)",
-            transition: "all 0.9s cubic-bezier(0.16,1,0.3,1) 1s",
-          }}>
-            <a href="#" style={{
-              minHeight: 56, padding: "0 36px", borderRadius: 16,
-              display: "inline-flex", alignItems: "center", justifyContent: "center",
-              background: "linear-gradient(135deg,#ff9448,#ff5000)",
-              color: "#fff", fontSize: 12, textTransform: "uppercase", letterSpacing: "0.1em",
-              fontWeight: 800, textDecoration: "none",
-              boxShadow: "0 20px 60px rgba(255,117,31,0.4), 0 4px 16px rgba(255,117,31,0.3)",
-              transition: "all 0.35s ease",
-            }}
-              onMouseEnter={e => { e.currentTarget.style.transform = "translateY(-5px)"; e.currentTarget.style.boxShadow = "0 30px 80px rgba(255,117,31,0.55), 0 4px 20px rgba(255,117,31,0.4)"; }}
-              onMouseLeave={e => { e.currentTarget.style.transform = "translateY(0)"; e.currentTarget.style.boxShadow = "0 20px 60px rgba(255,117,31,0.4), 0 4px 16px rgba(255,117,31,0.3)"; }}
-            >
-              Start a Project
-              <svg style={{ marginLeft: 10 }} width="14" height="14" viewBox="0 0 14 14" fill="none">
-                <path d="M2 12L12 2M12 2H5M12 2v7" stroke="white" strokeWidth="1.8" strokeLinecap="round" />
-              </svg>
-            </a>
-            <a href="#" style={{
-              minHeight: 56, padding: "0 36px", borderRadius: 16,
-              display: "inline-flex", alignItems: "center", justifyContent: "center",
-              border: "1px solid rgba(255,255,255,0.12)", background: "rgba(255,255,255,0.04)",
-              backdropFilter: "blur(20px)", color: "rgba(255,255,255,0.82)",
-              fontSize: 12, textTransform: "uppercase", letterSpacing: "0.1em", fontWeight: 700,
-              textDecoration: "none", transition: "all 0.35s ease",
-            }}
-              onMouseEnter={e => { e.currentTarget.style.transform = "translateY(-5px)"; e.currentTarget.style.borderColor = "rgba(255,255,255,0.25)"; }}
-              onMouseLeave={e => { e.currentTarget.style.transform = "translateY(0)"; e.currentTarget.style.borderColor = "rgba(255,255,255,0.12)"; }}
-            >
-              Explore Services
-            </a>
-          </div>
-
-          {/* Scroll hint */}
-          <div style={{
-            marginTop: 72, display: "flex", flexDirection: "column", alignItems: "center", gap: 10,
-            opacity: heroReady ? 0.4 : 0, transition: "opacity 1s ease 1.5s",
-          }}>
-            <div style={{ width: 1, height: 52, background: "linear-gradient(to bottom, rgba(255,117,31,0.8), transparent)", animation: "scanline 2s ease-in-out infinite" }} />
-            <span style={{ fontSize: 10, textTransform: "uppercase", letterSpacing: "0.22em", color: "rgba(255,255,255,0.4)" }}>Scroll</span>
-          </div>
-        </div>
-
-        <Ticker />
-      </section>
-
-      {/* STATS */}
-      <section style={{ padding: "100px 48px", position: "relative" }}>
-        <div style={{ maxWidth: 1200, margin: "0 auto" }}>
-          <div style={{
-            display: "grid", gridTemplateColumns: "repeat(4,1fr)", gap: 24,
-            padding: "56px 48px", borderRadius: 36,
-            background: "linear-gradient(145deg,rgba(255,255,255,0.05),rgba(255,255,255,0.02))",
-            border: "1px solid rgba(255,255,255,0.08)",
-          }}>
-            {STATS.map((s, i) => (
-              <StatItem key={i} {...s} />
-            ))}
-          </div>
-        </div>
-      </section>
-
-      {/* SERVICES */}
-      <section style={{ padding: "80px 48px 120px", position: "relative" }}>
-        <div style={{ position: "absolute", right: 0, top: "20%", width: 600, height: 600, background: "radial-gradient(circle,rgba(255,117,31,0.07),transparent 70%)", pointerEvents: "none" }} />
-        <div style={{ maxWidth: 1200, margin: "0 auto" }}>
-          <SectionReveal>
-            <div style={{ marginBottom: 64 }}>
-              <div style={{ color: "#ff751f", textTransform: "uppercase", letterSpacing: "0.2em", fontSize: 11, marginBottom: 16, fontWeight: 700 }}>What We Build</div>
-              <h2 style={{ margin: "0 0 20px", fontSize: "clamp(36px,5vw,68px)", lineHeight: 0.95, letterSpacing: "-0.06em", fontWeight: 900, maxWidth: 780 }}>
-                Digital systems with the polish of a brand and the power of software.
-              </h2>
-              <p style={{ color: "rgba(255,255,255,0.5)", fontSize: 16, lineHeight: 1.8, maxWidth: 600, margin: 0 }}>
-                We combine strategy, design, development, and automation to create
-                websites and systems that look premium and work properly.
+        <section className="section">
+          <div className="wrap">
+            <div className="section-head">
+              <div className="eyebrow">What We Build</div>
+              <h2>Premium digital systems with strategy, design, and engineering.</h2>
+              <p>
+                AHOS creates polished digital products that do more than look good.
+                They communicate clearly, convert better, and support real business growth.
               </p>
             </div>
-          </SectionReveal>
-          <div style={{ display: "grid", gridTemplateColumns: "repeat(3,1fr)", gap: 18 }}>
-            {SERVICES.map((s, i) => <ServiceCard key={i} service={s} index={i} />)}
-          </div>
-        </div>
-      </section>
 
-      {/* WHY AHOS */}
-      <section style={{ padding: "80px 48px 120px", position: "relative" }}>
-        <div style={{ position: "absolute", left: 0, top: "30%", width: 500, height: 500, background: "radial-gradient(circle,rgba(255,117,31,0.07),transparent 70%)", pointerEvents: "none" }} />
-        <div style={{ maxWidth: 1200, margin: "0 auto", display: "grid", gridTemplateColumns: "1fr 1fr", gap: 80, alignItems: "center" }}>
-          <SectionReveal>
-            <div style={{ color: "#ff751f", textTransform: "uppercase", letterSpacing: "0.2em", fontSize: 11, marginBottom: 16, fontWeight: 700 }}>Why AHOS</div>
-            <h2 style={{ margin: "0 0 20px", fontSize: "clamp(36px,4.5vw,62px)", lineHeight: 0.95, letterSpacing: "-0.06em", fontWeight: 900 }}>
-              Not another template. A digital presence engineered around growth.
-            </h2>
-            <p style={{ color: "rgba(255,255,255,0.5)", fontSize: 16, lineHeight: 1.8, margin: "0 0 36px" }}>
-              Every section, interaction, page, and system is designed to help your
-              business look more credible, communicate faster, and convert better.
-            </p>
-            <a href="#" style={{
-              display: "inline-flex", alignItems: "center", gap: 10,
-              color: "#ff9448", fontSize: 13, textDecoration: "none", fontWeight: 700,
-              textTransform: "uppercase", letterSpacing: "0.1em",
-            }}>
-              Learn how we work
-              <svg width="14" height="14" viewBox="0 0 14 14" fill="none">
-                <path d="M2 7h10M8 3l4 4-4 4" stroke="#ff9448" strokeWidth="1.8" strokeLinecap="round" strokeLinejoin="round" />
-              </svg>
-            </a>
-          </SectionReveal>
-          <ShowcasePanel />
-        </div>
-      </section>
-
-      {/* PROCESS */}
-      <section style={{ padding: "80px 48px 120px", position: "relative" }}>
-        <div style={{ maxWidth: 1200, margin: "0 auto", display: "grid", gridTemplateColumns: "1fr 1fr", gap: 80 }}>
-          <SectionReveal>
-            <div style={{ color: "#ff751f", textTransform: "uppercase", letterSpacing: "0.2em", fontSize: 11, marginBottom: 16, fontWeight: 700 }}>Process</div>
-            <h2 style={{ margin: "0 0 20px", fontSize: "clamp(36px,4.5vw,62px)", lineHeight: 0.95, letterSpacing: "-0.06em", fontWeight: 900 }}>
-              From first idea to final launch, without the mess.
-            </h2>
-            <p style={{ color: "rgba(255,255,255,0.5)", fontSize: 16, lineHeight: 1.8, margin: 0 }}>
-              We keep the workflow clear, direct, and focused on building something
-              that actually helps the business.
-            </p>
-          </SectionReveal>
-          <div>
-            {PROCESS.map((step, i) => <ProcessStep key={i} step={step} index={i} />)}
-          </div>
-        </div>
-      </section>
-
-      {/* CTA */}
-      <section style={{ padding: "0 48px 120px" }}>
-        <div style={{ maxWidth: 1200, margin: "0 auto" }}>
-          <SectionReveal>
-            <div style={{
-              padding: "80px 72px", borderRadius: 44, position: "relative", overflow: "hidden",
-              background: "linear-gradient(135deg,rgba(255,255,255,0.07),rgba(255,255,255,0.03))",
-              border: "1px solid rgba(255,255,255,0.1)",
-            }}>
-              <div style={{ position: "absolute", right: -80, top: -80, width: 500, height: 500, background: "radial-gradient(circle,rgba(255,117,31,0.22),transparent 60%)", pointerEvents: "none" }} />
-              <div style={{ position: "absolute", left: -40, bottom: -40, width: 300, height: 300, background: "radial-gradient(circle,rgba(255,60,0,0.1),transparent 60%)", pointerEvents: "none" }} />
-              <div style={{ position: "relative", zIndex: 1, display: "flex", justifyContent: "space-between", alignItems: "center", gap: 48 }}>
-                <div style={{ maxWidth: 620 }}>
-                  <div style={{ color: "#ff751f", textTransform: "uppercase", letterSpacing: "0.2em", fontSize: 11, marginBottom: 20, fontWeight: 700 }}>Start with AHOS</div>
-                  <h2 style={{ margin: "0 0 20px", fontSize: "clamp(36px,4.5vw,62px)", lineHeight: 0.95, letterSpacing: "-0.06em", fontWeight: 900 }}>
-                    Ready to make your brand look serious online?
-                  </h2>
-                  <p style={{ color: "rgba(255,255,255,0.55)", fontSize: 16, lineHeight: 1.8, margin: 0 }}>
-                    Bring the idea. We'll help shape it, design it, build it,
-                    and launch it with the level of polish your business deserves.
-                  </p>
+            <div className="services-grid">
+              {services.map(([title, text], index) => (
+                <div className="service" key={title}>
+                  <small>0{index + 1} / {title}</small>
+                  <h3>{title}</h3>
+                  <p>{text}</p>
                 </div>
-                <a href="#" style={{
-                  flexShrink: 0, padding: "22px 40px", borderRadius: 20,
-                  background: "linear-gradient(135deg,#ff9448,#ff5000)",
-                  color: "#fff", fontSize: 12, fontWeight: 800,
-                  textTransform: "uppercase", letterSpacing: "0.1em", textDecoration: "none",
-                  boxShadow: "0 24px 70px rgba(255,117,31,0.45)",
-                  display: "flex", alignItems: "center", gap: 12,
-                  transition: "all 0.35s ease", whiteSpace: "nowrap",
-                }}
-                  onMouseEnter={e => { e.currentTarget.style.transform = "translateY(-5px)"; e.currentTarget.style.boxShadow = "0 36px 90px rgba(255,117,31,0.6)"; }}
-                  onMouseLeave={e => { e.currentTarget.style.transform = "translateY(0)"; e.currentTarget.style.boxShadow = "0 24px 70px rgba(255,117,31,0.45)"; }}
-                >
-                  Contact AHOS
-                  <svg width="16" height="16" viewBox="0 0 16 16" fill="none">
-                    <path d="M3 13L13 3M13 3H6M13 3v7" stroke="white" strokeWidth="2" strokeLinecap="round" />
-                  </svg>
-                </a>
+              ))}
+            </div>
+          </div>
+        </section>
+
+        <section className="section">
+          <div className="wrap split">
+            <div className="section-head">
+              <div className="eyebrow">Why AHOS</div>
+              <h2>Not another template. A digital presence engineered to perform.</h2>
+              <p>
+                Every section, interaction, and system is built around credibility,
+                clarity, conversion, and long-term usability.
+              </p>
+            </div>
+
+            <div className="studio-panel">
+              <div className="panel-line">
+                <strong>Visual Direction</strong>
+                <span>Premium</span>
+              </div>
+              <div className="panel-line">
+                <strong>User Experience</strong>
+                <span>Conversion-focused</span>
+              </div>
+              <div className="panel-line">
+                <strong>Performance</strong>
+                <span>Fast & responsive</span>
+              </div>
+              <div className="panel-line">
+                <strong>Automation</strong>
+                <span>Business-ready</span>
+              </div>
+              <div className="panel-line">
+                <strong>Launch Support</strong>
+                <span>Included</span>
               </div>
             </div>
-          </SectionReveal>
-        </div>
-      </section>
+          </div>
+        </section>
 
-      {/* FOOTER */}
-      <footer style={{
-        borderTop: "1px solid rgba(255,255,255,0.07)", padding: "48px",
-        display: "flex", justifyContent: "space-between", alignItems: "center",
-        maxWidth: 1200, margin: "0 auto",
-      }}>
-        <div style={{ fontWeight: 900, fontSize: 18, letterSpacing: "-0.04em" }}>
-          <span style={{ color: "#ff751f" }}>AHOS</span>
-          <span style={{ color: "rgba(255,255,255,0.3)", fontWeight: 400, fontSize: 11, marginLeft: 8, textTransform: "uppercase", letterSpacing: "0.12em" }}>Digital Studio</span>
-        </div>
-        <div style={{ color: "rgba(255,255,255,0.25)", fontSize: 12 }}>
-          © 2025 AHOS. All rights reserved.
-        </div>
-        <div style={{ display: "flex", gap: 24 }}>
-          {["Twitter", "LinkedIn", "Instagram"].map(s => (
-            <a key={s} href="#" style={{
-              color: "rgba(255,255,255,0.35)", fontSize: 12, textDecoration: "none",
-              textTransform: "uppercase", letterSpacing: "0.1em",
-              transition: "color 0.2s ease",
-            }}
-              onMouseEnter={e => (e.currentTarget.style.color = "#ff9448")}
-              onMouseLeave={e => (e.currentTarget.style.color = "rgba(255,255,255,0.35)")}
-            >{s}</a>
-          ))}
-        </div>
-      </footer>
-    </div>
+        <section className="section">
+          <div className="wrap">
+            <div className="section-head">
+              <div className="eyebrow">Process</div>
+              <h2>From idea to launch, without the chaos.</h2>
+              <p>
+                A clear workflow that keeps your project sharp, organized, and focused
+                from the first discussion to the final release.
+              </p>
+            </div>
+
+            <div className="process">
+              {process.map(([num, title, text]) => (
+                <div className="process-card" key={title}>
+                  <strong>{num}</strong>
+                  <h3>{title}</h3>
+                  <p>{text}</p>
+                </div>
+              ))}
+            </div>
+
+            <div className="cta">
+              <div>
+                <div className="eyebrow">Start With AHOS</div>
+                <h2>Ready to make your brand look serious online?</h2>
+                <p>
+                  Bring the idea. We’ll help shape it, design it, build it, and launch it
+                  with the level of polish your business deserves.
+                </p>
+              </div>
+
+              <Link href="/contact" className="btn btn-primary">
+                Contact AHOS
+              </Link>
+            </div>
+          </div>
+        </section>
+
+        <Footer />
+      </main>
+    </>
   );
 }
