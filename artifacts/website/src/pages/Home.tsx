@@ -2,87 +2,85 @@ import { Link } from "wouter";
 import { Footer } from "../components/Footer";
 
 const services = [
-  {
-    label: "Web Development",
-    title: "Premium websites built to convert",
-    text: "Fast, responsive, and polished websites designed around your business goals.",
-  },
-  {
-    label: "E-commerce",
-    title: "Online stores ready to sell",
-    text: "Product pages, checkout flows, payment setup, and launch support.",
-  },
-  {
-    label: "AI Automation",
-    title: "Smarter workflows for serious teams",
-    text: "Automation systems that reduce manual work and help businesses move faster.",
-  },
-  {
-    label: "Branding",
-    title: "Identity that feels sharp and consistent",
-    text: "Visual direction, brand systems, and digital presence that look professional everywhere.",
-  },
-  {
-    label: "Web3",
-    title: "Modern blockchain experiences",
-    text: "Clean interfaces and digital products for crypto, DeFi, and Web3 projects.",
-  },
-  {
-    label: "Custom Systems",
-    title: "Software built around your workflow",
-    text: "Dashboards, internal platforms, and tools made for how your business actually works.",
-  },
+  ["Web Development", "Websites that look premium and convert visitors into clients."],
+  ["E-commerce", "Stores with clean product flows, payments, and launch support."],
+  ["AI Automation", "Tools that remove repetitive work and speed up operations."],
+  ["Custom Systems", "Dashboards, platforms, and internal tools built around your workflow."],
+  ["Branding", "Visual systems that make your business look sharp everywhere."],
+  ["Web3", "Modern interfaces for crypto, DeFi, and blockchain products."],
+];
+
+const modules = [
+  ["Website System", "98%", "Optimized"],
+  ["E-commerce Flow", "Ready", "Payments"],
+  ["AI Automation", "Active", "Workflows"],
+  ["Analytics Layer", "Live", "Tracking"],
 ];
 
 const process = [
-  "Understand the business",
-  "Design the experience",
-  "Build the product",
-  "Launch and improve",
+  "Strategy",
+  "Interface",
+  "Development",
+  "Launch",
 ];
 
 export default function Home() {
   return (
     <>
       <style>{`
-        .home {
-          background: #06060b;
-          color: white;
+        .ahos-home {
+          background: #05050a;
+          color: #fff;
           overflow: hidden;
         }
 
-        .hero {
-          min-height: 100vh;
-          padding: 150px 28px 90px;
+        .ahos-wrap {
+          width: min(1240px, calc(100% - 48px));
+          margin: 0 auto;
           position: relative;
-          background:
-            radial-gradient(circle at 75% 20%, rgba(255,117,31,.2), transparent 34%),
-            radial-gradient(circle at 20% 75%, rgba(255,117,31,.08), transparent 32%),
-            #06060b;
+          z-index: 2;
         }
 
-        .hero::before {
+        .ahos-hero {
+          min-height: 100vh;
+          position: relative;
+          display: flex;
+          align-items: center;
+          padding: 150px 0 90px;
+          background:
+            radial-gradient(circle at 75% 22%, rgba(255,117,31,.22), transparent 32%),
+            radial-gradient(circle at 16% 78%, rgba(255,117,31,.09), transparent 30%),
+            #05050a;
+        }
+
+        .ahos-hero::before {
           content: "";
           position: absolute;
           inset: 0;
           background-image:
             linear-gradient(rgba(255,255,255,.035) 1px, transparent 1px),
             linear-gradient(90deg, rgba(255,255,255,.035) 1px, transparent 1px);
-          background-size: 72px 72px;
-          mask-image: radial-gradient(circle at center, black, transparent 72%);
+          background-size: 76px 76px;
+          mask-image: radial-gradient(circle at 60% 40%, black, transparent 72%);
+          animation: gridMove 18s linear infinite;
         }
 
-        .wrap {
-          position: relative;
-          z-index: 2;
-          max-width: 1240px;
-          margin: 0 auto;
+        .ahos-hero::after {
+          content: "";
+          position: absolute;
+          inset: 0;
+          background: linear-gradient(to bottom, transparent 60%, #05050a);
+        }
+
+        @keyframes gridMove {
+          from { background-position: 0 0; }
+          to { background-position: 76px 76px; }
         }
 
         .hero-grid {
           display: grid;
-          grid-template-columns: 1.1fr .9fr;
-          gap: 80px;
+          grid-template-columns: 1.05fr .95fr;
+          gap: 70px;
           align-items: center;
         }
 
@@ -92,135 +90,287 @@ export default function Home() {
           gap: 10px;
           padding: 9px 15px;
           border-radius: 999px;
-          border: 1px solid rgba(255,117,31,.3);
+          border: 1px solid rgba(255,117,31,.34);
           background: rgba(255,117,31,.08);
           color: #ff751f;
           font-size: 12px;
-          letter-spacing: .12em;
+          letter-spacing: .13em;
           text-transform: uppercase;
           margin-bottom: 28px;
         }
 
-        .badge span {
+        .badge i {
           width: 7px;
           height: 7px;
           border-radius: 50%;
           background: #ff751f;
-          box-shadow: 0 0 18px rgba(255,117,31,.9);
+          box-shadow: 0 0 18px rgba(255,117,31,.95);
         }
 
         h1 {
-          max-width: 820px;
           margin: 0;
-          font-size: clamp(52px, 7vw, 96px);
-          line-height: .96;
-          letter-spacing: -.07em;
+          max-width: 850px;
+          font-size: clamp(54px, 7vw, 104px);
+          line-height: .92;
+          letter-spacing: -.075em;
         }
 
-        h1 strong {
+        h1 span {
           color: #ff751f;
+          text-shadow: 0 0 50px rgba(255,117,31,.35);
         }
 
-        .hero p {
-          max-width: 620px;
-          margin-top: 28px;
-          color: rgba(255,255,255,.64);
+        .hero-text {
+          max-width: 640px;
+          margin: 30px 0 0;
+          color: rgba(255,255,255,.65);
           font-size: 18px;
           line-height: 1.75;
         }
 
         .actions {
           display: flex;
-          gap: 14px;
           flex-wrap: wrap;
-          margin-top: 38px;
+          gap: 14px;
+          margin-top: 40px;
         }
 
         .btn {
-          min-height: 52px;
-          padding: 0 28px;
+          min-height: 54px;
+          padding: 0 30px;
+          border-radius: 15px;
           display: inline-flex;
           align-items: center;
           justify-content: center;
-          border-radius: 14px;
           text-decoration: none;
-          font-size: 13px;
-          font-weight: 700;
-          letter-spacing: .08em;
           text-transform: uppercase;
+          letter-spacing: .08em;
+          font-size: 13px;
+          font-weight: 800;
           transition: .25s ease;
         }
 
         .btn.primary {
           color: #fff;
-          background: linear-gradient(135deg, #ff9348, #ff5c00);
-          box-shadow: 0 20px 60px rgba(255,117,31,.28);
+          background: linear-gradient(135deg, #ff9448, #ff5c00);
+          box-shadow: 0 24px 70px rgba(255,117,31,.32);
         }
 
         .btn.secondary {
           color: rgba(255,255,255,.82);
           background: rgba(255,255,255,.045);
-          border: 1px solid rgba(255,255,255,.13);
+          border: 1px solid rgba(255,255,255,.14);
         }
 
         .btn:hover {
           transform: translateY(-3px);
         }
 
-        .hero-panel {
-          padding: 28px;
-          border-radius: 34px;
-          background: linear-gradient(145deg, rgba(255,255,255,.11), rgba(255,255,255,.035));
-          border: 1px solid rgba(255,255,255,.13);
-          box-shadow: 0 50px 140px rgba(0,0,0,.65);
-          backdrop-filter: blur(24px);
-        }
-
-        .panel-top {
+        .proof-row {
           display: flex;
+          flex-wrap: wrap;
+          gap: 12px;
+          margin-top: 46px;
+        }
+
+        .proof {
+          padding: 13px 15px;
+          border-radius: 16px;
+          background: rgba(255,255,255,.045);
+          border: 1px solid rgba(255,255,255,.09);
+          color: rgba(255,255,255,.62);
+          font-size: 13px;
+        }
+
+        .proof strong {
+          color: #fff;
+        }
+
+        .os-shell {
+          position: relative;
+          padding: 18px;
+          border-radius: 38px;
+          background:
+            linear-gradient(145deg, rgba(255,255,255,.18), rgba(255,255,255,.035)),
+            rgba(255,255,255,.04);
+          border: 1px solid rgba(255,255,255,.16);
+          box-shadow:
+            0 70px 160px rgba(0,0,0,.78),
+            0 0 80px rgba(255,117,31,.16);
+          backdrop-filter: blur(26px);
+          animation: floatPanel 6s ease-in-out infinite;
+        }
+
+        @keyframes floatPanel {
+          0%,100% { transform: translateY(0); }
+          50% { transform: translateY(-12px); }
+        }
+
+        .os-shell::before {
+          content: "";
+          position: absolute;
+          inset: -1px;
+          border-radius: 38px;
+          background: linear-gradient(135deg, rgba(255,117,31,.38), transparent 35%, rgba(255,255,255,.12));
+          opacity: .55;
+          pointer-events: none;
+          mask: linear-gradient(#000 0 0) content-box, linear-gradient(#000 0 0);
+          -webkit-mask-composite: xor;
+          mask-composite: exclude;
+          padding: 1px;
+        }
+
+        .os {
+          border-radius: 28px;
+          overflow: hidden;
+          background: #090910;
+          border: 1px solid rgba(255,255,255,.1);
+        }
+
+        .os-top {
+          height: 54px;
+          display: flex;
+          align-items: center;
           justify-content: space-between;
-          color: rgba(255,255,255,.55);
-          text-transform: uppercase;
-          letter-spacing: .13em;
+          padding: 0 18px;
+          border-bottom: 1px solid rgba(255,255,255,.08);
+          background: rgba(255,255,255,.035);
+        }
+
+        .dots {
+          display: flex;
+          gap: 7px;
+        }
+
+        .dots span {
+          width: 9px;
+          height: 9px;
+          border-radius: 50%;
+          background: rgba(255,255,255,.22);
+        }
+
+        .os-name {
+          color: rgba(255,255,255,.58);
           font-size: 12px;
-          margin-bottom: 24px;
+          letter-spacing: .14em;
+          text-transform: uppercase;
         }
 
-        .panel-card {
+        .live {
+          color: #ff751f;
+          font-size: 12px;
+        }
+
+        .os-body {
           padding: 22px;
-          border-radius: 24px;
-          background: rgba(0,0,0,.28);
-          border: 1px solid rgba(255,255,255,.08);
-          margin-bottom: 14px;
         }
 
-        .panel-card small {
+        .main-module {
+          min-height: 190px;
+          border-radius: 24px;
+          padding: 22px;
+          background:
+            radial-gradient(circle at 78% 25%, rgba(255,117,31,.28), transparent 32%),
+            linear-gradient(135deg, rgba(255,117,31,.12), rgba(255,255,255,.04));
+          border: 1px solid rgba(255,255,255,.1);
+          position: relative;
+          overflow: hidden;
+        }
+
+        .main-module::after {
+          content: "";
+          position: absolute;
+          width: 180px;
+          height: 180px;
+          right: -50px;
+          bottom: -70px;
+          border-radius: 50%;
+          background: rgba(255,117,31,.22);
+          filter: blur(35px);
+        }
+
+        .main-module small {
           color: #ff751f;
           text-transform: uppercase;
           letter-spacing: .14em;
           font-size: 11px;
         }
 
-        .panel-card h3 {
-          margin: 10px 0 8px;
-          font-size: 22px;
-          letter-spacing: -.03em;
+        .main-module h3 {
+          margin: 16px 0 12px;
+          max-width: 340px;
+          font-size: 34px;
+          line-height: 1;
+          letter-spacing: -.055em;
         }
 
-        .panel-card p {
+        .main-module p {
+          max-width: 370px;
           margin: 0;
-          color: rgba(255,255,255,.55);
-          font-size: 14px;
+          color: rgba(255,255,255,.58);
           line-height: 1.6;
+          font-size: 14px;
+        }
+
+        .module-grid {
+          display: grid;
+          grid-template-columns: repeat(2,1fr);
+          gap: 12px;
+          margin-top: 14px;
+        }
+
+        .module {
+          padding: 16px;
+          border-radius: 18px;
+          background: rgba(255,255,255,.045);
+          border: 1px solid rgba(255,255,255,.08);
+        }
+
+        .module-top {
+          display: flex;
+          justify-content: space-between;
+          gap: 10px;
+          color: rgba(255,255,255,.48);
+          font-size: 12px;
+          margin-bottom: 14px;
+        }
+
+        .module strong {
+          display: block;
+          color: #fff;
+          font-size: 20px;
+          margin-bottom: 8px;
+        }
+
+        .bar {
+          height: 6px;
+          border-radius: 999px;
+          background: rgba(255,255,255,.08);
+          overflow: hidden;
+        }
+
+        .bar i {
+          display: block;
+          width: 78%;
+          height: 100%;
+          border-radius: inherit;
+          background: linear-gradient(90deg, #ff751f, #ffb071);
+          animation: load 2.2s ease-in-out infinite alternate;
+        }
+
+        @keyframes load {
+          from { width: 52%; }
+          to { width: 92%; }
         }
 
         .section {
-          padding: 110px 28px;
+          padding: 115px 0;
+          position: relative;
         }
 
         .section-head {
-          max-width: 720px;
-          margin-bottom: 48px;
+          max-width: 760px;
+          margin-bottom: 52px;
         }
 
         .eyebrow {
@@ -233,9 +383,9 @@ export default function Home() {
 
         h2 {
           margin: 0;
-          font-size: clamp(36px, 5vw, 64px);
-          line-height: 1;
-          letter-spacing: -.05em;
+          font-size: clamp(38px, 5vw, 68px);
+          line-height: .98;
+          letter-spacing: -.06em;
         }
 
         .section-head p {
@@ -247,23 +397,41 @@ export default function Home() {
 
         .service-grid {
           display: grid;
-          grid-template-columns: repeat(3, 1fr);
+          grid-template-columns: repeat(3,1fr);
           gap: 18px;
         }
 
         .service-card {
-          min-height: 250px;
+          min-height: 255px;
           padding: 26px;
-          border-radius: 28px;
-          background: rgba(255,255,255,.045);
+          border-radius: 30px;
+          background:
+            linear-gradient(145deg, rgba(255,255,255,.075), rgba(255,255,255,.025));
           border: 1px solid rgba(255,255,255,.09);
+          transition: .25s ease;
+          position: relative;
+          overflow: hidden;
+        }
+
+        .service-card::after {
+          content: "";
+          position: absolute;
+          inset: auto -30px -60px auto;
+          width: 160px;
+          height: 160px;
+          background: rgba(255,117,31,.13);
+          filter: blur(45px);
+          opacity: 0;
           transition: .25s ease;
         }
 
         .service-card:hover {
-          transform: translateY(-6px);
-          border-color: rgba(255,117,31,.35);
-          background: rgba(255,117,31,.06);
+          transform: translateY(-8px);
+          border-color: rgba(255,117,31,.36);
+        }
+
+        .service-card:hover::after {
+          opacity: 1;
         }
 
         .service-card small {
@@ -274,68 +442,105 @@ export default function Home() {
         }
 
         .service-card h3 {
-          margin: 18px 0 12px;
-          font-size: 25px;
-          letter-spacing: -.04em;
+          margin: 20px 0 12px;
+          font-size: 26px;
+          line-height: 1.05;
+          letter-spacing: -.045em;
         }
 
         .service-card p {
-          color: rgba(255,255,255,.56);
+          color: rgba(255,255,255,.57);
           line-height: 1.7;
           margin: 0;
         }
 
+        .split {
+          display: grid;
+          grid-template-columns: .95fr 1.05fr;
+          gap: 60px;
+          align-items: center;
+        }
+
+        .capability-list {
+          display: grid;
+          gap: 14px;
+        }
+
+        .capability {
+          padding: 22px;
+          border-radius: 24px;
+          background: rgba(255,255,255,.045);
+          border: 1px solid rgba(255,255,255,.09);
+          display: flex;
+          gap: 18px;
+          align-items: flex-start;
+        }
+
+        .capability span {
+          color: #ff751f;
+          font-weight: 900;
+        }
+
+        .capability h3 {
+          margin: 0 0 7px;
+          font-size: 20px;
+        }
+
+        .capability p {
+          margin: 0;
+          color: rgba(255,255,255,.55);
+          line-height: 1.6;
+        }
+
         .process-grid {
           display: grid;
-          grid-template-columns: repeat(4, 1fr);
+          grid-template-columns: repeat(4,1fr);
           gap: 16px;
         }
 
         .process-card {
-          padding: 24px;
-          border-radius: 24px;
-          border: 1px solid rgba(255,255,255,.09);
+          padding: 25px;
+          border-radius: 26px;
           background: rgba(255,255,255,.04);
+          border: 1px solid rgba(255,255,255,.09);
         }
 
         .process-card strong {
           color: #ff751f;
           display: block;
-          margin-bottom: 18px;
+          margin-bottom: 26px;
         }
 
         .process-card h3 {
           margin: 0;
-          font-size: 20px;
+          font-size: 22px;
+          letter-spacing: -.035em;
         }
 
         .cta {
-          margin: 70px auto 0;
-          padding: 46px;
-          border-radius: 34px;
+          margin-top: 80px;
+          padding: 52px;
+          border-radius: 38px;
           background:
-            radial-gradient(circle at 80% 20%, rgba(255,117,31,.22), transparent 32%),
-            linear-gradient(135deg, rgba(255,255,255,.09), rgba(255,255,255,.035));
-          border: 1px solid rgba(255,255,255,.12);
+            radial-gradient(circle at 82% 20%, rgba(255,117,31,.3), transparent 34%),
+            linear-gradient(135deg, rgba(255,255,255,.105), rgba(255,255,255,.035));
+          border: 1px solid rgba(255,255,255,.13);
           display: flex;
           justify-content: space-between;
-          gap: 30px;
           align-items: center;
-        }
-
-        .cta h2 {
-          max-width: 680px;
+          gap: 32px;
         }
 
         .cta p {
+          max-width: 580px;
           color: rgba(255,255,255,.58);
           line-height: 1.7;
-          max-width: 560px;
         }
 
         @media (max-width: 980px) {
           .hero-grid,
           .service-grid,
+          .split,
           .process-grid {
             grid-template-columns: 1fr;
           }
@@ -346,8 +551,12 @@ export default function Home() {
           }
         }
 
-        @media (max-width: 600px) {
-          .hero {
+        @media (max-width: 620px) {
+          .ahos-wrap {
+            width: min(100% - 36px, 1240px);
+          }
+
+          .ahos-hero {
             padding-top: 125px;
           }
 
@@ -355,34 +564,45 @@ export default function Home() {
             font-size: 46px;
           }
 
+          .module-grid {
+            grid-template-columns: 1fr;
+          }
+
           .section {
-            padding: 80px 20px;
+            padding: 85px 0;
           }
 
           .cta {
-            padding: 28px;
+            padding: 30px;
+          }
+        }
+
+        @media (prefers-reduced-motion: reduce) {
+          .ahos-hero::before,
+          .os-shell,
+          .bar i {
+            animation: none !important;
           }
         }
       `}</style>
 
-      <main className="home">
-        <section className="hero">
-          <div className="wrap hero-grid">
+      <main className="ahos-home">
+        <section className="ahos-hero">
+          <div className="ahos-wrap hero-grid">
             <div>
               <div className="badge">
-                <span />
+                <i />
                 Digital Solutions Studio
               </div>
 
               <h1>
-                Digital products built to <strong>look sharp</strong>, work fast,
-                and scale.
+                We build the <span>digital layer</span> your business runs on.
               </h1>
 
-              <p>
-                AHOS builds premium websites, e-commerce platforms, branding systems,
-                AI automations, and custom digital tools for businesses that need more
-                than a basic online presence.
+              <p className="hero-text">
+                AHOS designs and develops premium websites, e-commerce platforms,
+                AI automations, and custom software systems for businesses ready to
+                look serious, move faster, and scale properly.
               </p>
 
               <div className="actions">
@@ -390,63 +610,72 @@ export default function Home() {
                   Start a Project
                 </Link>
                 <Link href="/services" className="btn secondary">
-                  View Services
+                  Explore Services
                 </Link>
+              </div>
+
+              <div className="proof-row">
+                <div className="proof"><strong>Strategy</strong> before design</div>
+                <div className="proof"><strong>Premium</strong> interfaces</div>
+                <div className="proof"><strong>Launch</strong> support included</div>
               </div>
             </div>
 
-            <div className="hero-panel">
-              <div className="panel-top">
-                <span>AHOS Studio</span>
-                <span style={{ color: "#ff751f" }}>● Live</span>
-              </div>
+            <div className="os-shell">
+              <div className="os">
+                <div className="os-top">
+                  <div className="dots">
+                    <span /><span /><span />
+                  </div>
+                  <div className="os-name">AHOS Operating System</div>
+                  <div className="live">● LIVE</div>
+                </div>
 
-              <div className="panel-card">
-                <small>Strategy</small>
-                <h3>We understand your business first.</h3>
-                <p>
-                  Before designing anything, we define the goal, audience, offer,
-                  and digital structure.
-                </p>
-              </div>
+                <div className="os-body">
+                  <div className="main-module">
+                    <small>Project Command Center</small>
+                    <h3>From idea to live system.</h3>
+                    <p>
+                      Strategy, design, development, automation, analytics, and launch
+                      support connected in one clean workflow.
+                    </p>
+                  </div>
 
-              <div className="panel-card">
-                <small>Design & Build</small>
-                <h3>Clean interfaces. Strong execution.</h3>
-                <p>
-                  We turn ideas into polished, responsive, and functional digital
-                  products.
-                </p>
-              </div>
-
-              <div className="panel-card">
-                <small>Launch</small>
-                <h3>Built to go live, not stay in drafts.</h3>
-                <p>
-                  We help with deployment, optimization, and support after launch.
-                </p>
+                  <div className="module-grid">
+                    {modules.map(([name, value, tag]) => (
+                      <div className="module" key={name}>
+                        <div className="module-top">
+                          <span>{name}</span>
+                          <span>{tag}</span>
+                        </div>
+                        <strong>{value}</strong>
+                        <div className="bar"><i /></div>
+                      </div>
+                    ))}
+                  </div>
+                </div>
               </div>
             </div>
           </div>
         </section>
 
         <section className="section">
-          <div className="wrap">
+          <div className="ahos-wrap">
             <div className="section-head">
               <div className="eyebrow">What We Build</div>
-              <h2>Everything your business needs to look serious online.</h2>
+              <h2>Software, websites, and systems that feel expensive.</h2>
               <p>
-                From websites to automation systems, AHOS creates digital assets that
-                are designed to be useful, scalable, and visually premium.
+                We create the kind of digital presence that makes a business look
+                established, trustworthy, and ready to grow.
               </p>
             </div>
 
             <div className="service-grid">
-              {services.map((service) => (
-                <div className="service-card" key={service.label}>
-                  <small>{service.label}</small>
-                  <h3>{service.title}</h3>
-                  <p>{service.text}</p>
+              {services.map(([title, text], index) => (
+                <div className="service-card" key={title}>
+                  <small>0{index + 1} / {title}</small>
+                  <h3>{title}</h3>
+                  <p>{text}</p>
                 </div>
               ))}
             </div>
@@ -454,14 +683,48 @@ export default function Home() {
         </section>
 
         <section className="section">
-          <div className="wrap">
+          <div className="ahos-wrap split">
             <div className="section-head">
-              <div className="eyebrow">Our Process</div>
-              <h2>A clear process from idea to launch.</h2>
+              <div className="eyebrow">Why AHOS</div>
+              <h2>Not just pretty pages. Real digital infrastructure.</h2>
               <p>
-                No random design. No messy execution. We follow a simple workflow that
-                keeps the project focused from the first call to the final launch.
+                A serious website should do more than look nice. It should explain
+                your offer, guide users, capture leads, support operations, and give
+                your business a stronger digital engine.
               </p>
+            </div>
+
+            <div className="capability-list">
+              <div className="capability">
+                <span>01</span>
+                <div>
+                  <h3>Conversion-focused structure</h3>
+                  <p>Every section has a purpose: trust, clarity, action, and sales.</p>
+                </div>
+              </div>
+              <div className="capability">
+                <span>02</span>
+                <div>
+                  <h3>Premium visual direction</h3>
+                  <p>Dark, sharp, modern interfaces that make the brand feel serious.</p>
+                </div>
+              </div>
+              <div className="capability">
+                <span>03</span>
+                <div>
+                  <h3>Systems beyond the website</h3>
+                  <p>Automation, dashboards, workflows, and tools built around growth.</p>
+                </div>
+              </div>
+            </div>
+          </div>
+        </section>
+
+        <section className="section">
+          <div className="ahos-wrap">
+            <div className="section-head">
+              <div className="eyebrow">Process</div>
+              <h2>A clean workflow from first idea to final launch.</h2>
             </div>
 
             <div className="process-grid">
@@ -476,10 +739,10 @@ export default function Home() {
             <div className="cta">
               <div>
                 <div className="eyebrow">Start With AHOS</div>
-                <h2>Have an idea? Let’s turn it into a real digital product.</h2>
+                <h2>Ready to build something that actually looks serious?</h2>
                 <p>
-                  Whether you need a website, store, brand system, or automation tool,
-                  we can help you structure it, build it, and launch it properly.
+                  Bring the idea. We’ll help shape the strategy, design the interface,
+                  build the system, and launch it properly.
                 </p>
               </div>
 
