@@ -1,696 +1,361 @@
-import { useEffect, useRef, useState } from "react";
 import { Link } from "wouter";
 
-const words = [
-  "Experiences.",
-  "Websites.",
-  "Mobile Apps.",
-  "Brands.",
-  "Systems.",
-  "Web3 Projects.",
-  "Ideas.",
-];
-
-const phoneItems = [
-  {
-    label: "Web Development",
-    title: "Premium website build",
-    body: "Clean structure, responsive design, fast loading, and conversion-focused sections.",
-  },
-  {
-    label: "eCommerce",
-    title: "Online store setup",
-    body: "Product pages, checkout flow, payment options, and launch support.",
-  },
-  {
-    label: "AI Automation",
-    title: "Smarter workflows",
-    body: "Automations and tools that reduce manual work and help businesses move faster.",
-  },
-];
-
 export function HeroPhone() {
-  const wordRef = useRef<HTMLSpanElement | null>(null);
-  const [active, setActive] = useState(0);
-
-  useEffect(() => {
-    const el = wordRef.current;
-    if (!el) return;
-
-    const chars = "ABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789@#$%&";
-    let wordIndex = 0;
-    let timeoutId = 0;
-    let frameId = 0;
-
-    function scramble(target: string) {
-      let frame = 0;
-      const total = 24;
-
-      function update() {
-        let output = "";
-
-        for (let i = 0; i < target.length; i++) {
-          output +=
-            i < (frame / total) * target.length
-              ? target[i]
-              : chars[Math.floor(Math.random() * chars.length)];
-        }
-
-        el.textContent = output;
-
-        if (frame < total) {
-          frame++;
-          frameId = requestAnimationFrame(update);
-        } else {
-          el.textContent = target;
-          timeoutId = window.setTimeout(() => {
-            wordIndex = (wordIndex + 1) % words.length;
-            scramble(words[wordIndex]);
-          }, 3000);
-        }
-      }
-
-      update();
-    }
-
-    scramble(words[0]);
-
-    return () => {
-      window.clearTimeout(timeoutId);
-      cancelAnimationFrame(frameId);
-    };
-  }, []);
-
-  useEffect(() => {
-    const interval = window.setInterval(() => {
-      setActive((current) => (current + 1) % phoneItems.length);
-    }, 3600);
-
-    return () => window.clearInterval(interval);
-  }, []);
-
-  const selected = phoneItems[active];
-
   return (
     <>
       <style>{`
-        .hp {
-          position: relative;
+        .agency-hero {
           min-height: 100vh;
+          position: relative;
           overflow: hidden;
           background:
-            radial-gradient(circle at 74% 42%, rgba(255,117,31,0.12), transparent 35%),
-            radial-gradient(circle at 22% 76%, rgba(255,117,31,0.07), transparent 34%),
-            #07070f;
-          color: #ffffff;
-          padding: 150px 42px 105px;
+            radial-gradient(circle at 70% 25%, rgba(255,117,31,.18), transparent 35%),
+            radial-gradient(circle at 20% 75%, rgba(255,117,31,.08), transparent 32%),
+            #06060b;
+          color: #fff;
+          padding: 150px 32px 100px;
         }
 
-        .hp::before {
-          content: "";
-          position: absolute;
-          inset: 0;
-          background:
-            radial-gradient(circle at center, transparent 24%, rgba(0,0,0,0.62) 100%);
-          pointer-events: none;
-        }
-
-        .hp::after {
+        .agency-hero::before {
           content: "";
           position: absolute;
           inset: 0;
           background-image:
-            radial-gradient(rgba(255,117,31,0.16) 1px, transparent 1px);
-          background-size: 42px 42px;
-          opacity: 0.18;
-          mask-image: radial-gradient(circle at 70% 45%, black 0%, transparent 58%);
+            linear-gradient(rgba(255,255,255,.035) 1px, transparent 1px),
+            linear-gradient(90deg, rgba(255,255,255,.035) 1px, transparent 1px);
+          background-size: 72px 72px;
+          mask-image: radial-gradient(circle at 50% 40%, black, transparent 70%);
           pointer-events: none;
         }
 
-        .hp-inner {
+        .agency-hero::after {
+          content: "";
+          position: absolute;
+          inset: 0;
+          background: linear-gradient(to bottom, transparent, rgba(0,0,0,.78));
+          pointer-events: none;
+        }
+
+        .agency-inner {
           position: relative;
           z-index: 2;
           max-width: 1240px;
           margin: 0 auto;
           display: grid;
-          grid-template-columns: 1.08fr 0.92fr;
+          grid-template-columns: 1.1fr .9fr;
           gap: 80px;
           align-items: center;
         }
 
-        .hp-copy {
-          max-width: 760px;
-        }
-
-        .hp-badge {
+        .agency-badge {
           display: inline-flex;
           align-items: center;
           gap: 10px;
-          padding: 9px 18px;
+          padding: 9px 15px;
+          border: 1px solid rgba(255,117,31,.28);
           border-radius: 999px;
-          border: 1px solid rgba(255,117,31,0.34);
-          background: rgba(255,117,31,0.07);
+          background: rgba(255,117,31,.08);
           color: #ff751f;
-          font-size: 11px;
-          letter-spacing: 0.22em;
+          font-size: 12px;
+          letter-spacing: .12em;
           text-transform: uppercase;
           margin-bottom: 28px;
-          backdrop-filter: blur(16px);
-          -webkit-backdrop-filter: blur(16px);
         }
 
-        .hp-badge-dot {
+        .agency-dot {
           width: 7px;
           height: 7px;
-          border-radius: 50%;
+          border-radius: 999px;
           background: #ff751f;
-          box-shadow: 0 0 14px rgba(255,117,31,0.9);
+          box-shadow: 0 0 18px rgba(255,117,31,.9);
         }
 
-        .hp-eyebrow {
-          font-size: 10px;
-          letter-spacing: 0.38em;
-          text-transform: uppercase;
-          color: rgba(255,255,255,0.28);
-          margin-bottom: 20px;
-        }
-
-        .hp-title {
+        .agency-title {
           margin: 0;
-          font-size: clamp(54px, 6.8vw, 88px);
-          line-height: 1.02;
-          letter-spacing: -0.055em;
-          text-shadow: 0 24px 90px rgba(0,0,0,0.78);
+          max-width: 780px;
+          font-size: clamp(52px, 7vw, 96px);
+          line-height: .96;
+          letter-spacing: -.07em;
+          font-weight: 800;
         }
 
-        .hp-title-top {
-          display: block;
-          color: rgba(255,255,255,0.96);
-        }
-
-        .hp-word-wrap {
-          display: block;
-          min-height: 1.08em;
-          overflow: hidden;
-        }
-
-        .hp-word {
-          display: block;
+        .agency-title span {
           color: #ff751f;
-          white-space: nowrap;
-          text-shadow:
-            0 0 36px rgba(255,117,31,0.58),
-            0 0 92px rgba(255,117,31,0.18);
         }
 
-        .hp-line {
-          width: 118px;
-          height: 1px;
-          margin: 28px 0 24px;
-          background: linear-gradient(90deg, transparent, #ff751f, transparent);
-          box-shadow: 0 0 18px rgba(255,117,31,0.45);
+        .agency-sub {
+          max-width: 610px;
+          margin: 28px 0 0;
+          color: rgba(255,255,255,.62);
+          font-size: 18px;
+          line-height: 1.75;
         }
 
-        .hp-sub {
-          max-width: 560px;
-          color: rgba(255,255,255,0.58);
-          font-size: 16px;
-          line-height: 1.85;
-        }
-
-        .hp-actions {
+        .agency-actions {
           display: flex;
-          gap: 14px;
           flex-wrap: wrap;
-          margin-top: 38px;
+          gap: 14px;
+          margin-top: 40px;
         }
 
-        .hp-btn-primary,
-        .hp-btn-secondary {
+        .agency-btn {
+          min-height: 52px;
+          padding: 0 28px;
           display: inline-flex;
           align-items: center;
           justify-content: center;
-          min-height: 50px;
-          padding: 0 30px;
-          border-radius: 13px;
+          border-radius: 14px;
           text-decoration: none;
+          font-size: 13px;
+          font-weight: 700;
+          letter-spacing: .08em;
           text-transform: uppercase;
-          font-size: 12px;
-          letter-spacing: 0.09em;
-          transition: transform 0.24s ease, box-shadow 0.24s ease, border-color 0.24s ease;
+          transition: .25s ease;
         }
 
-        .hp-btn-primary {
-          background: linear-gradient(135deg, #ff9448, #ff5c00);
+        .agency-btn.primary {
+          background: linear-gradient(135deg, #ff9348, #ff5c00);
           color: #fff;
-          box-shadow:
-            0 0 34px rgba(255,117,31,0.30),
-            inset 0 1px 0 rgba(255,255,255,0.22);
+          box-shadow: 0 20px 60px rgba(255,117,31,.28);
         }
 
-        .hp-btn-secondary {
-          color: rgba(255,255,255,0.78);
-          border: 1px solid rgba(255,255,255,0.14);
-          background: rgba(255,255,255,0.04);
+        .agency-btn.secondary {
+          color: rgba(255,255,255,.82);
+          border: 1px solid rgba(255,255,255,.14);
+          background: rgba(255,255,255,.04);
           backdrop-filter: blur(16px);
-          -webkit-backdrop-filter: blur(16px);
         }
 
-        .hp-btn-primary:hover,
-        .hp-btn-secondary:hover {
+        .agency-btn:hover {
           transform: translateY(-3px);
         }
 
-        .hp-tags {
-          display: flex;
-          flex-wrap: wrap;
-          gap: 9px;
-          margin-top: 30px;
-        }
-
-        .hp-tag {
-          padding: 7px 13px;
-          border-radius: 999px;
-          border: 1px solid rgba(255,117,31,0.18);
-          background: rgba(255,117,31,0.04);
-          color: rgba(255,255,255,0.42);
-          font-size: 10px;
-          letter-spacing: 0.14em;
-          text-transform: uppercase;
-        }
-
-        .hp-visual {
-          position: relative;
-          min-height: 650px;
-          display: flex;
-          align-items: center;
-          justify-content: center;
-        }
-
-        .hp-visual-glow {
-          position: absolute;
-          width: 520px;
-          height: 520px;
-          border-radius: 999px;
-          background: rgba(255,117,31,0.12);
-          filter: blur(90px);
-        }
-
-        .hp-network {
-          position: absolute;
-          width: 530px;
-          height: 530px;
-          opacity: 0.55;
-        }
-
-        .hp-network span {
-          position: absolute;
-          width: 5px;
-          height: 5px;
-          border-radius: 999px;
-          background: #ff751f;
-          box-shadow: 0 0 12px rgba(255,117,31,0.65);
-        }
-
-        .hp-network i {
-          position: absolute;
-          height: 1px;
-          transform-origin: left center;
-          background: linear-gradient(90deg, transparent, rgba(255,117,31,0.28), transparent);
-        }
-
-        .hp-network .d1 { left: 70px; top: 155px; }
-        .hp-network .d2 { right: 84px; top: 120px; }
-        .hp-network .d3 { left: 112px; bottom: 130px; }
-        .hp-network .d4 { right: 66px; bottom: 170px; }
-        .hp-network .d5 { left: 248px; top: 78px; }
-
-        .hp-network .l1 { left: 74px; top: 158px; width: 350px; transform: rotate(-6deg); }
-        .hp-network .l2 { left: 116px; bottom: 133px; width: 330px; transform: rotate(-13deg); }
-        .hp-network .l3 { left: 250px; top: 81px; width: 190px; transform: rotate(12deg); }
-        .hp-network .l4 { left: 116px; bottom: 133px; width: 150px; transform: rotate(-63deg); }
-
-        .hp-phone {
-          position: relative;
-          z-index: 3;
-          width: 350px;
-          border-radius: 54px;
-          padding: 12px;
-          background:
-            linear-gradient(145deg, rgba(255,255,255,0.24), rgba(255,255,255,0.055) 22%, #030306 72%);
-          border: 1px solid rgba(255,255,255,0.20);
-          box-shadow:
-            0 60px 150px rgba(0,0,0,0.88),
-            0 0 56px rgba(255,117,31,0.13),
-            inset 0 1px 0 rgba(255,255,255,0.18);
-          animation: hpFloat 7s ease-in-out infinite;
-        }
-
-        @keyframes hpFloat {
-          0%, 100% { transform: translateY(0) rotate(1.5deg); }
-          50% { transform: translateY(-10px) rotate(1.5deg); }
-        }
-
-        .hp-phone::before {
-          content: "";
-          position: absolute;
-          right: -9px;
-          top: 105px;
-          width: 9px;
-          height: 124px;
-          border-radius: 0 10px 10px 0;
-          background: linear-gradient(180deg, rgba(255,255,255,0.22), rgba(255,255,255,0.04));
-          opacity: 0.45;
-        }
-
-        .hp-screen {
-          min-height: 625px;
-          border-radius: 44px;
-          padding: 24px;
-          overflow: hidden;
-          background:
-            radial-gradient(circle at 50% 0%, rgba(255,117,31,0.18), transparent 34%),
-            linear-gradient(180deg, rgba(255,255,255,0.065), rgba(255,255,255,0.018)),
-            #090911;
-          border: 1px solid rgba(255,255,255,0.10);
-        }
-
-        .hp-notch {
-          width: 104px;
-          height: 27px;
-          border-radius: 999px;
-          background: #000;
-          margin: 0 auto 25px;
-          box-shadow: inset 0 -1px 0 rgba(255,255,255,0.08);
-        }
-
-        .hp-app-label {
-          color: #ff751f;
-          font-size: 11px;
-          letter-spacing: 0.23em;
-          text-transform: uppercase;
-          margin-bottom: 20px;
-        }
-
-        .hp-phone-card {
-          border-radius: 30px;
-          padding: 20px;
-          border: 1px solid rgba(255,255,255,0.12);
-          background: linear-gradient(145deg, rgba(255,255,255,0.088), rgba(255,255,255,0.028));
-          backdrop-filter: blur(18px);
-          -webkit-backdrop-filter: blur(18px);
-          animation: hpFade 0.35s ease;
-        }
-
-        @keyframes hpFade {
-          from { opacity: 0; transform: translateY(8px); }
-          to { opacity: 1; transform: translateY(0); }
-        }
-
-        .hp-phone-kicker {
-          color: rgba(255,255,255,0.42);
-          font-size: 10px;
-          letter-spacing: 0.15em;
-          text-transform: uppercase;
-          margin-bottom: 12px;
-        }
-
-        .hp-phone-title {
-          color: #fff;
-          font-size: 24px;
-          line-height: 1.1;
-          letter-spacing: -0.035em;
-          margin-bottom: 14px;
-        }
-
-        .hp-phone-body {
-          color: rgba(255,255,255,0.64);
-          font-size: 13px;
-          line-height: 1.65;
-          margin-bottom: 20px;
-        }
-
-        .hp-phone-preview {
-          height: 145px;
-          border-radius: 24px;
-          border: 1px solid rgba(255,255,255,0.10);
-          background:
-            radial-gradient(circle at 76% 26%, rgba(255,117,31,0.26), transparent 30%),
-            linear-gradient(135deg, rgba(255,117,31,0.11), rgba(255,255,255,0.035));
-          position: relative;
-          overflow: hidden;
-          margin-bottom: 16px;
-        }
-
-        .hp-phone-preview::before {
-          content: "";
-          position: absolute;
-          top: 18px;
-          left: 18px;
-          right: 18px;
-          height: 18px;
-          border-radius: 999px;
-          background: rgba(0,0,0,0.22);
-        }
-
-        .hp-preview-line {
-          position: absolute;
-          left: 30px;
-          height: 8px;
-          border-radius: 999px;
-          background: rgba(255,255,255,0.18);
-        }
-
-        .hp-preview-line.one { top: 58px; width: 55%; }
-        .hp-preview-line.two { top: 82px; width: 38%; }
-        .hp-preview-line.three {
-          bottom: 26px;
-          width: 76%;
-          background: #ff751f;
-          box-shadow: 0 0 14px rgba(255,117,31,0.36);
-        }
-
-        .hp-phone-list {
+        .agency-proof {
           display: grid;
-          gap: 9px;
+          grid-template-columns: repeat(3, 1fr);
+          gap: 14px;
+          margin-top: 48px;
+          max-width: 620px;
         }
 
-        .hp-phone-list-item {
+        .agency-proof-card {
+          padding: 18px;
+          border-radius: 18px;
+          background: rgba(255,255,255,.045);
+          border: 1px solid rgba(255,255,255,.09);
+        }
+
+        .agency-proof-card strong {
+          display: block;
+          font-size: 24px;
+          color: #fff;
+          margin-bottom: 6px;
+        }
+
+        .agency-proof-card span {
+          color: rgba(255,255,255,.46);
+          font-size: 12px;
+          text-transform: uppercase;
+          letter-spacing: .1em;
+        }
+
+        .agency-panel {
+          position: relative;
+          border-radius: 34px;
+          padding: 28px;
+          background:
+            linear-gradient(145deg, rgba(255,255,255,.11), rgba(255,255,255,.035)),
+            rgba(255,255,255,.03);
+          border: 1px solid rgba(255,255,255,.13);
+          box-shadow:
+            0 50px 140px rgba(0,0,0,.65),
+            inset 0 1px 0 rgba(255,255,255,.12);
+          backdrop-filter: blur(24px);
+        }
+
+        .agency-panel-top {
           display: flex;
+          justify-content: space-between;
           align-items: center;
-          gap: 10px;
-          padding: 11px 12px;
-          border-radius: 15px;
-          border: 1px solid rgba(255,255,255,0.075);
-          background: rgba(255,255,255,0.035);
-          color: rgba(255,255,255,0.72);
+          margin-bottom: 26px;
+        }
+
+        .agency-panel-title {
+          font-size: 13px;
+          color: rgba(255,255,255,.55);
+          text-transform: uppercase;
+          letter-spacing: .14em;
+        }
+
+        .agency-status {
+          color: #ff751f;
           font-size: 12px;
         }
 
-        .hp-phone-dot {
-          width: 6px;
-          height: 6px;
-          border-radius: 999px;
-          background: #ff751f;
-          box-shadow: 0 0 10px rgba(255,117,31,0.55);
-          flex-shrink: 0;
+        .agency-service {
+          padding: 22px;
+          border-radius: 24px;
+          background: rgba(0,0,0,.28);
+          border: 1px solid rgba(255,255,255,.08);
+          margin-bottom: 14px;
         }
 
-        .hp-phone-tabs {
-          display: grid;
-          grid-template-columns: 1fr;
-          gap: 8px;
-          margin-top: 14px;
+        .agency-service:nth-child(3) {
+          transform: translateX(24px);
         }
 
-        .hp-phone-tab {
-          cursor: pointer;
-          border: 1px solid rgba(255,255,255,0.085);
-          background: rgba(255,255,255,0.035);
-          color: rgba(255,255,255,0.48);
-          border-radius: 14px;
-          padding: 10px 12px;
-          font-size: 10px;
-          letter-spacing: 0.12em;
-          text-transform: uppercase;
-          text-align: left;
-          transition: 0.22s ease;
+        .agency-service:nth-child(4) {
+          transform: translateX(-12px);
         }
 
-        .hp-phone-tab.active,
-        .hp-phone-tab:hover {
-          border-color: rgba(255,117,31,0.36);
+        .agency-service small {
+          display: block;
           color: #ff751f;
-          background: rgba(255,117,31,0.08);
+          font-size: 11px;
+          letter-spacing: .14em;
+          text-transform: uppercase;
+          margin-bottom: 10px;
+        }
+
+        .agency-service h3 {
+          margin: 0 0 8px;
+          font-size: 22px;
+          letter-spacing: -.03em;
+        }
+
+        .agency-service p {
+          margin: 0;
+          color: rgba(255,255,255,.55);
+          font-size: 14px;
+          line-height: 1.6;
+        }
+
+        .agency-stack {
+          display: flex;
+          flex-wrap: wrap;
+          gap: 8px;
+          margin-top: 22px;
+        }
+
+        .agency-stack span {
+          padding: 8px 11px;
+          border-radius: 999px;
+          background: rgba(255,117,31,.08);
+          border: 1px solid rgba(255,117,31,.18);
+          color: rgba(255,255,255,.65);
+          font-size: 11px;
         }
 
         @media (max-width: 980px) {
-          .hp {
-            padding: 125px 22px 80px;
-          }
-
-          .hp-inner {
+          .agency-inner {
             grid-template-columns: 1fr;
-            gap: 46px;
-            text-align: center;
+            gap: 50px;
           }
 
-          .hp-copy,
-          .hp-title,
-          .hp-sub {
-            margin-left: auto;
-            margin-right: auto;
+          .agency-title,
+          .agency-sub {
+            max-width: 100%;
           }
 
-          .hp-line {
-            margin-left: auto;
-            margin-right: auto;
-          }
-
-          .hp-actions,
-          .hp-tags {
-            justify-content: center;
-          }
-
-          .hp-visual {
-            min-height: 610px;
+          .agency-service:nth-child(3),
+          .agency-service:nth-child(4) {
+            transform: none;
           }
         }
 
-        @media (max-width: 560px) {
-          .hp-title {
-            font-size: 44px;
+        @media (max-width: 600px) {
+          .agency-hero {
+            padding: 125px 20px 80px;
           }
 
-          .hp-phone {
-            width: 290px;
+          .agency-title {
+            font-size: 46px;
           }
 
-          .hp-screen {
-            min-height: 585px;
-            padding: 19px;
+          .agency-proof {
+            grid-template-columns: 1fr;
           }
 
-          .hp-network {
-            display: none;
-          }
-        }
-
-        @media (prefers-reduced-motion: reduce) {
-          .hp-phone,
-          .hp-phone-card {
-            animation: none !important;
+          .agency-panel {
+            padding: 20px;
           }
         }
       `}</style>
 
-      <section className="hp">
-        <div className="hp-inner">
-          <div className="hp-copy">
-            <div className="hp-badge">
-              <span className="hp-badge-dot" />
+      <section className="agency-hero">
+        <div className="agency-inner">
+          <div>
+            <div className="agency-badge">
+              <span className="agency-dot" />
               Available for new projects
             </div>
 
-            <div className="hp-eyebrow">AHOS · Digital Studio</div>
-
-            <h1 className="hp-title">
-              <span className="hp-title-top">We Build Digital</span>
-              <span className="hp-word-wrap">
-                <span className="hp-word" ref={wordRef}>
-                  Experiences.
-                </span>
-              </span>
+            <h1 className="agency-title">
+              Digital products built to <span>look sharp</span>, work fast, and scale.
             </h1>
 
-            <div className="hp-line" />
-
-            <p className="hp-sub">
-              We don't follow templates. We architect custom digital solutions —
-              from strategy to launch — for businesses that are built to stand out.
+            <p className="agency-sub">
+              AHOS is a digital solutions studio building websites, software, branding,
+              Web3 platforms, and AI automations for businesses that need more than a basic online presence.
             </p>
 
-            <div className="hp-actions">
-              <Link href="/contact" className="hp-btn-primary">
+            <div className="agency-actions">
+              <Link href="/contact" className="agency-btn primary">
                 Start a Project
               </Link>
 
-              <Link href="/services" className="hp-btn-secondary">
-                Explore Services
+              <Link href="/services" className="agency-btn secondary">
+                View Services
               </Link>
             </div>
 
-            <div className="hp-tags">
-              <span className="hp-tag">Web Dev</span>
-              <span className="hp-tag">Mobile Apps</span>
-              <span className="hp-tag">Branding</span>
-              <span className="hp-tag">Automation</span>
-              <span className="hp-tag">Web3 & DeFi</span>
-              <span className="hp-tag">AI Systems</span>
+            <div className="agency-proof">
+              <div className="agency-proof-card">
+                <strong>01</strong>
+                <span>Strategy</span>
+              </div>
+              <div className="agency-proof-card">
+                <strong>02</strong>
+                <span>Design & Build</span>
+              </div>
+              <div className="agency-proof-card">
+                <strong>03</strong>
+                <span>Launch Support</span>
+              </div>
             </div>
           </div>
 
-          <div className="hp-visual">
-            <div className="hp-visual-glow" />
-
-            <div className="hp-network">
-              <span className="d1" />
-              <span className="d2" />
-              <span className="d3" />
-              <span className="d4" />
-              <span className="d5" />
-              <i className="l1" />
-              <i className="l2" />
-              <i className="l3" />
-              <i className="l4" />
+          <div className="agency-panel">
+            <div className="agency-panel-top">
+              <div className="agency-panel-title">AHOS Capabilities</div>
+              <div className="agency-status">● Live Studio</div>
             </div>
 
-            <div className="hp-phone">
-              <div className="hp-screen">
-                <div className="hp-notch" />
+            <div className="agency-service">
+              <small>Web Development</small>
+              <h3>Premium websites that convert</h3>
+              <p>Fast, responsive, polished websites built around your brand and business goals.</p>
+            </div>
 
-                <div className="hp-app-label">AHOS Studio</div>
+            <div className="agency-service">
+              <small>Custom Software</small>
+              <h3>Systems built around your workflow</h3>
+              <p>Dashboards, platforms, internal tools, and scalable digital products.</p>
+            </div>
 
-                <div className="hp-phone-card" key={selected.label}>
-                  <div className="hp-phone-kicker">{selected.label}</div>
-                  <div className="hp-phone-title">{selected.title}</div>
-                  <div className="hp-phone-body">{selected.body}</div>
+            <div className="agency-service">
+              <small>AI & Automation</small>
+              <h3>Less manual work. More output.</h3>
+              <p>Smart automations and AI tools that help your business move faster.</p>
+            </div>
 
-                  <div className="hp-phone-preview">
-                    <span className="hp-preview-line one" />
-                    <span className="hp-preview-line two" />
-                    <span className="hp-preview-line three" />
-                  </div>
-
-                  <div className="hp-phone-list">
-                    <div className="hp-phone-list-item">
-                      <span className="hp-phone-dot" />
-                      Strategy and structure
-                    </div>
-                    <div className="hp-phone-list-item">
-                      <span className="hp-phone-dot" />
-                      Premium interface design
-                    </div>
-                    <div className="hp-phone-list-item">
-                      <span className="hp-phone-dot" />
-                      Launch and support
-                    </div>
-                  </div>
-                </div>
-
-                <div className="hp-phone-tabs">
-                  {phoneItems.map((item, index) => (
-                    <button
-                      key={item.label}
-                      type="button"
-                      className={`hp-phone-tab ${active === index ? "active" : ""}`}
-                      onClick={() => setActive(index)}
-                    >
-                      {item.label}
-                    </button>
-                  ))}
-                </div>
-              </div>
+            <div className="agency-stack">
+              <span>Websites</span>
+              <span>E-commerce</span>
+              <span>Branding</span>
+              <span>Web3</span>
+              <span>AI Tools</span>
+              <span>Automation</span>
             </div>
           </div>
         </div>
