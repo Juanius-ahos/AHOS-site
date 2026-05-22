@@ -1,37 +1,35 @@
 import { Link } from "wouter";
 import { Footer } from "../components/Footer";
 
-const gateways = [
+const services = [
   {
-    label: "Services",
-    title: "Digital systems for modern brands",
-    text: "Websites, e-commerce platforms, automations, and custom business tools built with strategy and precision.",
+    eyebrow: "01 / Web Systems",
+    title: "Premium websites built to convert.",
+    text: "High-end landing pages, business websites, and digital experiences with strong visual identity, fast performance, and clear conversion paths.",
     href: "/services",
   },
   {
-    label: "Blockchain",
-    title: "Web3 infrastructure with real utility",
-    text: "Blockchain products, smart contract experiences, token ecosystems, and decentralized platforms.",
-    href: "/blockchain-services",
+    eyebrow: "02 / Commerce",
+    title: "E-commerce engines for serious brands.",
+    text: "Online stores, product flows, payment-ready experiences, customer journeys, and post-launch support designed for growth.",
+    href: "/services",
   },
   {
-    label: "Careers",
-    title: "Build with the AHOS team",
-    text: "For people who want to create serious digital products, not just pretty screens.",
-    href: "/careers",
+    eyebrow: "03 / Automation",
+    title: "AI-powered workflows that save time.",
+    text: "Smart automations, internal tools, dashboards, CRM flows, and business systems that reduce manual work and improve operations.",
+    href: "/services",
+  },
+  {
+    eyebrow: "04 / Blockchain",
+    title: "Web3 infrastructure with real purpose.",
+    text: "Smart contract experiences, decentralized platforms, token ecosystems, and blockchain interfaces designed around usability.",
+    href: "/blockchain-services",
   },
 ];
 
-const signals = [
-  "Strategy",
-  "Interface Design",
-  "Web Development",
-  "E-commerce",
-  "AI Automation",
-  "Blockchain",
-  "Custom Systems",
-  "Launch Support",
-];
+const orbitItems = ["Strategy", "Design", "Code", "Launch", "Scale"];
+const stackItems = ["Web Development", "E-commerce", "Automation", "AI Systems", "Blockchain", "Custom Platforms"];
 
 export default function Home() {
   return (
@@ -39,721 +37,1168 @@ export default function Home() {
       <style>{`
         :root {
           --ahos-bg: #050505;
-          --ahos-panel: #0d0d0f;
-          --ahos-soft: rgba(255,255,255,.065);
-          --ahos-line: rgba(255,255,255,.11);
+          --ahos-bg-2: #090909;
+          --ahos-card: rgba(255, 255, 255, 0.055);
+          --ahos-card-strong: rgba(255, 255, 255, 0.09);
+          --ahos-line: rgba(255, 255, 255, 0.12);
+          --ahos-line-strong: rgba(255, 117, 31, 0.42);
           --ahos-text: #ffffff;
-          --ahos-muted: rgba(255,255,255,.62);
-          --ahos-faint: rgba(255,255,255,.38);
+          --ahos-muted: rgba(255, 255, 255, 0.68);
+          --ahos-faint: rgba(255, 255, 255, 0.42);
           --ahos-orange: #ff751f;
-          --ahos-orange-soft: rgba(255,117,31,.18);
+          --ahos-orange-2: #ff9d55;
+          --ahos-orange-soft: rgba(255, 117, 31, 0.2);
+          --ahos-shadow: 0 40px 140px rgba(0, 0, 0, 0.62);
         }
 
         * {
-          margin: 0;
-          padding: 0;
           box-sizing: border-box;
+        }
+
+        body {
+          margin: 0;
+          background: var(--ahos-bg);
         }
 
         .home {
           min-height: 100vh;
-          background: var(--ahos-bg);
+          overflow: hidden;
           color: var(--ahos-text);
-          font-family: 'Inter', system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+          background:
+            radial-gradient(circle at 78% 12%, rgba(255,117,31,.17), transparent 34%),
+            radial-gradient(circle at 16% 26%, rgba(255,117,31,.08), transparent 25%),
+            linear-gradient(180deg, #050505 0%, #080808 48%, #050505 100%);
+          font-family: Inter, ui-sans-serif, system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+        }
+
+        .home a {
+          color: inherit;
         }
 
         .wrap {
-          width: min(1180px, calc(100% - 44px));
+          width: min(1200px, calc(100% - 44px));
           margin: 0 auto;
           position: relative;
           z-index: 2;
         }
 
-        /* Hero Section */
+        .noise,
+        .cinema-lines,
+        .cursor-glow {
+          pointer-events: none;
+          position: fixed;
+          inset: 0;
+          z-index: 0;
+        }
+
+        .noise {
+          opacity: .08;
+          mix-blend-mode: overlay;
+          background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 220 220' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='.8' numOctaves='3' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)' opacity='.45'/%3E%3C/svg%3E");
+        }
+
+        .cinema-lines {
+          opacity: .34;
+          background:
+            linear-gradient(rgba(255,255,255,.045) 1px, transparent 1px),
+            linear-gradient(90deg, rgba(255,255,255,.035) 1px, transparent 1px);
+          background-size: 96px 96px;
+          mask-image: radial-gradient(circle at 50% 30%, black 0%, transparent 68%);
+        }
+
+        .cursor-glow {
+          background: radial-gradient(circle at 70% 22%, rgba(255,117,31,.16), transparent 28%);
+          animation: glowDrift 9s ease-in-out infinite alternate;
+        }
+
+        @keyframes glowDrift {
+          from { transform: translate3d(-2%, -1%, 0) scale(1); }
+          to { transform: translate3d(3%, 2%, 0) scale(1.08); }
+        }
+
         .hero {
           min-height: 100vh;
           position: relative;
           display: flex;
           align-items: center;
-          padding: 150px 0 100px;
+          padding: 140px 0 90px;
           isolation: isolate;
         }
 
         .hero::before {
           content: "";
           position: absolute;
-          inset: -20%;
-          background: radial-gradient(circle at 78% 28%, rgba(255,117,31,.18), transparent 28%),
-                      radial-gradient(circle at 18% 76%, rgba(255,117,31,.08), transparent 28%),
-                      linear-gradient(to bottom, transparent 0%, #050505 92%);
-          z-index: -3;
+          inset: auto -10% 0;
+          height: 32%;
+          background: linear-gradient(to top, var(--ahos-bg), transparent);
+          z-index: 1;
         }
 
-        .hero::after {
-          content: "";
-          position: absolute;
-          inset: 0;
-          background-image: linear-gradient(rgba(255,255,255,.045) 1px, transparent 1px);
-          background-size: 100% 86px;
-          mask-image: linear-gradient(to bottom, transparent, black 18%, black 62%, transparent);
-          opacity: .35;
-          z-index: -2;
-        }
-
-        .hero-layout {
+        .hero-grid {
           display: grid;
-          grid-template-columns: 1.08fr .92fr;
-          gap: 72px;
+          grid-template-columns: minmax(0, 1fr) 520px;
+          gap: 70px;
           align-items: center;
         }
 
-        .kicker {
+        .eyebrow {
           display: inline-flex;
           align-items: center;
           gap: 12px;
+          margin-bottom: 28px;
           color: var(--ahos-faint);
-          text-transform: uppercase;
-          letter-spacing: .22em;
           font-size: 11px;
-          font-weight: 800;
-          margin-bottom: 32px;
+          font-weight: 900;
+          letter-spacing: .24em;
+          text-transform: uppercase;
+          animation: riseIn .8s ease both;
         }
 
-        .kicker::before {
+        .eyebrow::before {
           content: "";
-          width: 36px;
+          width: 42px;
           height: 1px;
-          background: var(--ahos-orange);
+          background: linear-gradient(90deg, var(--ahos-orange), transparent);
         }
 
-        .hero h1 {
+        .hero-title {
+          max-width: 790px;
           margin: 0;
-          max-width: 780px;
-          font-size: clamp(58px, 9vw, 124px);
-          line-height: .86;
-          letter-spacing: -.085em;
+          font-size: clamp(56px, 9vw, 126px);
+          line-height: .82;
+          letter-spacing: -.09em;
           font-weight: 950;
+          text-transform: uppercase;
         }
 
-        .hero h1 span {
+        .hero-title .line {
+          display: block;
+          overflow: hidden;
+        }
+
+        .hero-title .line span {
+          display: block;
+          animation: titleReveal 1s cubic-bezier(.2,.8,.2,1) both;
+        }
+
+        .hero-title .line:nth-child(2) span { animation-delay: .09s; }
+        .hero-title .line:nth-child(3) span { animation-delay: .18s; }
+
+        .hero-title em {
           color: var(--ahos-orange);
+          font-style: normal;
+          text-shadow: 0 0 45px rgba(255,117,31,.28);
+        }
+
+        @keyframes titleReveal {
+          from { transform: translateY(112%) rotate(2deg); opacity: 0; }
+          to { transform: translateY(0) rotate(0); opacity: 1; }
+        }
+
+        @keyframes riseIn {
+          from { transform: translateY(18px); opacity: 0; }
+          to { transform: translateY(0); opacity: 1; }
         }
 
         .hero-copy {
-          max-width: 610px;
-          margin-top: 32px;
+          max-width: 650px;
+          margin: 34px 0 0;
           color: var(--ahos-muted);
           font-size: 18px;
           line-height: 1.8;
+          animation: riseIn .8s ease .24s both;
         }
 
-        .actions {
+        .hero-actions {
           display: flex;
           flex-wrap: wrap;
           gap: 14px;
           margin-top: 42px;
+          animation: riseIn .8s ease .34s both;
         }
 
         .btn {
-          min-height: 54px;
+          min-height: 56px;
           padding: 0 28px;
           border-radius: 999px;
           display: inline-flex;
           align-items: center;
           justify-content: center;
+          gap: 10px;
+          border: 1px solid var(--ahos-line);
           text-decoration: none;
-          font-size: 12px;
-          font-weight: 900;
-          letter-spacing: .13em;
           text-transform: uppercase;
-          transition: all .28s ease;
-          cursor: pointer;
-          border: none;
+          letter-spacing: .14em;
+          font-size: 12px;
+          font-weight: 950;
+          transition: transform .35s ease, border-color .35s ease, background .35s ease, color .35s ease;
+          will-change: transform;
         }
 
         .btn-primary {
-          color: #050505;
           background: #fff;
+          color: #050505;
+          border-color: #fff;
+          box-shadow: 0 18px 60px rgba(255,255,255,.12);
         }
 
         .btn-primary:hover {
-          background: #e0e0e0;
-          transform: translateY(-2px);
-        }
-
-        .btn-secondary {
-          color: #fff;
-          border: 1px solid var(--ahos-line);
-          background: rgba(255,255,255,.035);
-        }
-
-        .btn-secondary:hover {
-          border-color: var(--ahos-orange);
-          background: rgba(255,117,31,.1);
-          transform: translateY(-2px);
-        }
-
-        /* System Cards */
-        .system {
-          position: relative;
-          min-height: 560px;
-          border-left: 1px solid var(--ahos-line);
-          padding-left: 34px;
-        }
-
-        .system::before {
-          content: "";
-          position: absolute;
-          left: -1px;
-          top: 8%;
-          width: 1px;
-          height: 28%;
+          transform: translateY(-4px);
           background: var(--ahos-orange);
-          transition: transform 0.3s ease;
+          border-color: var(--ahos-orange);
         }
 
-        .system-card {
-          position: absolute;
-          width: 320px;
-          padding: 22px;
-          border: 1px solid var(--ahos-line);
-          background: rgba(12,12,14,.85);
-          backdrop-filter: blur(22px);
-          border-radius: 24px;
-          transition: all .3s ease;
+        .btn-ghost {
+          background: rgba(255,255,255,.04);
+          color: #fff;
+          backdrop-filter: blur(16px);
         }
 
-        .system-card:hover {
+        .btn-ghost:hover {
           transform: translateY(-4px);
           border-color: var(--ahos-orange);
+          background: rgba(255,117,31,.11);
         }
 
-        .system-card:nth-child(1) {
-          top: 10px;
-          right: 20px;
-        }
-
-        .system-card:nth-child(2) {
-          top: 205px;
-          left: 0;
-        }
-
-        .system-card:nth-child(3) {
-          bottom: 25px;
-          right: 55px;
-        }
-
-        .card-top {
+        .hero-proof {
           display: flex;
-          justify-content: space-between;
-          align-items: center;
+          flex-wrap: wrap;
+          gap: 14px;
+          margin-top: 34px;
           color: var(--ahos-faint);
-          font-size: 11px;
+          font-size: 12px;
           text-transform: uppercase;
-          letter-spacing: .16em;
-          margin-bottom: 22px;
+          letter-spacing: .13em;
+          animation: riseIn .8s ease .46s both;
         }
 
-        .dot {
-          width: 8px;
-          height: 8px;
+        .hero-proof span {
+          border: 1px solid rgba(255,255,255,.1);
+          border-radius: 999px;
+          padding: 10px 14px;
+          background: rgba(255,255,255,.03);
+        }
+
+        .visual-stage {
+          position: relative;
+          min-height: 620px;
+          perspective: 1200px;
+          animation: riseIn .9s ease .18s both;
+        }
+
+        .orbital-system {
+          position: absolute;
+          inset: 24px 0 0;
+          border-radius: 42px;
+          background:
+            radial-gradient(circle at 50% 50%, rgba(255,117,31,.18), transparent 32%),
+            linear-gradient(145deg, rgba(255,255,255,.09), rgba(255,255,255,.025));
+          border: 1px solid rgba(255,255,255,.12);
+          box-shadow: var(--ahos-shadow), inset 0 0 80px rgba(255,117,31,.06);
+          overflow: hidden;
+          transform: rotateX(7deg) rotateY(-9deg);
+        }
+
+        .orbital-system::before {
+          content: "";
+          position: absolute;
+          inset: -35%;
+          background: conic-gradient(from 180deg, transparent, rgba(255,117,31,.32), transparent, rgba(255,255,255,.1), transparent);
+          animation: spin 16s linear infinite;
+        }
+
+        .orbital-system::after {
+          content: "";
+          position: absolute;
+          inset: 1px;
+          border-radius: 41px;
+          background:
+            radial-gradient(circle at 50% 46%, transparent 0 28%, rgba(5,5,5,.58) 45%, rgba(5,5,5,.95) 100%),
+            linear-gradient(180deg, rgba(255,255,255,.055), rgba(255,255,255,.018));
+        }
+
+        @keyframes spin {
+          to { transform: rotate(360deg); }
+        }
+
+        .core {
+          position: absolute;
+          left: 50%;
+          top: 48%;
+          width: 190px;
+          height: 190px;
+          transform: translate(-50%, -50%);
+          z-index: 3;
+          border-radius: 50%;
+          background:
+            radial-gradient(circle at 40% 36%, #fff, var(--ahos-orange) 18%, rgba(255,117,31,.22) 36%, rgba(255,117,31,.05) 64%, transparent 72%);
+          box-shadow: 0 0 80px rgba(255,117,31,.42), inset 0 0 45px rgba(255,255,255,.18);
+          animation: breathe 3.8s ease-in-out infinite;
+        }
+
+        .core::before,
+        .core::after {
+          content: "";
+          position: absolute;
+          inset: -44px;
+          border-radius: inherit;
+          border: 1px solid rgba(255,117,31,.32);
+          animation: pulseRing 3.8s ease-in-out infinite;
+        }
+
+        .core::after {
+          inset: -86px;
+          animation-delay: .55s;
+          border-color: rgba(255,255,255,.12);
+        }
+
+        @keyframes breathe {
+          0%,100% { transform: translate(-50%, -50%) scale(.96); }
+          50% { transform: translate(-50%, -50%) scale(1.04); }
+        }
+
+        @keyframes pulseRing {
+          0%,100% { transform: scale(.96); opacity: .55; }
+          50% { transform: scale(1.06); opacity: 1; }
+        }
+
+        .orbit {
+          position: absolute;
+          left: 50%;
+          top: 48%;
+          z-index: 4;
+          width: 380px;
+          height: 380px;
+          margin: -190px 0 0 -190px;
+          border-radius: 50%;
+          border: 1px solid rgba(255,255,255,.1);
+          animation: spin 18s linear infinite;
+        }
+
+        .orbit:nth-of-type(2) {
+          width: 485px;
+          height: 485px;
+          margin: -242.5px 0 0 -242.5px;
+          animation-duration: 26s;
+          animation-direction: reverse;
+          opacity: .72;
+        }
+
+        .orbit-node {
+          position: absolute;
+          width: 10px;
+          height: 10px;
           border-radius: 50%;
           background: var(--ahos-orange);
+          box-shadow: 0 0 30px rgba(255,117,31,.8);
         }
 
-        .metric {
-          font-size: 42px;
-          line-height: 1;
-          letter-spacing: -.06em;
+        .orbit-node:nth-child(1) { left: 50%; top: -5px; }
+        .orbit-node:nth-child(2) { right: 28px; bottom: 62px; }
+        .orbit-node:nth-child(3) { left: 22px; bottom: 88px; }
+
+        .floating-panel {
+          position: absolute;
+          z-index: 6;
+          width: 230px;
+          padding: 18px;
+          border-radius: 22px;
+          border: 1px solid rgba(255,255,255,.13);
+          background: rgba(11,11,12,.78);
+          backdrop-filter: blur(22px);
+          box-shadow: 0 24px 70px rgba(0,0,0,.42);
+        }
+
+        .floating-panel.one {
+          top: 62px;
+          right: -12px;
+          animation: floatA 5s ease-in-out infinite;
+        }
+
+        .floating-panel.two {
+          left: -12px;
+          bottom: 100px;
+          animation: floatB 5.6s ease-in-out infinite;
+        }
+
+        .floating-panel.three {
+          right: 54px;
+          bottom: 38px;
+          animation: floatA 6.3s ease-in-out infinite reverse;
+        }
+
+        @keyframes floatA {
+          0%,100% { transform: translateY(0); }
+          50% { transform: translateY(-18px); }
+        }
+
+        @keyframes floatB {
+          0%,100% { transform: translateY(0) translateX(0); }
+          50% { transform: translateY(16px) translateX(8px); }
+        }
+
+        .panel-label {
+          display: flex;
+          justify-content: space-between;
+          color: var(--ahos-faint);
+          font-size: 10px;
           font-weight: 900;
-          margin-bottom: 10px;
+          letter-spacing: .16em;
+          text-transform: uppercase;
         }
 
-        .metric span {
-          color: var(--ahos-orange);
+        .panel-title {
+          margin-top: 14px;
+          font-size: 22px;
+          font-weight: 950;
+          letter-spacing: -.04em;
         }
 
-        .mini {
-          color: var(--ahos-muted);
-          line-height: 1.6;
-          font-size: 14px;
-          margin-bottom: 20px;
-        }
-
-        .bars {
-          display: grid;
-          gap: 8px;
-        }
-
-        .bars i {
-          display: block;
-          height: 6px;
-          border-radius: 3px;
-          background: rgba(255,255,255,.08);
+        .panel-line {
+          height: 7px;
+          margin-top: 14px;
           overflow: hidden;
+          border-radius: 99px;
+          background: rgba(255,255,255,.08);
         }
 
-        .bars i::before {
-          content: "";
+        .panel-line span {
           display: block;
           height: 100%;
           width: var(--w);
-          background: linear-gradient(90deg, var(--ahos-orange), #ffaa66);
           border-radius: inherit;
+          background: linear-gradient(90deg, var(--ahos-orange), var(--ahos-orange-2));
         }
 
-        /* Sections */
+        .ticker {
+          position: relative;
+          z-index: 3;
+          border-block: 1px solid rgba(255,255,255,.1);
+          background: rgba(255,255,255,.025);
+          overflow: hidden;
+        }
+
+        .ticker-track {
+          display: flex;
+          width: max-content;
+          animation: marquee 22s linear infinite;
+        }
+
+        .ticker span {
+          padding: 24px 34px;
+          color: rgba(255,255,255,.68);
+          font-size: 13px;
+          font-weight: 900;
+          letter-spacing: .18em;
+          text-transform: uppercase;
+          white-space: nowrap;
+        }
+
+        .ticker b {
+          color: var(--ahos-orange);
+          font-weight: 950;
+        }
+
+        @keyframes marquee {
+          to { transform: translateX(-50%); }
+        }
+
         .section {
           position: relative;
-          padding: 110px 0;
+          z-index: 2;
+          padding: 120px 0;
         }
 
-        .section-label {
+        .section-head {
+          display: grid;
+          grid-template-columns: minmax(0, .95fr) minmax(280px, .45fr);
+          gap: 48px;
+          align-items: end;
+          margin-bottom: 58px;
+        }
+
+        .section-kicker {
           color: var(--ahos-orange);
-          text-transform: uppercase;
-          letter-spacing: .22em;
           font-size: 11px;
-          font-weight: 900;
-          margin-bottom: 22px;
+          font-weight: 950;
+          letter-spacing: .24em;
+          text-transform: uppercase;
+          margin-bottom: 18px;
         }
 
         .section-title {
-          max-width: 820px;
           margin: 0;
-          font-size: clamp(42px, 6vw, 82px);
-          line-height: .94;
-          letter-spacing: -.07em;
+          font-size: clamp(44px, 7vw, 92px);
+          line-height: .9;
+          letter-spacing: -.075em;
           font-weight: 950;
+          text-transform: uppercase;
         }
 
         .section-copy {
-          max-width: 650px;
+          margin: 0;
           color: var(--ahos-muted);
           font-size: 17px;
-          line-height: 1.8;
-          margin-top: 24px;
+          line-height: 1.75;
         }
 
-        /* Gateway */
-        .gateway {
-          margin-top: 62px;
-          border-top: 1px solid var(--ahos-line);
-        }
-
-        .gateway-row {
-          position: relative;
+        .services-grid {
           display: grid;
-          grid-template-columns: 180px 1fr 42px;
-          gap: 34px;
-          align-items: center;
-          padding: 38px 0;
-          border-bottom: 1px solid var(--ahos-line);
-          text-decoration: none;
-          color: #fff;
-          transition: all .3s ease;
-          cursor: pointer;
+          grid-template-columns: repeat(2, minmax(0, 1fr));
+          gap: 18px;
         }
 
-        .gateway-row::before {
+        .service-card {
+          position: relative;
+          min-height: 350px;
+          display: flex;
+          flex-direction: column;
+          justify-content: space-between;
+          padding: 30px;
+          overflow: hidden;
+          border-radius: 34px;
+          border: 1px solid rgba(255,255,255,.1);
+          background:
+            linear-gradient(140deg, rgba(255,255,255,.085), rgba(255,255,255,.025)),
+            radial-gradient(circle at 88% 12%, rgba(255,117,31,.14), transparent 36%);
+          text-decoration: none;
+          box-shadow: 0 25px 90px rgba(0,0,0,.32);
+          transition: transform .45s cubic-bezier(.2,.8,.2,1), border-color .35s ease, background .35s ease;
+        }
+
+        .service-card::before {
           content: "";
           position: absolute;
-          inset: 0;
-          background: linear-gradient(90deg, rgba(255,117,31,.08), transparent 65%);
+          inset: -1px;
           opacity: 0;
+          background: radial-gradient(circle at var(--x, 70%) var(--y, 20%), rgba(255,117,31,.28), transparent 34%);
           transition: opacity .35s ease;
         }
 
-        .gateway-row:hover::before {
+        .service-card::after {
+          content: "";
+          position: absolute;
+          right: -70px;
+          bottom: -70px;
+          width: 210px;
+          height: 210px;
+          border-radius: 50%;
+          border: 1px solid rgba(255,117,31,.24);
+          box-shadow: inset 0 0 55px rgba(255,117,31,.08);
+          transition: transform .45s ease;
+        }
+
+        .service-card:hover {
+          transform: translateY(-8px) scale(1.01);
+          border-color: rgba(255,117,31,.42);
+        }
+
+        .service-card:hover::before {
           opacity: 1;
         }
 
-        .gateway-label {
+        .service-card:hover::after {
+          transform: scale(1.22) rotate(18deg);
+        }
+
+        .service-eyebrow,
+        .service-body,
+        .service-arrow {
+          position: relative;
+          z-index: 2;
+        }
+
+        .service-eyebrow {
           color: var(--ahos-orange);
-          text-transform: uppercase;
-          letter-spacing: .18em;
           font-size: 11px;
-          font-weight: 900;
-          position: relative;
-          z-index: 2;
+          font-weight: 950;
+          letter-spacing: .18em;
+          text-transform: uppercase;
         }
 
-        .gateway-title {
-          margin: 0 0 8px;
-          font-size: clamp(28px, 4vw, 52px);
+        .service-card h3 {
+          max-width: 500px;
+          margin: 0 0 16px;
+          font-size: clamp(30px, 4vw, 48px);
+          line-height: .98;
           letter-spacing: -.055em;
-          line-height: 1;
-          position: relative;
-          z-index: 2;
+          font-weight: 950;
         }
 
-        .gateway-text {
+        .service-card p {
+          max-width: 570px;
+          margin: 0;
           color: var(--ahos-muted);
-          line-height: 1.65;
-          max-width: 700px;
-          position: relative;
-          z-index: 2;
+          font-size: 15px;
+          line-height: 1.7;
         }
 
-        .arrow {
-          position: relative;
-          z-index: 2;
-          width: 42px;
-          height: 42px;
-          border-radius: 50%;
-          border: 1px solid var(--ahos-line);
+        .service-arrow {
+          width: 48px;
+          height: 48px;
           display: grid;
           place-items: center;
-          transition: all .3s ease;
+          border-radius: 50%;
+          border: 1px solid rgba(255,255,255,.13);
+          background: rgba(255,255,255,.04);
+          transition: transform .35s ease, background .35s ease;
         }
 
-        .gateway-row:hover .arrow {
-          transform: translateX(6px);
+        .service-card:hover .service-arrow {
+          transform: translateX(8px);
           background: var(--ahos-orange);
-          border-color: var(--ahos-orange);
           color: #050505;
         }
 
-        /* Signals */
-        .signals {
-          display: flex;
-          flex-wrap: wrap;
-          gap: 12px;
-          margin-top: 52px;
+        .showcase {
+          padding: 130px 0;
+          position: relative;
+          z-index: 2;
         }
 
-        .signals span {
-          padding: 12px 20px;
-          border: 1px solid var(--ahos-line);
-          border-radius: 999px;
-          color: var(--ahos-muted);
-          background: rgba(255,255,255,.025);
-          font-size: 13px;
-          transition: all .25s ease;
-          cursor: default;
-        }
-
-        .signals span:hover {
-          border-color: var(--ahos-orange);
-          color: var(--ahos-text);
-        }
-
-        /* Statement */
-        .statement {
-          padding: 140px 0;
-          background: radial-gradient(circle at 50% 50%, rgba(255,117,31,.08), transparent 38%);
-          text-align: center;
-        }
-
-        .statement h2 {
-          margin: 0 auto;
-          max-width: 1000px;
-          font-size: clamp(48px, 8vw, 116px);
-          line-height: .88;
-          letter-spacing: -.085em;
-          font-weight: 950;
-        }
-
-        .statement p {
-          max-width: 620px;
-          margin: 34px auto 0;
-          color: var(--ahos-muted);
-          font-size: 18px;
-          line-height: 1.8;
-        }
-
-        /* Final CTA */
-        .final-cta {
-          padding: 120px 0 140px;
-        }
-
-        .final-box {
+        .showcase-panel {
+          position: relative;
+          min-height: 650px;
           display: grid;
-          grid-template-columns: 1fr auto;
-          gap: 40px;
+          grid-template-columns: .85fr 1.15fr;
+          gap: 50px;
           align-items: center;
-          border-top: 1px solid var(--ahos-line);
-          padding-top: 54px;
+          overflow: hidden;
+          border-radius: 42px;
+          border: 1px solid rgba(255,255,255,.12);
+          background:
+            radial-gradient(circle at 78% 42%, rgba(255,117,31,.18), transparent 35%),
+            linear-gradient(140deg, rgba(255,255,255,.08), rgba(255,255,255,.025));
+          box-shadow: var(--ahos-shadow);
+          padding: 52px;
         }
 
-        .final-box h2 {
+        .showcase-panel::before {
+          content: "";
+          position: absolute;
+          inset: 0;
+          background-image:
+            linear-gradient(rgba(255,255,255,.04) 1px, transparent 1px),
+            linear-gradient(90deg, rgba(255,255,255,.04) 1px, transparent 1px);
+          background-size: 64px 64px;
+          mask-image: radial-gradient(circle at 72% 50%, black, transparent 68%);
+          opacity: .7;
+        }
+
+        .showcase-content,
+        .dashboard {
+          position: relative;
+          z-index: 2;
+        }
+
+        .showcase h2 {
           margin: 0;
-          font-size: clamp(50px, 8vw, 108px);
-          line-height: .88;
-          letter-spacing: -.08em;
+          font-size: clamp(44px, 7vw, 90px);
+          line-height: .9;
+          letter-spacing: -.075em;
+          text-transform: uppercase;
+        }
+
+        .showcase p {
+          margin: 24px 0 0;
+          color: var(--ahos-muted);
+          line-height: 1.8;
+          font-size: 17px;
+        }
+
+        .dashboard {
+          min-height: 440px;
+          border-radius: 30px;
+          border: 1px solid rgba(255,255,255,.14);
+          background: rgba(5,5,5,.72);
+          backdrop-filter: blur(24px);
+          box-shadow: 0 30px 120px rgba(0,0,0,.5);
+          overflow: hidden;
+          transform: rotateX(6deg) rotateY(-7deg);
+        }
+
+        .dash-top {
+          height: 58px;
+          display: flex;
+          align-items: center;
+          justify-content: space-between;
+          padding: 0 20px;
+          border-bottom: 1px solid rgba(255,255,255,.1);
+          color: var(--ahos-faint);
+          font-size: 11px;
           font-weight: 950;
+          letter-spacing: .16em;
+          text-transform: uppercase;
         }
 
-        .final-box h2 span {
-          color: var(--ahos-orange);
+        .dash-dots {
+          display: flex;
+          gap: 7px;
         }
 
-        /* Stats Section */
-        .stats-section {
-          padding: 80px 0;
-          border-top: 1px solid var(--ahos-line);
-          border-bottom: 1px solid var(--ahos-line);
+        .dash-dots i {
+          width: 9px;
+          height: 9px;
+          border-radius: 50%;
+          background: rgba(255,255,255,.22);
         }
 
-        .stats-grid {
+        .dash-body {
+          padding: 22px;
           display: grid;
-          grid-template-columns: repeat(3, 1fr);
-          gap: 60px;
+          grid-template-columns: 1fr 1fr;
+          gap: 14px;
+        }
+
+        .dash-card {
+          min-height: 130px;
+          border-radius: 22px;
+          border: 1px solid rgba(255,255,255,.1);
+          background: rgba(255,255,255,.045);
+          padding: 18px;
+          overflow: hidden;
+        }
+
+        .dash-card.wide {
+          grid-column: 1 / -1;
+          min-height: 170px;
+        }
+
+        .dash-label {
+          color: var(--ahos-faint);
+          font-size: 10px;
+          font-weight: 900;
+          letter-spacing: .16em;
+          text-transform: uppercase;
+        }
+
+        .dash-value {
+          margin-top: 10px;
+          font-size: 32px;
+          font-weight: 950;
+          letter-spacing: -.05em;
+        }
+
+        .wave {
+          height: 72px;
+          margin-top: 18px;
+          border-radius: 18px;
+          background:
+            linear-gradient(110deg, transparent 0 12%, rgba(255,117,31,.68) 12% 15%, transparent 15% 28%, rgba(255,117,31,.45) 28% 31%, transparent 31% 47%, rgba(255,117,31,.75) 47% 50%, transparent 50% 68%, rgba(255,117,31,.5) 68% 71%, transparent 71%),
+            linear-gradient(180deg, rgba(255,117,31,.12), rgba(255,255,255,.02));
+          animation: waveMove 5s linear infinite;
+        }
+
+        @keyframes waveMove {
+          to { background-position: 220px 0, 0 0; }
+        }
+
+        .process {
+          padding: 115px 0;
+          position: relative;
+          z-index: 2;
+        }
+
+        .process-line {
+          margin-top: 60px;
+          display: grid;
+          grid-template-columns: repeat(4, 1fr);
+          gap: 1px;
+          border: 1px solid rgba(255,255,255,.1);
+          border-radius: 30px;
+          overflow: hidden;
+          background: rgba(255,255,255,.1);
+        }
+
+        .process-step {
+          min-height: 240px;
+          padding: 28px;
+          background: rgba(7,7,7,.96);
+        }
+
+        .process-step b {
+          color: var(--ahos-orange);
+          font-size: 12px;
+          letter-spacing: .18em;
+          text-transform: uppercase;
+        }
+
+        .process-step h3 {
+          margin: 44px 0 12px;
+          font-size: 26px;
+          letter-spacing: -.045em;
+        }
+
+        .process-step p {
+          margin: 0;
+          color: var(--ahos-muted);
+          line-height: 1.7;
+          font-size: 14px;
+        }
+
+        .final {
+          position: relative;
+          z-index: 2;
+          padding: 130px 0 150px;
           text-align: center;
         }
 
-        .stat-number {
-          font-size: 56px;
-          font-weight: 900;
-          letter-spacing: -.05em;
-          color: var(--ahos-orange);
-          margin-bottom: 12px;
+        .final::before {
+          content: "";
+          position: absolute;
+          left: 50%;
+          top: 50%;
+          width: min(980px, 92vw);
+          height: min(980px, 92vw);
+          transform: translate(-50%, -50%);
+          border-radius: 50%;
+          background: radial-gradient(circle, rgba(255,117,31,.16), transparent 62%);
+          z-index: -1;
         }
 
-        .stat-label {
-          color: var(--ahos-muted);
-          font-size: 13px;
+        .final h2 {
+          max-width: 1000px;
+          margin: 0 auto;
+          font-size: clamp(54px, 9vw, 126px);
+          line-height: .84;
+          letter-spacing: -.09em;
           text-transform: uppercase;
-          letter-spacing: .1em;
         }
 
-        /* Responsive */
-        @media (max-width: 980px) {
-          .hero-layout,
-          .final-box {
+        .final h2 span {
+          color: var(--ahos-orange);
+        }
+
+        .final p {
+          max-width: 620px;
+          margin: 30px auto 0;
+          color: var(--ahos-muted);
+          line-height: 1.8;
+          font-size: 17px;
+        }
+
+        .final .hero-actions {
+          justify-content: center;
+        }
+
+        @media (max-width: 1040px) {
+          .hero-grid,
+          .section-head,
+          .showcase-panel {
             grid-template-columns: 1fr;
           }
 
-          .system {
-            min-height: 520px;
-            border-left: 0;
-            padding-left: 0;
-          }
-
-          .gateway-row {
-            grid-template-columns: 1fr 42px;
-          }
-
-          .gateway-label {
-            grid-column: 1 / -1;
-          }
-
-          .stats-grid {
-            gap: 40px;
-          }
-        }
-
-        @media (max-width: 768px) {
-          .stats-grid {
-            grid-template-columns: 1fr;
-            gap: 48px;
-          }
-        }
-
-        @media (max-width: 640px) {
-          .wrap {
-            width: min(100% - 30px, 1180px);
-          }
-
-          .hero {
-            padding: 125px 0 70px;
-          }
-
-          .hero h1 {
-            font-size: 54px;
-          }
-
-          .system {
-            min-height: auto;
-            display: grid;
-            gap: 16px;
-          }
-
-          .system-card {
-            position: relative;
-            inset: auto !important;
+          .visual-stage {
+            min-height: 560px;
+            max-width: 620px;
+            margin: 0 auto;
             width: 100%;
           }
 
-          .section {
-            padding: 82px 0;
+          .services-grid,
+          .process-line {
+            grid-template-columns: 1fr 1fr;
+          }
+        }
+
+        @media (max-width: 720px) {
+          .wrap {
+            width: min(100% - 28px, 1200px);
           }
 
-          .statement {
-            padding: 100px 0;
+          .hero {
+            padding: 120px 0 70px;
           }
 
-          .final-cta {
-            padding: 90px 0 110px;
+          .hero-title {
+            font-size: 54px;
+          }
+
+          .hero-copy,
+          .section-copy,
+          .showcase p,
+          .final p {
+            font-size: 15px;
+          }
+
+          .visual-stage {
+            min-height: 470px;
+          }
+
+          .orbital-system {
+            inset: 10px 0 0;
+            transform: none;
+            border-radius: 30px;
+          }
+
+          .core {
+            width: 140px;
+            height: 140px;
+          }
+
+          .orbit {
+            width: 270px;
+            height: 270px;
+            margin: -135px 0 0 -135px;
+          }
+
+          .orbit:nth-of-type(2) {
+            width: 350px;
+            height: 350px;
+            margin: -175px 0 0 -175px;
+          }
+
+          .floating-panel {
+            width: 190px;
+            padding: 14px;
+          }
+
+          .floating-panel.one { right: 12px; top: 44px; }
+          .floating-panel.two { left: 12px; bottom: 78px; }
+          .floating-panel.three { display: none; }
+
+          .services-grid,
+          .process-line,
+          .dash-body {
+            grid-template-columns: 1fr;
+          }
+
+          .service-card {
+            min-height: 310px;
+            padding: 24px;
+            border-radius: 26px;
+          }
+
+          .showcase,
+          .section,
+          .process,
+          .final {
+            padding: 86px 0;
+          }
+
+          .showcase-panel {
+            min-height: auto;
+            padding: 24px;
+            border-radius: 28px;
+          }
+
+          .dashboard {
+            min-height: 420px;
+            transform: none;
+          }
+
+          .process-line {
+            border-radius: 24px;
           }
         }
 
         @media (prefers-reduced-motion: reduce) {
-          * {
+          *, *::before, *::after {
             animation: none !important;
             transition: none !important;
+            scroll-behavior: auto !important;
           }
         }
       `}</style>
 
       <main className="home">
-        <section className="hero">
-          <div className="wrap hero-layout">
-            <div>
-              <div className="kicker">AHOS / Digital Systems</div>
+        <div className="noise" />
+        <div className="cinema-lines" />
+        <div className="cursor-glow" />
 
-              <h1>
-                Engineering digital brands that <span>perform.</span>
+        <section className="hero">
+          <div className="wrap hero-grid">
+            <div className="hero-content">
+              <div className="eyebrow">AHOS / Software Agency</div>
+
+              <h1 className="hero-title" aria-label="Digital systems built to move brands forward">
+                <span className="line"><span>Digital</span></span>
+                <span className="line"><span>systems built</span></span>
+                <span className="line"><span>to <em>move.</em></span></span>
               </h1>
 
               <p className="hero-copy">
-                AHOS builds premium websites, platforms, automations, and digital
-                infrastructure for businesses that want to look serious, move faster,
-                and scale with confidence.
+                AHOS designs and engineers premium websites, e-commerce platforms,
+                automations, blockchain experiences, and custom systems for brands
+                that want to look sharper, operate faster, and scale with confidence.
               </p>
 
-              <div className="actions">
-                <Link href="/contact" className="btn btn-primary">
-                  Start a Project
-                </Link>
-                <Link href="/services" className="btn btn-secondary">
-                  Explore AHOS
-                </Link>
+              <div className="hero-actions">
+                <Link href="/contact" className="btn btn-primary">Start a Project →</Link>
+                <Link href="/services" className="btn btn-ghost">Explore Services</Link>
+              </div>
+
+              <div className="hero-proof">
+                <span>Strategy</span>
+                <span>Design</span>
+                <span>Engineering</span>
+                <span>Launch</span>
               </div>
             </div>
 
-            <div className="system" aria-hidden="true">
-              <div className="system-card">
-                <div className="card-top">
-                  <span>Client Success</span>
-                  <span className="dot" />
-                </div>
-                <div className="metric">
-                  98<span>%</span>
-                </div>
-                <div className="mini">
-                  Client satisfaction rate across all delivered projects.
-                </div>
-                <div className="bars">
-                  <i style={{ "--w": "98%" } as React.CSSProperties} />
-                  <i style={{ "--w": "94%" } as React.CSSProperties} />
-                  <i style={{ "--w": "96%" } as React.CSSProperties} />
-                </div>
+            <div className="visual-stage" aria-hidden="true">
+              <div className="orbital-system" />
+              <div className="core" />
+
+              <div className="orbit">
+                <span className="orbit-node" />
+                <span className="orbit-node" />
+                <span className="orbit-node" />
+              </div>
+              <div className="orbit">
+                <span className="orbit-node" />
+                <span className="orbit-node" />
+                <span className="orbit-node" />
               </div>
 
-              <div className="system-card">
-                <div className="card-top">
-                  <span>Project Delivery</span>
-                  <span className="dot" />
-                </div>
-                <div className="metric">
-                  150<span>+</span>
-                </div>
-                <div className="mini">
-                  Successful projects delivered to satisfied clients.
-                </div>
-                <div className="bars">
-                  <i style={{ "--w": "100%" } as React.CSSProperties} />
-                  <i style={{ "--w": "95%" } as React.CSSProperties} />
-                  <i style={{ "--w": "92%" } as React.CSSProperties} />
-                </div>
+              <div className="floating-panel one">
+                <div className="panel-label"><span>Build</span><span>Live</span></div>
+                <div className="panel-title">Conversion-ready interface</div>
+                <div className="panel-line"><span style={{ "--w": "92%" } as React.CSSProperties} /></div>
               </div>
 
-              <div className="system-card">
-                <div className="card-top">
-                  <span>Support Coverage</span>
-                  <span className="dot" />
-                </div>
-                <div className="metric">
-                  24<span>/7</span>
-                </div>
-                <div className="mini">
-                  Dedicated support for all enterprise clients.
-                </div>
-                <div className="bars">
-                  <i style={{ "--w": "100%" } as React.CSSProperties} />
-                  <i style={{ "--w": "100%" } as React.CSSProperties} />
-                  <i style={{ "--w": "98%" } as React.CSSProperties} />
-                </div>
+              <div className="floating-panel two">
+                <div className="panel-label"><span>System</span><span>Active</span></div>
+                <div className="panel-title">Automation pipeline</div>
+                <div className="panel-line"><span style={{ "--w": "78%" } as React.CSSProperties} /></div>
+              </div>
+
+              <div className="floating-panel three">
+                <div className="panel-label"><span>Launch</span><span>Ready</span></div>
+                <div className="panel-title">Scalable digital product</div>
+                <div className="panel-line"><span style={{ "--w": "88%" } as React.CSSProperties} /></div>
               </div>
             </div>
           </div>
         </section>
 
-        <section className="stats-section">
-          <div className="wrap">
-            <div className="stats-grid">
-              <div>
-                <div className="stat-number">98%</div>
-                <div className="stat-label">Client Satisfaction</div>
-              </div>
-              <div>
-                <div className="stat-number">150+</div>
-                <div className="stat-label">Projects Delivered</div>
-              </div>
-              <div>
-                <div className="stat-number">24/7</div>
-                <div className="stat-label">Support Coverage</div>
-              </div>
-            </div>
+        <div className="ticker" aria-hidden="true">
+          <div className="ticker-track">
+            {[...stackItems, ...stackItems, ...stackItems, ...stackItems].map((item, index) => (
+              <span key={`${item}-${index}`}><b>✦</b> {item}</span>
+            ))}
           </div>
-        </section>
+        </div>
 
         <section className="section">
           <div className="wrap">
-            <div className="section-label">AHOS Ecosystem</div>
-            <h2 className="section-title">
-              One studio. Multiple digital directions.
-            </h2>
-            <p className="section-copy">
-              The homepage stays simple. Each area has its own dedicated space, so
-              visitors can quickly move toward what they actually need.
-            </p>
+            <div className="section-head">
+              <div>
+                <div className="section-kicker">What AHOS Builds</div>
+                <h2 className="section-title">Premium digital execution from idea to launch.</h2>
+              </div>
+              <p className="section-copy">
+                Every project is built with brand clarity, clean interfaces, strong
+                architecture, and a launch plan that makes the final product feel serious.
+              </p>
+            </div>
 
-            <div className="gateway">
-              {gateways.map((item) => (
-                <Link href={item.href} className="gateway-row" key={item.label}>
-                  <div className="gateway-label">{item.label}</div>
-                  <div>
-                    <h3 className="gateway-title">{item.title}</h3>
-                    <div className="gateway-text">{item.text}</div>
+            <div className="services-grid">
+              {services.map((service) => (
+                <Link href={service.href} className="service-card" key={service.eyebrow}>
+                  <div className="service-eyebrow">{service.eyebrow}</div>
+                  <div className="service-body">
+                    <h3>{service.title}</h3>
+                    <p>{service.text}</p>
                   </div>
-                  <div className="arrow">→</div>
+                  <div className="service-arrow">→</div>
                 </Link>
               ))}
             </div>
           </div>
         </section>
 
-        <section className="statement">
-          <div className="wrap">
-            <h2>
-              Not just websites. Digital infrastructure for brands that want more.
-            </h2>
-            <p>
-              AHOS combines design, technology, automation, and strategy to create
-              digital products that feel premium and work with purpose.
-            </p>
+        <section className="showcase">
+          <div className="wrap showcase-panel">
+            <div className="showcase-content">
+              <div className="section-kicker">Cinematic Systems</div>
+              <h2>Not another generic website.</h2>
+              <p>
+                AHOS builds digital infrastructure that feels premium on the surface
+                and works properly underneath: fast pages, clean flows, integrated
+                systems, clear messaging, and a user experience that supports business goals.
+              </p>
+              <div className="hero-actions">
+                <Link href="/services" className="btn btn-primary">View Capabilities →</Link>
+              </div>
+            </div>
 
-            <div className="signals">
-              {signals.map((signal) => (
-                <span key={signal}>{signal}</span>
-              ))}
+            <div className="dashboard" aria-hidden="true">
+              <div className="dash-top">
+                <div className="dash-dots"><i /><i /><i /></div>
+                <span>AHOS Control Layer</span>
+              </div>
+              <div className="dash-body">
+                <div className="dash-card">
+                  <div className="dash-label">Interface</div>
+                  <div className="dash-value">Premium</div>
+                  <div className="panel-line"><span style={{ "--w": "91%" } as React.CSSProperties} /></div>
+                </div>
+                <div className="dash-card">
+                  <div className="dash-label">Performance</div>
+                  <div className="dash-value">Fast</div>
+                  <div className="panel-line"><span style={{ "--w": "86%" } as React.CSSProperties} /></div>
+                </div>
+                <div className="dash-card wide">
+                  <div className="dash-label">System Activity</div>
+                  <div className="wave" />
+                </div>
+              </div>
             </div>
           </div>
         </section>
 
-        <section className="final-cta">
-          <div className="wrap final-box">
-            <div>
-              <div className="section-label">Start With AHOS</div>
-              <h2>
-                Build something <span>serious.</span>
-              </h2>
+        <section className="process">
+          <div className="wrap">
+            <div className="section-head">
+              <div>
+                <div className="section-kicker">The AHOS Method</div>
+                <h2 className="section-title">Built with structure. Delivered with polish.</h2>
+              </div>
+              <p className="section-copy">
+                The process stays simple: understand the business, design the experience,
+                build the system, then launch with support.
+              </p>
             </div>
 
-            <Link href="/contact" className="btn btn-primary">
-              Contact AHOS
-            </Link>
+            <div className="process-line">
+              <div className="process-step">
+                <b>01</b>
+                <h3>Discover</h3>
+                <p>We define the offer, audience, goals, pages, flows, and technical direction.</p>
+              </div>
+              <div className="process-step">
+                <b>02</b>
+                <h3>Design</h3>
+                <p>We create a premium visual system with strong hierarchy and brand consistency.</p>
+              </div>
+              <div className="process-step">
+                <b>03</b>
+                <h3>Engineer</h3>
+                <p>We build the website, platform, automation, or system with clean architecture.</p>
+              </div>
+              <div className="process-step">
+                <b>04</b>
+                <h3>Launch</h3>
+                <p>We prepare the final product, test it, publish it, and support what comes next.</p>
+              </div>
+            </div>
+          </div>
+        </section>
+
+        <section className="final">
+          <div className="wrap">
+            <div className="section-kicker">Start With AHOS</div>
+            <h2>Build something <span>serious.</span></h2>
+            <p>
+              Whether you need a premium website, an e-commerce platform, a custom tool,
+              or a full digital system, AHOS turns the idea into a product that looks sharp
+              and works with purpose.
+            </p>
+            <div className="hero-actions">
+              <Link href="/contact" className="btn btn-primary">Contact AHOS →</Link>
+              <Link href="/careers" className="btn btn-ghost">Join the Team</Link>
+            </div>
           </div>
         </section>
 
