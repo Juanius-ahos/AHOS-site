@@ -3,54 +3,83 @@ import { Footer } from "../components/Footer";
 
 const services = [
   {
-    eyebrow: "01 / Digital Products",
-    title: "Premium websites and platforms built to perform.",
-    text: "Custom websites, landing pages, and web applications designed with clear messaging, refined interfaces, and reliable development.",
+    number: "01",
+    title: "Custom Software",
+    text: "Bespoke digital tools, dashboards, platforms, and internal systems built around your workflow.",
+    tags: ["Web Apps", "Dashboards", "APIs"],
     href: "/services",
   },
   {
-    eyebrow: "02 / E-commerce",
-    title: "Online stores designed to convert and scale.",
-    text: "Modern storefronts, product flows, checkout experiences, and payment-ready commerce systems for growing brands.",
+    number: "02",
+    title: "Web Development",
+    text: "Premium websites, landing pages, and business platforms built to look sharp and convert clearly.",
+    tags: ["Websites", "Landing Pages", "E-commerce"],
+    href: "/services",
+    featured: true,
+  },
+  {
+    number: "03",
+    title: "AI Automation",
+    text: "Workflow automations, AI tools, integrations, and operational systems that save time.",
+    tags: ["AI Tools", "Workflows", "Integrations"],
     href: "/services",
   },
   {
-    eyebrow: "03 / Automation",
-    title: "Smart systems that simplify operations.",
-    text: "AI automations, dashboards, workflows, internal tools, and business systems that reduce manual work and improve speed.",
-    href: "/services",
-  },
-  {
-    eyebrow: "04 / Blockchain",
-    title: "Web3 products with clean user experiences.",
-    text: "Blockchain interfaces, smart contract experiences, token ecosystems, and decentralized platforms built for real usability.",
+    number: "04",
+    title: "Web3 & Blockchain",
+    text: "Blockchain interfaces, token systems, smart contract experiences, and decentralized products.",
+    tags: ["Smart Contracts", "Web3", "DeFi"],
     href: "/blockchain-services",
   },
 ];
 
-const phoneCards = [
-  ["01", "Web Development"],
-  ["02", "E-commerce Setup"],
-  ["03", "AI Automation"],
-  ["04", "Blockchain Systems"],
+const projects = [
+  ["SpeeAligner", "Dental Tech"],
+  ["YourProvider", "Security & Automation"],
+  ["ido taxi", "Transport App"],
+  ["DigitalTrans", "Tech Partner"],
+  ["defi.app", "DeFi Protocol"],
+  ["abs.xyz", "L2 Web3 Platform"],
+  ["$ABAS", "Token Project"],
+  ["$HOOT", "Meme Token"],
+];
+
+const stats = [
+  ["50+", "Projects Delivered"],
+  ["100%", "Partner Satisfaction"],
+  ["24/7", "Support Availability"],
+];
+
+const processSteps = [
+  {
+    number: "01",
+    title: "Discovery",
+    text: "A focused consultation where we understand your goals, define the product, and map a clear plan.",
+    bullets: ["Free consultation", "Project brief", "Clear timeline"],
+  },
+  {
+    number: "02",
+    title: "Design & Build",
+    text: "We craft your interface, develop the system, and keep the work structured through clear milestones.",
+    bullets: ["Premium UI", "Clean code", "Milestone updates"],
+  },
+  {
+    number: "03",
+    title: "Launch & Support",
+    text: "We deploy, test, monitor, and support the product so it stays reliable after launch.",
+    bullets: ["Deployment", "Monitoring", "Ongoing support"],
+  },
 ];
 
 const stackItems = [
   "Web Development",
+  "Custom Software",
   "E-commerce",
   "AI Automation",
-  "Blockchain",
-  "Digital Strategy",
-  "Custom Platforms",
-  "Launch Support",
   "Brand Systems",
-];
-
-const processSteps = [
-  ["01", "Discover", "We define the business goal, target audience, offer, structure, and technical direction."],
-  ["02", "Design", "We create a premium interface with clear hierarchy, strong spacing, and a polished brand feel."],
-  ["03", "Build", "We develop responsive, scalable, and clean systems that work smoothly across devices."],
-  ["04", "Launch", "We test, refine, publish, and support the final product so it is ready for real users."],
+  "Web3",
+  "Launch Support",
+  "Digital Strategy",
 ];
 
 export default function Home() {
@@ -58,20 +87,20 @@ export default function Home() {
     <>
       <style>{`
         :root {
-          --bg: #050505;
-          --bg-soft: #0a0a0b;
+          --bg: #040404;
+          --bg-2: #090909;
           --text: #ffffff;
-          --muted: rgba(255,255,255,.72);
-          --soft: rgba(255,255,255,.48);
-          --faint: rgba(255,255,255,.28);
+          --muted: rgba(255,255,255,.68);
+          --soft: rgba(255,255,255,.46);
+          --faint: rgba(255,255,255,.24);
           --line: rgba(255,255,255,.12);
-          --line-strong: rgba(255,255,255,.18);
+          --line-hot: rgba(255,117,31,.34);
           --panel: rgba(255,255,255,.055);
-          --panel-strong: rgba(255,255,255,.085);
+          --panel-2: rgba(255,255,255,.085);
           --orange: #ff751f;
-          --orange-2: #ff9b4a;
-          --orange-soft: rgba(255,117,31,.18);
-          --shadow: 0 44px 150px rgba(0,0,0,.62);
+          --orange-2: #ff9a4a;
+          --orange-soft: rgba(255,117,31,.16);
+          --shadow: 0 42px 140px rgba(0,0,0,.66);
         }
 
         * { box-sizing: border-box; }
@@ -83,18 +112,18 @@ export default function Home() {
           overflow: hidden;
           color: var(--text);
           background:
-            radial-gradient(circle at 78% 14%, rgba(255,117,31,.16), transparent 34%),
-            radial-gradient(circle at 14% 74%, rgba(255,117,31,.075), transparent 28%),
-            linear-gradient(180deg, #050505 0%, #090909 48%, #050505 100%);
+            radial-gradient(circle at 72% 8%, rgba(255,117,31,.18), transparent 34%),
+            radial-gradient(circle at 18% 78%, rgba(255,117,31,.075), transparent 30%),
+            linear-gradient(180deg, #040404 0%, #090909 48%, #040404 100%);
           font-family: Inter, ui-sans-serif, system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
-          text-rendering: geometricPrecision;
           -webkit-font-smoothing: antialiased;
+          text-rendering: geometricPrecision;
         }
 
         .home a { color: inherit; }
 
         .wrap {
-          width: min(1220px, calc(100% - 44px));
+          width: min(1180px, calc(100% - 44px));
           margin: 0 auto;
           position: relative;
           z-index: 3;
@@ -102,8 +131,8 @@ export default function Home() {
 
         .noise,
         .grid,
-        .vignette,
-        .light-beam {
+        .aurora,
+        .vignette {
           position: fixed;
           inset: 0;
           pointer-events: none;
@@ -111,46 +140,123 @@ export default function Home() {
 
         .noise {
           z-index: 1;
-          opacity: .045;
+          opacity: .05;
           mix-blend-mode: overlay;
-          background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 220 220' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='.85' numOctaves='3' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)' opacity='.55'/%3E%3C/svg%3E");
+          background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 220 220' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='.8' numOctaves='3' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)' opacity='.5'/%3E%3C/svg%3E");
         }
 
         .grid {
           z-index: 0;
-          opacity: .2;
+          opacity: .18;
           background:
             linear-gradient(rgba(255,255,255,.03) 1px, transparent 1px),
             linear-gradient(90deg, rgba(255,255,255,.026) 1px, transparent 1px);
           background-size: 88px 88px;
-          mask-image: radial-gradient(circle at 50% 24%, black, transparent 70%);
+          mask-image: radial-gradient(circle at 50% 28%, black, transparent 72%);
         }
 
-        .light-beam {
+        .aurora {
           z-index: 0;
+          opacity: .9;
           background:
-            linear-gradient(115deg, transparent 0 47%, rgba(255,117,31,.08) 50%, transparent 54%),
-            radial-gradient(circle at 80% 28%, rgba(255,117,31,.16), transparent 34%);
-          opacity: .75;
-          animation: ambientShift 9s ease-in-out infinite alternate;
+            radial-gradient(circle at 72% 28%, rgba(255,117,31,.17), transparent 30%),
+            linear-gradient(115deg, transparent 0 46%, rgba(255,117,31,.075) 50%, transparent 56%);
+          animation: auroraMove 10s ease-in-out infinite alternate;
         }
 
         .vignette {
           z-index: 2;
-          background: radial-gradient(circle at center, transparent 0 50%, rgba(0,0,0,.48) 100%);
+          background: radial-gradient(circle at center, transparent 0 50%, rgba(0,0,0,.5) 100%);
         }
 
-        @keyframes ambientShift {
+        @keyframes auroraMove {
           from { transform: translate3d(-1%, -1%, 0) scale(1); }
           to { transform: translate3d(1.4%, 1%, 0) scale(1.04); }
         }
 
+        .eyebrow,
+        .section-kicker {
+          display: inline-flex;
+          align-items: center;
+          gap: 12px;
+          color: var(--orange);
+          text-transform: uppercase;
+          letter-spacing: .22em;
+          font-size: 11px;
+          font-weight: 900;
+        }
+
+        .eyebrow::before,
+        .section-kicker::before {
+          content: "";
+          width: 42px;
+          height: 1px;
+          background: linear-gradient(90deg, var(--orange), transparent);
+        }
+
+        .btn {
+          min-height: 56px;
+          padding: 0 28px;
+          border-radius: 999px;
+          display: inline-flex;
+          align-items: center;
+          justify-content: center;
+          gap: 10px;
+          border: 1px solid var(--line);
+          text-decoration: none;
+          color: #fff;
+          background: rgba(255,255,255,.045);
+          backdrop-filter: blur(14px);
+          text-transform: uppercase;
+          letter-spacing: .13em;
+          font-size: 12px;
+          font-weight: 900;
+          transition: transform .3s ease, border-color .3s ease, background .3s ease, box-shadow .3s ease;
+        }
+
+        .btn::after { content: "→"; font-size: 15px; }
+
+        .btn-primary {
+          background: linear-gradient(135deg, var(--orange), var(--orange-2));
+          color: #070707;
+          border-color: rgba(255,117,31,.95);
+          box-shadow: 0 18px 60px rgba(255,117,31,.23);
+        }
+
+        .btn:hover {
+          transform: translateY(-3px);
+          border-color: rgba(255,117,31,.55);
+          background: rgba(255,117,31,.08);
+        }
+
+        .btn-primary:hover {
+          background: linear-gradient(135deg, #ff8731, #ffb06b);
+          box-shadow: 0 24px 80px rgba(255,117,31,.33);
+        }
+
+        .reveal {
+          animation: revealUp linear both;
+          animation-timeline: view();
+          animation-range: entry 0% cover 32%;
+        }
+
+        @keyframes revealUp {
+          from { opacity: .35; transform: translateY(46px); }
+          to { opacity: 1; transform: translateY(0); }
+        }
+
+        @keyframes rise {
+          from { opacity: 0; transform: translateY(20px); }
+          to { opacity: 1; transform: translateY(0); }
+        }
+
+        /* HERO */
         .hero {
           min-height: 100vh;
           display: flex;
           align-items: center;
           position: relative;
-          padding: 138px 0 88px;
+          padding: 135px 0 86px;
           isolation: isolate;
         }
 
@@ -170,57 +276,71 @@ export default function Home() {
           display: grid;
           grid-template-columns: minmax(0, 1fr) 520px;
           align-items: center;
-          gap: 82px;
+          gap: 86px;
         }
 
-        .eyebrow,
-        .section-kicker {
+        .hero-badge {
+          width: fit-content;
           display: inline-flex;
           align-items: center;
-          gap: 12px;
+          gap: 9px;
+          padding: 8px 14px;
+          margin-bottom: 22px;
+          border-radius: 999px;
+          border: 1px solid rgba(255,117,31,.28);
+          background: rgba(255,117,31,.08);
           color: var(--orange);
           text-transform: uppercase;
-          letter-spacing: .22em;
+          letter-spacing: .13em;
           font-size: 11px;
           font-weight: 900;
+          animation: rise .75s ease both;
         }
 
-        .eyebrow { margin-bottom: 28px; animation: rise .75s ease both; }
+        .hero-badge i {
+          width: 7px;
+          height: 7px;
+          border-radius: 50%;
+          background: var(--orange);
+          box-shadow: 0 0 0 0 rgba(255,117,31,.6);
+          animation: ping 2s ease-out infinite;
+        }
 
-        .eyebrow::before,
-        .section-kicker::before {
-          content: "";
-          width: 42px;
-          height: 1px;
-          background: linear-gradient(90deg, var(--orange), transparent);
+        @keyframes ping {
+          0% { box-shadow: 0 0 0 0 rgba(255,117,31,.65); }
+          70% { box-shadow: 0 0 0 9px rgba(255,117,31,0); }
+          100% { box-shadow: 0 0 0 0 rgba(255,117,31,0); }
+        }
+
+        .hero .eyebrow {
+          margin-bottom: 22px;
+          animation: rise .75s ease .08s both;
         }
 
         .hero-title {
-          max-width: 860px;
+          max-width: 850px;
           margin: 0;
           font-size: clamp(56px, 8vw, 112px);
           line-height: .86;
           letter-spacing: -.075em;
           text-transform: uppercase;
           font-weight: 950;
+          animation: rise .75s ease .16s both;
         }
 
-        .hero-title .muted-word {
-          color: rgba(255,255,255,.56);
-        }
-
+        .hero-title .muted-word { color: rgba(255,255,255,.56); }
         .hero-title .accent-word {
           color: var(--orange);
-          text-shadow: 0 0 46px rgba(255,117,31,.34);
+          text-shadow: 0 0 48px rgba(255,117,31,.36);
         }
 
         .hero-copy {
-          max-width: 640px;
+          max-width: 650px;
           margin: 30px 0 0;
           color: var(--muted);
           font-size: 17px;
           line-height: 1.82;
-          animation: rise .75s ease .12s both;
+          animation: rise .75s ease .24s both;
         }
 
         .actions {
@@ -228,52 +348,7 @@ export default function Home() {
           flex-wrap: wrap;
           gap: 14px;
           margin-top: 38px;
-          animation: rise .75s ease .22s both;
-        }
-
-        .btn {
-          min-height: 56px;
-          padding: 0 28px;
-          border-radius: 999px;
-          display: inline-flex;
-          align-items: center;
-          justify-content: center;
-          gap: 10px;
-          border: 1px solid var(--line-strong);
-          text-decoration: none;
-          color: #fff;
-          background: rgba(255,255,255,.045);
-          backdrop-filter: blur(14px);
-          text-transform: uppercase;
-          letter-spacing: .13em;
-          font-size: 12px;
-          font-weight: 900;
-          transition: transform .3s ease, border-color .3s ease, background .3s ease, box-shadow .3s ease;
-        }
-
-        .btn::after {
-          content: "→";
-          font-size: 15px;
-          line-height: 1;
-          transform: translateY(-1px);
-        }
-
-        .btn-primary {
-          background: linear-gradient(135deg, var(--orange), var(--orange-2));
-          color: #070707;
-          border-color: rgba(255,117,31,.95);
-          box-shadow: 0 18px 60px rgba(255,117,31,.24);
-        }
-
-        .btn:hover {
-          transform: translateY(-3px);
-          border-color: rgba(255,117,31,.58);
-          background: rgba(255,117,31,.08);
-        }
-
-        .btn-primary:hover {
-          background: linear-gradient(135deg, #ff8a35, #ffb06d);
-          box-shadow: 0 24px 78px rgba(255,117,31,.33);
+          animation: rise .75s ease .32s both;
         }
 
         .hero-tags {
@@ -281,7 +356,7 @@ export default function Home() {
           flex-wrap: wrap;
           gap: 10px;
           margin-top: 30px;
-          animation: rise .75s ease .32s both;
+          animation: rise .75s ease .4s both;
         }
 
         .hero-tags span {
@@ -296,18 +371,13 @@ export default function Home() {
           font-weight: 800;
         }
 
-        @keyframes rise {
-          from { opacity: 0; transform: translateY(20px); }
-          to { opacity: 1; transform: translateY(0); }
-        }
-
         .phone-stage {
           position: relative;
           min-height: 650px;
           display: grid;
           place-items: center;
           perspective: 1400px;
-          animation: rise .85s ease .15s both;
+          animation: rise .85s ease .18s both;
         }
 
         .phone-glow {
@@ -315,9 +385,9 @@ export default function Home() {
           width: 520px;
           height: 520px;
           border-radius: 50%;
-          background: radial-gradient(circle, rgba(255,117,31,.22), transparent 62%);
+          background: radial-gradient(circle, rgba(255,117,31,.2), transparent 62%);
           filter: blur(8px);
-          animation: glowPulse 4.5s ease-in-out infinite;
+          animation: glowPulse 4.8s ease-in-out infinite;
         }
 
         @keyframes glowPulse {
@@ -348,7 +418,6 @@ export default function Home() {
 
         .phone-orbit::before { top: 46px; left: 130px; }
         .phone-orbit::after { right: 92px; bottom: 78px; }
-
         @keyframes rotate { to { transform: rotate(360deg); } }
 
         .iphone {
@@ -365,7 +434,7 @@ export default function Home() {
             0 0 0 8px rgba(255,255,255,.024),
             inset 0 0 0 1px rgba(255,255,255,.16);
           transform: rotateX(7deg) rotateY(-12deg) rotateZ(2deg);
-          animation: phoneFloat 5.6s ease-in-out infinite;
+          animation: phoneFloat 5.8s ease-in-out infinite;
         }
 
         @keyframes phoneFloat {
@@ -379,7 +448,7 @@ export default function Home() {
           overflow: hidden;
           border-radius: 39px;
           background:
-            radial-gradient(circle at 76% 18%, rgba(255,117,31,.25), transparent 33%),
+            radial-gradient(circle at 76% 18%, rgba(255,117,31,.24), transparent 33%),
             linear-gradient(180deg, #151515, #070707 55%, #111);
           border: 1px solid rgba(255,255,255,.095);
         }
@@ -392,7 +461,7 @@ export default function Home() {
             linear-gradient(rgba(255,255,255,.026) 1px, transparent 1px),
             linear-gradient(90deg, rgba(255,255,255,.022) 1px, transparent 1px);
           background-size: 36px 36px;
-          opacity: .38;
+          opacity: .36;
         }
 
         .dynamic-island {
@@ -529,6 +598,7 @@ export default function Home() {
           letter-spacing: -.035em;
         }
 
+        /* TICKER */
         .ticker {
           position: relative;
           z-index: 4;
@@ -557,183 +627,313 @@ export default function Home() {
         .ticker b { color: var(--orange); }
         @keyframes marquee { to { transform: translateX(-50%); } }
 
-        .section,
-        .showcase,
-        .process,
-        .final {
+        /* LOGOS */
+        .logo-strip {
           position: relative;
           z-index: 4;
-          animation: softReveal linear both;
-          animation-timeline: view();
-          animation-range: entry 0% cover 34%;
+          padding: 72px 0 18px;
         }
 
-        .section { padding: 128px 0; }
-        .showcase { padding: 126px 0; }
-        .process { padding: 118px 0; }
-        .final { padding: 138px 0 158px; text-align: center; }
+        .logo-head {
+          display: flex;
+          align-items: center;
+          gap: 18px;
+          margin-bottom: 26px;
+          color: rgba(255,255,255,.44);
+          text-transform: uppercase;
+          letter-spacing: .18em;
+          font-size: 11px;
+          font-weight: 900;
+        }
 
-        @keyframes softReveal {
-          from { opacity: .45; transform: translateY(48px); }
-          to { opacity: 1; transform: translateY(0); }
+        .logo-head::before,
+        .logo-head::after {
+          content: "";
+          height: 1px;
+          flex: 1;
+          background: linear-gradient(90deg, transparent, rgba(255,255,255,.12), transparent);
+        }
+
+        .logo-viewport {
+          overflow: hidden;
+          mask-image: linear-gradient(90deg, transparent, black 12%, black 88%, transparent);
+        }
+
+        .logo-track {
+          display: flex;
+          width: max-content;
+          gap: 18px;
+          animation: logoMove 34s linear infinite;
+        }
+
+        @keyframes logoMove { to { transform: translateX(-50%); } }
+
+        .project-logo {
+          min-width: 230px;
+          display: flex;
+          align-items: center;
+          gap: 12px;
+          padding: 16px 18px;
+          border: 1px solid rgba(255,255,255,.1);
+          border-radius: 18px;
+          background: rgba(255,255,255,.035);
+        }
+
+        .project-mark {
+          width: 38px;
+          height: 38px;
+          border-radius: 14px;
+          display: grid;
+          place-items: center;
+          border: 1px solid rgba(255,117,31,.25);
+          background: rgba(255,117,31,.08);
+          color: var(--orange);
+          font-weight: 950;
+        }
+
+        .project-name {
+          font-size: 15px;
+          font-weight: 850;
+          letter-spacing: -.02em;
+        }
+
+        .project-type {
+          margin-top: 3px;
+          color: rgba(255,255,255,.42);
+          font-size: 11px;
+          text-transform: uppercase;
+          letter-spacing: .12em;
+        }
+
+        /* SERVICES */
+        .section {
+          position: relative;
+          z-index: 4;
+          padding: 120px 0;
         }
 
         .section-head {
           display: grid;
-          grid-template-columns: minmax(0, .95fr) minmax(280px, .45fr);
+          grid-template-columns: minmax(0, .9fr) minmax(280px, .45fr);
           gap: 54px;
           align-items: end;
-          margin-bottom: 62px;
+          margin-bottom: 58px;
         }
 
         .section-title {
           margin: 18px 0 0;
-          font-size: clamp(44px, 7vw, 92px);
-          line-height: .91;
+          font-size: clamp(44px, 7vw, 88px);
+          line-height: .92;
           letter-spacing: -.07em;
           text-transform: uppercase;
           font-weight: 950;
         }
 
         .section-title span,
-        .showcase h2 span,
-        .final h2 span {
+        .final h2 span,
+        .showcase-title span {
           color: var(--orange);
         }
 
         .section-copy {
           margin: 0;
           color: var(--muted);
-          font-size: 17px;
+          font-size: 16px;
           line-height: 1.78;
         }
 
-        .services-grid {
+        .services-shell {
           display: grid;
-          grid-template-columns: repeat(4, minmax(0, 1fr));
+          grid-template-columns: .95fr 1.05fr;
+          gap: 18px;
+        }
+
+        .featured-service,
+        .service-card,
+        .stat-card,
+        .process-step,
+        .showcase-panel,
+        .social-card {
+          position: relative;
+          border: 1px solid rgba(255,255,255,.11);
+          background:
+            radial-gradient(circle at 80% 0%, rgba(255,117,31,.12), transparent 34%),
+            linear-gradient(145deg, rgba(255,255,255,.075), rgba(255,255,255,.024));
+          box-shadow: 0 26px 90px rgba(0,0,0,.32);
+          overflow: hidden;
+        }
+
+        .featured-service {
+          min-height: 560px;
+          display: flex;
+          flex-direction: column;
+          justify-content: space-between;
+          padding: 34px;
+          border-radius: 34px;
+          text-decoration: none;
+          transition: transform .32s ease, border-color .32s ease;
+        }
+
+        .featured-service:hover,
+        .service-card:hover,
+        .social-card:hover {
+          transform: translateY(-7px);
+          border-color: rgba(255,117,31,.46);
+        }
+
+        .popular-badge {
+          width: fit-content;
+          padding: 9px 13px;
+          border-radius: 999px;
+          border: 1px solid rgba(255,117,31,.28);
+          background: rgba(255,117,31,.08);
+          color: var(--orange);
+          text-transform: uppercase;
+          letter-spacing: .13em;
+          font-size: 10px;
+          font-weight: 950;
+        }
+
+        .service-number {
+          color: rgba(255,255,255,.34);
+          font-size: 13px;
+          letter-spacing: .16em;
+          font-weight: 950;
+        }
+
+        .featured-service h3 {
+          margin: 0 0 18px;
+          font-size: clamp(44px, 5vw, 66px);
+          line-height: .94;
+          letter-spacing: -.065em;
+        }
+
+        .featured-service p,
+        .service-card p {
+          color: rgba(255,255,255,.68);
+          line-height: 1.72;
+          margin: 0;
+        }
+
+        .tag-row {
+          display: flex;
+          flex-wrap: wrap;
+          gap: 8px;
+          margin-top: 24px;
+        }
+
+        .tag-row span {
+          padding: 8px 10px;
+          border-radius: 999px;
+          border: 1px solid rgba(255,255,255,.1);
+          background: rgba(255,255,255,.035);
+          color: rgba(255,255,255,.52);
+          font-size: 11px;
+          font-weight: 800;
+        }
+
+        .service-grid {
+          display: grid;
+          grid-template-columns: 1fr 1fr;
           gap: 18px;
         }
 
         .service-card {
-          position: relative;
-          min-height: 360px;
+          min-height: 270px;
           display: flex;
           flex-direction: column;
           justify-content: space-between;
           padding: 28px;
-          overflow: hidden;
-          border-radius: 30px;
-          border: 1px solid rgba(255,255,255,.11);
-          background:
-            radial-gradient(circle at 80% 100%, rgba(255,117,31,.12), transparent 38%),
-            linear-gradient(145deg, rgba(255,255,255,.075), rgba(255,255,255,.024));
+          border-radius: 28px;
           color: #fff;
           text-decoration: none;
-          box-shadow: 0 26px 90px rgba(0,0,0,.32);
-          transition: transform .32s ease, border-color .32s ease, background .32s ease;
-          animation: cardReveal linear both;
-          animation-timeline: view();
-          animation-range: entry 0% cover 32%;
+          transition: transform .32s ease, border-color .32s ease;
         }
-
-        @keyframes cardReveal {
-          from { opacity: 0; transform: translateY(42px); }
-          to { opacity: 1; transform: translateY(0); }
-        }
-
-        .service-card:hover {
-          transform: translateY(-8px);
-          border-color: rgba(255,117,31,.48);
-          background:
-            radial-gradient(circle at 80% 100%, rgba(255,117,31,.18), transparent 40%),
-            linear-gradient(145deg, rgba(255,255,255,.09), rgba(255,255,255,.03));
-        }
-
-        .service-card::after {
-          content: "";
-          position: absolute;
-          right: -82px;
-          bottom: -82px;
-          width: 220px;
-          height: 220px;
-          border-radius: 50%;
-          border: 1px solid rgba(255,117,31,.2);
-        }
-
-        .service-eyebrow {
-          position: relative;
-          z-index: 2;
-          color: var(--orange);
-          font-size: 10px;
-          font-weight: 950;
-          letter-spacing: .16em;
-          text-transform: uppercase;
-        }
-
-        .service-body { position: relative; z-index: 2; }
 
         .service-card h3 {
-          margin: 0 0 14px;
-          font-size: 25px;
-          line-height: 1.03;
+          margin: 0 0 12px;
+          font-size: 28px;
+          line-height: 1.02;
           letter-spacing: -.045em;
         }
 
-        .service-card p {
-          margin: 0;
-          color: rgba(255,255,255,.68);
-          font-size: 14px;
-          line-height: 1.68;
+        .service-footer {
+          display: flex;
+          align-items: center;
+          justify-content: space-between;
+          color: var(--orange);
+          text-transform: uppercase;
+          letter-spacing: .12em;
+          font-size: 11px;
+          font-weight: 950;
         }
 
-        .service-arrow {
+        /* STATS */
+        .stats-section {
           position: relative;
-          z-index: 2;
-          width: 46px;
-          height: 46px;
-          display: grid;
-          place-items: center;
-          border-radius: 50%;
-          border: 1px solid rgba(255,255,255,.14);
-          background: rgba(255,255,255,.04);
-          transition: transform .3s ease, background .3s ease, color .3s ease;
+          z-index: 4;
+          padding: 32px 0 114px;
         }
 
-        .service-card:hover .service-arrow {
-          background: var(--orange);
-          color: #050505;
-          transform: translateX(6px);
+        .stats-grid {
+          display: grid;
+          grid-template-columns: repeat(3, 1fr);
+          gap: 18px;
+        }
+
+        .stat-card {
+          border-radius: 26px;
+          padding: 34px 28px;
+          text-align: center;
+        }
+
+        .stat-number {
+          color: var(--orange);
+          font-size: clamp(42px, 5vw, 62px);
+          line-height: 1;
+          letter-spacing: -.045em;
+          font-weight: 950;
+          text-shadow: 0 0 32px rgba(255,117,31,.3);
+        }
+
+        .stat-label {
+          margin-top: 12px;
+          color: rgba(255,255,255,.58);
+          text-transform: uppercase;
+          letter-spacing: .14em;
+          font-size: 12px;
+          font-weight: 900;
+        }
+
+        /* SHOWCASE */
+        .showcase {
+          position: relative;
+          z-index: 4;
+          padding: 112px 0;
         }
 
         .showcase-panel {
-          position: relative;
-          min-height: 630px;
+          min-height: 620px;
           display: grid;
-          grid-template-columns: .82fr 1.18fr;
+          grid-template-columns: .78fr 1.22fr;
           gap: 56px;
           align-items: center;
-          overflow: hidden;
           padding: 56px;
           border-radius: 42px;
-          border: 1px solid rgba(255,255,255,.13);
-          background:
-            radial-gradient(circle at 82% 42%, rgba(255,117,31,.18), transparent 35%),
-            linear-gradient(140deg, rgba(255,255,255,.08), rgba(255,255,255,.024));
-          box-shadow: var(--shadow);
         }
 
-        .showcase h2 {
+        .showcase-title {
           margin: 18px 0 0;
-          font-size: clamp(44px, 7vw, 88px);
+          font-size: clamp(44px, 7vw, 86px);
           line-height: .91;
           letter-spacing: -.07em;
           text-transform: uppercase;
         }
 
-        .showcase p {
+        .showcase-copy {
           margin: 25px 0 0;
           color: var(--muted);
-          font-size: 17px;
+          font-size: 16px;
           line-height: 1.8;
         }
 
@@ -747,14 +947,6 @@ export default function Home() {
           box-shadow: 0 30px 120px rgba(0,0,0,.52);
           overflow: hidden;
           transform: rotateX(5deg) rotateY(-6deg);
-          animation: previewReveal linear both;
-          animation-timeline: view();
-          animation-range: entry 0% cover 42%;
-        }
-
-        @keyframes previewReveal {
-          from { opacity: .45; transform: translateY(46px) rotateX(8deg) rotateY(-10deg); }
-          to { opacity: 1; transform: translateY(0) rotateX(5deg) rotateY(-6deg); }
         }
 
         .preview-top {
@@ -787,7 +979,6 @@ export default function Home() {
         }
 
         .preview-block.large { min-height: 170px; }
-
         .preview-label {
           color: rgba(255,255,255,.48);
           text-transform: uppercase;
@@ -819,47 +1010,186 @@ export default function Home() {
           background: linear-gradient(90deg, var(--orange), var(--orange-2));
         }
 
-        .process-line {
-          margin-top: 62px;
+        /* PROCESS */
+        .process {
+          position: relative;
+          z-index: 4;
+          padding: 112px 0;
+        }
+
+        .process-grid {
           display: grid;
-          grid-template-columns: repeat(4, 1fr);
-          gap: 1px;
-          overflow: hidden;
-          border-radius: 30px;
-          border: 1px solid rgba(255,255,255,.105);
-          background: rgba(255,255,255,.105);
-          box-shadow: 0 28px 100px rgba(0,0,0,.3);
+          grid-template-columns: repeat(3, 1fr);
+          gap: 18px;
+          margin-top: 58px;
         }
 
         .process-step {
-          min-height: 248px;
-          padding: 30px;
-          background:
-            radial-gradient(circle at 100% 0%, rgba(255,117,31,.08), transparent 30%),
-            rgba(7,7,7,.96);
-          animation: cardReveal linear both;
-          animation-timeline: view();
-          animation-range: entry 0% cover 35%;
+          min-height: 430px;
+          padding: 32px;
+          border-radius: 30px;
         }
 
-        .process-step b {
+        .step-number {
+          width: 58px;
+          height: 58px;
+          display: grid;
+          place-items: center;
+          border-radius: 50%;
+          border: 1px solid rgba(255,117,31,.32);
+          background: rgba(255,117,31,.08);
           color: var(--orange);
-          letter-spacing: .18em;
-          font-size: 12px;
+          font-size: 13px;
           font-weight: 950;
+          letter-spacing: .12em;
         }
 
         .process-step h3 {
-          margin: 48px 0 12px;
-          font-size: 28px;
-          letter-spacing: -.048em;
+          margin: 54px 0 14px;
+          font-size: 34px;
+          letter-spacing: -.052em;
         }
 
         .process-step p {
           margin: 0;
           color: rgba(255,255,255,.68);
           line-height: 1.72;
-          font-size: 14px;
+          font-size: 15px;
+        }
+
+        .bullet-list {
+          display: grid;
+          gap: 11px;
+          margin-top: 28px;
+        }
+
+        .bullet-list span {
+          display: flex;
+          align-items: center;
+          gap: 9px;
+          color: rgba(255,255,255,.58);
+          font-size: 13px;
+          font-weight: 750;
+        }
+
+        .bullet-list span::before {
+          content: "";
+          width: 7px;
+          height: 7px;
+          border-radius: 50%;
+          background: var(--orange);
+          box-shadow: 0 0 14px rgba(255,117,31,.7);
+        }
+
+        /* SOCIAL / CTA */
+        .social-section {
+          position: relative;
+          z-index: 4;
+          padding: 112px 0;
+        }
+
+        .social-grid {
+          display: grid;
+          grid-template-columns: .82fr 1.18fr;
+          gap: 56px;
+          align-items: center;
+        }
+
+        .social-list {
+          display: grid;
+          gap: 14px;
+          margin-top: 34px;
+        }
+
+        .social-card {
+          display: grid;
+          grid-template-columns: 48px 1fr auto;
+          align-items: center;
+          gap: 16px;
+          padding: 16px 18px;
+          border-radius: 18px;
+          text-decoration: none;
+          transition: transform .3s ease, border-color .3s ease;
+        }
+
+        .social-icon {
+          width: 48px;
+          height: 48px;
+          display: grid;
+          place-items: center;
+          border-radius: 16px;
+          border: 1px solid rgba(255,117,31,.24);
+          background: rgba(255,117,31,.08);
+          color: var(--orange);
+          font-weight: 950;
+        }
+
+        .social-name {
+          font-size: 17px;
+          font-weight: 850;
+        }
+
+        .social-handle {
+          margin-top: 4px;
+          color: rgba(255,255,255,.44);
+          font-size: 13px;
+        }
+
+        .reel-box {
+          min-height: 520px;
+          display: grid;
+          place-items: center;
+          border-radius: 36px;
+          border: 1px solid rgba(255,255,255,.12);
+          background:
+            radial-gradient(circle at 50% 30%, rgba(255,117,31,.17), transparent 38%),
+            linear-gradient(145deg, rgba(255,255,255,.075), rgba(255,255,255,.024));
+          box-shadow: var(--shadow);
+          overflow: hidden;
+        }
+
+        .reel-inner-card {
+          width: min(280px, 70%);
+          aspect-ratio: 9 / 16;
+          border-radius: 34px;
+          border: 1px solid rgba(255,255,255,.14);
+          background:
+            radial-gradient(circle at 50% 20%, rgba(255,117,31,.22), transparent 36%),
+            linear-gradient(180deg, #161616, #070707);
+          box-shadow: 0 32px 110px rgba(0,0,0,.54);
+          display: flex;
+          flex-direction: column;
+          justify-content: flex-end;
+          padding: 24px;
+        }
+
+        .reel-badge {
+          width: fit-content;
+          padding: 9px 12px;
+          border-radius: 999px;
+          background: rgba(255,117,31,.1);
+          border: 1px solid rgba(255,117,31,.25);
+          color: var(--orange);
+          text-transform: uppercase;
+          letter-spacing: .14em;
+          font-size: 10px;
+          font-weight: 950;
+          margin-bottom: 16px;
+        }
+
+        .reel-title {
+          font-size: 34px;
+          line-height: 1;
+          letter-spacing: -.05em;
+          font-weight: 950;
+        }
+
+        /* FINAL */
+        .final {
+          position: relative;
+          z-index: 4;
+          padding: 132px 0 154px;
+          text-align: center;
         }
 
         .final::before {
@@ -887,7 +1217,7 @@ export default function Home() {
         }
 
         .final p {
-          max-width: 640px;
+          max-width: 650px;
           margin: 31px auto 0;
           color: var(--muted);
           line-height: 1.82;
@@ -896,15 +1226,14 @@ export default function Home() {
 
         .final .actions { justify-content: center; }
 
-        @media (max-width: 1180px) {
-          .services-grid { grid-template-columns: repeat(2, minmax(0, 1fr)); }
-          .service-card h3 { font-size: 34px; }
-        }
-
-        @media (max-width: 1080px) {
+        @media (max-width: 1120px) {
           .hero-grid,
-          .section-head,
-          .showcase-panel { grid-template-columns: 1fr; }
+          .services-shell,
+          .showcase-panel,
+          .social-grid,
+          .section-head {
+            grid-template-columns: 1fr;
+          }
 
           .phone-stage {
             min-height: 610px;
@@ -913,15 +1242,20 @@ export default function Home() {
             width: 100%;
           }
 
-          .process-line { grid-template-columns: 1fr 1fr; }
+          .stats-grid,
+          .process-grid { grid-template-columns: 1fr; }
+        }
+
+        @media (max-width: 820px) {
+          .service-grid { grid-template-columns: 1fr; }
         }
 
         @media (max-width: 740px) {
-          .wrap { width: min(100% - 28px, 1220px); }
+          .wrap { width: min(100% - 28px, 1180px); }
 
-          .hero { padding: 120px 0 74px; }
+          .hero { padding: 118px 0 74px; }
           .hero-title { font-size: 52px; letter-spacing: -.065em; }
-          .hero-copy, .section-copy, .showcase p, .final p { font-size: 15px; }
+          .hero-copy, .section-copy, .showcase-copy, .final p { font-size: 15px; }
 
           .actions { width: 100%; }
           .btn { width: 100%; }
@@ -952,19 +1286,22 @@ export default function Home() {
           .phone-subtitle { font-size: 12px; }
           .phone-card { padding: 12px; font-size: 12px; }
 
-          .section, .showcase, .process, .final { padding: 88px 0; }
-          .section-title, .showcase h2 { font-size: 43px; }
+          .section, .showcase, .process, .social-section, .final { padding: 88px 0; }
+          .section-title, .showcase-title { font-size: 43px; }
 
-          .services-grid,
-          .process-line { grid-template-columns: 1fr; }
+          .featured-service {
+            min-height: 430px;
+            padding: 24px;
+            border-radius: 28px;
+          }
+
+          .featured-service h3 { font-size: 40px; }
 
           .service-card {
-            min-height: 310px;
+            min-height: 260px;
             padding: 24px;
             border-radius: 26px;
           }
-
-          .service-card h3 { font-size: 31px; }
 
           .showcase-panel {
             min-height: auto;
@@ -977,22 +1314,13 @@ export default function Home() {
             transform: none;
           }
 
-          .preview-top {
-            font-size: 9px;
-            letter-spacing: .11em;
-          }
+          .project-logo { min-width: 210px; }
+          .process-step { min-height: auto; }
+          .reel-box { min-height: 430px; }
         }
 
         @supports not (animation-timeline: view()) {
-          .section,
-          .showcase,
-          .process,
-          .final,
-          .service-card,
-          .process-step,
-          .interface-preview {
-            animation-timeline: auto;
-          }
+          .reveal { animation-timeline: auto; }
         }
 
         @media (prefers-reduced-motion: reduce) {
@@ -1006,20 +1334,21 @@ export default function Home() {
       <main className="home">
         <div className="noise" />
         <div className="grid" />
-        <div className="light-beam" />
+        <div className="aurora" />
         <div className="vignette" />
 
         <section className="hero">
           <div className="wrap hero-grid">
             <div>
-              <div className="eyebrow">AHOS / Digital Products</div>
+              <div className="hero-badge"><i /> Available for new projects</div>
+              <div className="eyebrow">AHOS / Digital Studio</div>
               <h1 className="hero-title">
                 Digital systems <span className="muted-word">that</span> <span className="accent-word">scale.</span>
               </h1>
               <p className="hero-copy">
-                AHOS creates premium websites, e-commerce platforms, automation systems,
-                blockchain products, and digital infrastructure for brands that want to look
-                professional, move faster, and grow with confidence.
+                We build premium websites, e-commerce platforms, automation systems,
+                Web3 products, and custom digital tools for brands that want to look serious,
+                move faster, and launch with confidence.
               </p>
 
               <div className="actions">
@@ -1028,10 +1357,10 @@ export default function Home() {
               </div>
 
               <div className="hero-tags">
-                <span>Strategy</span>
-                <span>Design</span>
-                <span>Engineering</span>
-                <span>Launch</span>
+                <span>Web Dev</span>
+                <span>Automation</span>
+                <span>Web3</span>
+                <span>AI Systems</span>
               </div>
             </div>
 
@@ -1054,10 +1383,10 @@ export default function Home() {
                         Websites, stores, automations, and platforms engineered under one clean brand experience.
                       </div>
                       <div className="phone-list">
-                        {phoneCards.map(([number, item]) => (
-                          <div className="phone-card" key={item}>
-                            <small>{number}</small>
-                            <strong>{item}</strong>
+                        {services.map((service) => (
+                          <div className="phone-card" key={service.title}>
+                            <small>{service.number}</small>
+                            <strong>{service.title.split(" ").slice(0, 2).join(" ")}</strong>
                             <i />
                           </div>
                         ))}
@@ -1083,40 +1412,93 @@ export default function Home() {
           </div>
         </div>
 
-        <section className="section">
+        <section className="logo-strip reveal">
           <div className="wrap">
-            <div className="section-head">
-              <div>
-                <div className="section-kicker">What AHOS Builds</div>
-                <h2 className="section-title">End-to-end digital systems for <span>the next era.</span></h2>
-              </div>
-              <p className="section-copy">
-                From strategy and interface design to engineering and launch, we build digital products
-                with clean execution, clear structure, and long-term usability.
-              </p>
-            </div>
-
-            <div className="services-grid">
-              {services.map((service) => (
-                <Link href={service.href} className="service-card" key={service.eyebrow}>
-                  <div className="service-eyebrow">{service.eyebrow}</div>
-                  <div className="service-body">
-                    <h3>{service.title}</h3>
-                    <p>{service.text}</p>
+            <div className="logo-head">Projects we've been part of</div>
+            <div className="logo-viewport">
+              <div className="logo-track">
+                {[...projects, ...projects].map(([name, type], index) => (
+                  <div className="project-logo" key={`${name}-${index}`}>
+                    <div className="project-mark">{name.charAt(0).replace("$", "A")}</div>
+                    <div>
+                      <div className="project-name">{name}</div>
+                      <div className="project-type">{type}</div>
+                    </div>
                   </div>
-                  <div className="service-arrow">→</div>
-                </Link>
-              ))}
+                ))}
+              </div>
             </div>
           </div>
         </section>
 
-        <section className="showcase">
+        <section className="section reveal">
+          <div className="wrap">
+            <div className="section-head">
+              <div>
+                <div className="section-kicker">What We Do</div>
+                <h2 className="section-title">Five capabilities. <span>One studio.</span></h2>
+              </div>
+              <p className="section-copy">
+                Stop juggling disconnected providers. Software, websites, branding, Web3,
+                and automation are planned together, designed together, and built to work together.
+              </p>
+            </div>
+
+            <div className="services-shell">
+              {services.filter((service) => service.featured).map((service) => (
+                <Link href={service.href} className="featured-service" key={service.title}>
+                  <div>
+                    <div className="popular-badge">Most Popular</div>
+                  </div>
+                  <div>
+                    <div className="service-number">{service.number}</div>
+                    <h3>{service.title}</h3>
+                    <p>{service.text}</p>
+                    <div className="tag-row">
+                      {service.tags.map((tag) => <span key={tag}>{tag}</span>)}
+                    </div>
+                  </div>
+                </Link>
+              ))}
+
+              <div className="service-grid">
+                {services.filter((service) => !service.featured).map((service) => (
+                  <Link href={service.href} className="service-card" key={service.title}>
+                    <div className="service-footer">
+                      <span>{service.number}</span>
+                      <span>Explore</span>
+                    </div>
+                    <div>
+                      <h3>{service.title}</h3>
+                      <p>{service.text}</p>
+                      <div className="tag-row">
+                        {service.tags.map((tag) => <span key={tag}>{tag}</span>)}
+                      </div>
+                    </div>
+                  </Link>
+                ))}
+              </div>
+            </div>
+          </div>
+        </section>
+
+        <section className="stats-section reveal">
+          <div className="wrap stats-grid">
+            {stats.map(([number, label]) => (
+              <div className="stat-card" key={label}>
+                <div className="stat-number">{number}</div>
+                <div className="stat-label">{label}</div>
+              </div>
+            ))}
+          </div>
+        </section>
+
+        <section className="showcase reveal">
           <div className="wrap showcase-panel">
             <div>
               <div className="section-kicker">Cinematic Systems</div>
-              <h2>Not another <span>generic website.</span></h2>
-              <p>
+              <h2 className="showcase-title">Not another <span>generic website.</span></h2>
+              <p className="showcase-copy">
                 AHOS builds digital infrastructure that feels premium on the surface and works properly underneath:
                 fast pages, clean flows, integrated systems, clear messaging, and user experiences that support business goals.
               </p>
@@ -1151,31 +1533,71 @@ export default function Home() {
           </div>
         </section>
 
-        <section className="process">
+        <section className="process reveal">
           <div className="wrap">
             <div className="section-head">
               <div>
-                <div className="section-kicker">The AHOS Method</div>
-                <h2 className="section-title">Built with structure. Delivered with <span>polish.</span></h2>
+                <div className="section-kicker">Our Process</div>
+                <h2 className="section-title">Three steps from idea to <span>live product.</span></h2>
               </div>
               <p className="section-copy">
-                A clear workflow that turns your idea into a clean, premium, working digital product.
+                Simple, transparent, and structured from the first call to launch and support.
               </p>
             </div>
 
-            <div className="process-line">
-              {processSteps.map(([number, title, text]) => (
-                <div className="process-step" key={number}>
-                  <b>{number}</b>
-                  <h3>{title}</h3>
-                  <p>{text}</p>
+            <div className="process-grid">
+              {processSteps.map((step) => (
+                <div className="process-step" key={step.number}>
+                  <div className="step-number">{step.number}</div>
+                  <h3>{step.title}</h3>
+                  <p>{step.text}</p>
+                  <div className="bullet-list">
+                    {step.bullets.map((bullet) => <span key={bullet}>{bullet}</span>)}
+                  </div>
                 </div>
               ))}
             </div>
           </div>
         </section>
 
-        <section className="final">
+        <section className="social-section reveal">
+          <div className="wrap social-grid">
+            <div>
+              <div className="section-kicker">Stay Connected</div>
+              <h2 className="section-title">Follow AHOS <span>online.</span></h2>
+              <p className="section-copy">
+                Keep up with our latest projects, launches, ideas, and behind-the-scenes updates.
+              </p>
+
+              <div className="social-list">
+                <a className="social-card" href="https://www.instagram.com/ahos.xyz/" target="_blank" rel="noopener noreferrer">
+                  <div className="social-icon">IG</div>
+                  <div><div className="social-name">Instagram</div><div className="social-handle">@ahos.xyz</div></div>
+                  <span>→</span>
+                </a>
+                <a className="social-card" href="https://www.linkedin.com/company/ahos-xyz" target="_blank" rel="noopener noreferrer">
+                  <div className="social-icon">IN</div>
+                  <div><div className="social-name">LinkedIn</div><div className="social-handle">AHOS-xyz</div></div>
+                  <span>→</span>
+                </a>
+                <a className="social-card" href="https://www.youtube.com/@ahos_xyz" target="_blank" rel="noopener noreferrer">
+                  <div className="social-icon">YT</div>
+                  <div><div className="social-name">YouTube</div><div className="social-handle">@ahos_xyz</div></div>
+                  <span>→</span>
+                </a>
+              </div>
+            </div>
+
+            <div className="reel-box" aria-hidden="true">
+              <div className="reel-inner-card">
+                <div className="reel-badge">Latest Short</div>
+                <div className="reel-title">Building digital products that move.</div>
+              </div>
+            </div>
+          </div>
+        </section>
+
+        <section className="final reveal">
           <div className="wrap">
             <div className="section-kicker">Start With AHOS</div>
             <h2>Build something <span>serious.</span></h2>
