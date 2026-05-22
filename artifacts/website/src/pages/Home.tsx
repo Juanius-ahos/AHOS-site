@@ -268,8 +268,16 @@ export default function Home() {
           min-height: 650px;
           display: grid;
           place-items: center;
-          perspective: 1200px;
-          animation: rise .9s ease .15s both;
+          perspective: 1400px;
+          animation: rise .9s ease .15s both, heroParallax linear both;
+          animation-timeline: auto, view();
+          animation-range: entry 0% exit 100%;
+        }
+
+        @keyframes heroParallax {
+          from { transform: translateY(36px) scale(.96) rotateX(4deg); }
+          45% { transform: translateY(0) scale(1) rotateX(0); }
+          to { transform: translateY(-70px) scale(1.04) rotateX(-5deg); }
         }
 
         .phone-glow {
@@ -319,14 +327,22 @@ export default function Home() {
           height: 620px;
           border-radius: 48px;
           padding: 13px;
-          background: linear-gradient(145deg, #2b2b2d, #050505 45%, #1c1c1e);
-          border: 1px solid rgba(255,255,255,.18);
+          background: linear-gradient(145deg, #2f3034, #050505 45%, #1a1b1f);
+          border: 1px solid rgba(255,255,255,.2);
           box-shadow:
-            0 44px 120px rgba(0,0,0,.62),
+            0 46px 130px rgba(0,0,0,.66),
             0 0 0 8px rgba(255,255,255,.025),
             inset 0 0 0 1px rgba(255,255,255,.16);
-          transform: rotateX(7deg) rotateY(-12deg) rotateZ(2deg);
-          animation: phoneFloat 5.5s ease-in-out infinite;
+          transform: rotateX(7deg) rotateY(-13deg) rotateZ(2deg);
+          animation: phoneFloat 5.5s ease-in-out infinite, phoneScroll3d linear both;
+          animation-timeline: auto, view();
+          animation-range: entry 0% exit 100%;
+        }
+
+        @keyframes phoneScroll3d {
+          from { filter: brightness(.86); }
+          40% { filter: brightness(1.05); }
+          to { filter: brightness(.92); }
         }
 
         @keyframes phoneFloat {
@@ -390,17 +406,30 @@ export default function Home() {
           font-weight: 900;
         }
 
-        .phone-logo {
-          width: 42px;
-          height: 42px;
-          border-radius: 14px;
-          display: grid;
-          place-items: center;
+        .phone-status-pill {
+          display: inline-flex;
+          align-items: center;
+          gap: 8px;
+          width: fit-content;
           margin-top: 24px;
-          background: linear-gradient(135deg, var(--orange), var(--orange2));
-          color: #070707;
+          padding: 9px 12px;
+          border-radius: 999px;
+          border: 1px solid rgba(255,117,31,.28);
+          background: rgba(255,117,31,.1);
+          color: var(--orange);
+          text-transform: uppercase;
+          letter-spacing: .14em;
+          font-size: 10px;
           font-weight: 950;
-          box-shadow: 0 16px 46px rgba(255,117,31,.34);
+        }
+
+        .phone-status-pill::before {
+          content: "";
+          width: 7px;
+          height: 7px;
+          border-radius: 50%;
+          background: var(--orange);
+          box-shadow: 0 0 16px rgba(255,117,31,.8);
         }
 
         .phone-title {
@@ -481,8 +510,33 @@ export default function Home() {
           box-shadow: 0 24px 80px rgba(0,0,0,.48);
         }
 
-        .floating-badge.one { top: 90px; right: -18px; animation: badgeA 5s ease-in-out infinite; }
-        .floating-badge.two { left: -10px; bottom: 122px; animation: badgeB 5.5s ease-in-out infinite; }
+        .floating-badge.one {
+          top: 84px;
+          right: -118px;
+          animation: badgeA 5s ease-in-out infinite, badgeScrollRight linear both;
+          animation-timeline: auto, view();
+          animation-range: entry 0% exit 100%;
+        }
+
+        .floating-badge.two {
+          left: -132px;
+          bottom: 128px;
+          animation: badgeB 5.5s ease-in-out infinite, badgeScrollLeft linear both;
+          animation-timeline: auto, view();
+          animation-range: entry 0% exit 100%;
+        }
+
+        @keyframes badgeScrollRight {
+          from { transform: translateX(22px) translateY(20px); opacity: .35; }
+          35% { transform: translateX(0) translateY(0); opacity: 1; }
+          to { transform: translateX(38px) translateY(-42px); opacity: .7; }
+        }
+
+        @keyframes badgeScrollLeft {
+          from { transform: translateX(-22px) translateY(24px); opacity: .35; }
+          35% { transform: translateX(0) translateY(0); opacity: 1; }
+          to { transform: translateX(-38px) translateY(-34px); opacity: .7; }
+        }
 
         .floating-badge small {
           color: var(--soft);
@@ -541,6 +595,14 @@ export default function Home() {
           position: relative;
           z-index: 4;
           padding: 128px 0;
+          animation: sectionDepth linear both;
+          animation-timeline: view();
+          animation-range: entry 0% cover 45%;
+        }
+
+        @keyframes sectionDepth {
+          from { opacity: .25; transform: translateY(80px) scale(.965) rotateX(7deg); filter: blur(8px); }
+          to { opacity: 1; transform: translateY(0) scale(1) rotateX(0); filter: blur(0); }
         }
 
         .section-head {
@@ -590,6 +652,14 @@ export default function Home() {
           text-decoration: none;
           box-shadow: 0 28px 95px rgba(0,0,0,.34);
           transition: .36s ease;
+          animation: cardDepth linear both;
+          animation-timeline: view();
+          animation-range: entry 0% cover 38%;
+        }
+
+        @keyframes cardDepth {
+          from { opacity: 0; transform: translateY(70px) rotateX(10deg) scale(.96); }
+          to { opacity: 1; transform: translateY(0) rotateX(0) scale(1); }
         }
 
         .service-card:hover {
@@ -659,6 +729,9 @@ export default function Home() {
           position: relative;
           z-index: 4;
           padding: 126px 0;
+          animation: sectionDepth linear both;
+          animation-timeline: view();
+          animation-range: entry 0% cover 45%;
         }
 
         .showcase-panel {
@@ -703,6 +776,15 @@ export default function Home() {
           box-shadow: 0 30px 120px rgba(0,0,0,.52);
           overflow: hidden;
           transform: rotateX(6deg) rotateY(-7deg);
+          animation: previewTilt linear both;
+          animation-timeline: view();
+          animation-range: entry 0% exit 100%;
+        }
+
+        @keyframes previewTilt {
+          from { transform: rotateX(12deg) rotateY(-14deg) translateY(60px); opacity: .35; }
+          40% { transform: rotateX(6deg) rotateY(-7deg) translateY(0); opacity: 1; }
+          to { transform: rotateX(-4deg) rotateY(7deg) translateY(-40px); opacity: .85; }
         }
 
         .preview-top {
@@ -756,6 +838,9 @@ export default function Home() {
           position: relative;
           z-index: 4;
           padding: 118px 0;
+          animation: sectionDepth linear both;
+          animation-timeline: view();
+          animation-range: entry 0% cover 45%;
         }
 
         .process-line {
@@ -773,6 +858,9 @@ export default function Home() {
           min-height: 248px;
           padding: 30px;
           background: rgba(7,7,7,.96);
+          animation: cardDepth linear both;
+          animation-timeline: view();
+          animation-range: entry 0% cover 42%;
         }
 
         .process-step b { color: var(--orange); letter-spacing: .18em; font-size: 12px; }
@@ -784,6 +872,9 @@ export default function Home() {
           z-index: 4;
           padding: 138px 0 158px;
           text-align: center;
+          animation: sectionDepth linear both;
+          animation-timeline: view();
+          animation-range: entry 0% cover 45%;
         }
 
         .final::before {
@@ -837,8 +928,8 @@ export default function Home() {
           }
           .phone-orbit { width: 420px; height: 420px; }
           .floating-badge { width: 178px; padding: 14px; }
-          .floating-badge.one { top: 56px; right: 0; }
-          .floating-badge.two { left: 0; bottom: 84px; }
+          .floating-badge.one { top: 50px; right: -4px; }
+          .floating-badge.two { left: -4px; bottom: 72px; }
           .floating-badge strong { font-size: 18px; }
           .services-grid, .process-line { grid-template-columns: 1fr; }
           .section, .showcase, .process, .final { padding: 88px 0; }
@@ -846,6 +937,22 @@ export default function Home() {
           .service-card { min-height: 320px; padding: 24px; border-radius: 26px; }
           .showcase-panel { min-height: auto; padding: 24px; border-radius: 28px; }
           .interface-preview { min-height: 400px; transform: none; }
+        }
+
+        @supports not (animation-timeline: view()) {
+          .section,
+          .showcase,
+          .process,
+          .final,
+          .service-card,
+          .process-step,
+          .interface-preview,
+          .phone-stage,
+          .iphone,
+          .floating-badge.one,
+          .floating-badge.two {
+            animation-timeline: auto;
+          }
         }
 
         @media (prefers-reduced-motion: reduce) {
@@ -897,7 +1004,7 @@ export default function Home() {
                         <span>AHOS OS</span>
                         <span>LIVE</span>
                       </div>
-                      <div className="phone-logo">A</div>
+                      <div className="phone-status-pill">Live Build</div>
                       <div className="phone-title">Build your digital system.</div>
                       <div className="phone-subtitle">
                         Websites, stores, automations, and platforms engineered under one clean brand experience.
