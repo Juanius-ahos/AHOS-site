@@ -499,59 +499,7 @@ export default function Home() {
         }
 
         .floating-badge {
-          position: absolute;
-          z-index: 6;
-          width: 210px;
-          padding: 18px;
-          border-radius: 24px;
-          border: 1px solid rgba(255,255,255,.13);
-          background: rgba(8,8,9,.78);
-          backdrop-filter: blur(22px);
-          box-shadow: 0 24px 80px rgba(0,0,0,.48);
-        }
-
-        .floating-badge.one {
-          top: 84px;
-          right: -118px;
-          animation: badgeA 5s ease-in-out infinite, badgeScrollRight linear both;
-          animation-timeline: auto, view();
-          animation-range: entry 0% exit 100%;
-        }
-
-        .floating-badge.two {
-          left: -132px;
-          bottom: 128px;
-          animation: badgeB 5.5s ease-in-out infinite, badgeScrollLeft linear both;
-          animation-timeline: auto, view();
-          animation-range: entry 0% exit 100%;
-        }
-
-        @keyframes badgeScrollRight {
-          from { transform: translateX(22px) translateY(20px); opacity: .35; }
-          35% { transform: translateX(0) translateY(0); opacity: 1; }
-          to { transform: translateX(38px) translateY(-42px); opacity: .7; }
-        }
-
-        @keyframes badgeScrollLeft {
-          from { transform: translateX(-22px) translateY(24px); opacity: .35; }
-          35% { transform: translateX(0) translateY(0); opacity: 1; }
-          to { transform: translateX(-38px) translateY(-34px); opacity: .7; }
-        }
-
-        .floating-badge small {
-          color: var(--soft);
-          text-transform: uppercase;
-          letter-spacing: .16em;
-          font-size: 10px;
-          font-weight: 900;
-        }
-
-        .floating-badge strong {
-          display: block;
-          margin-top: 10px;
-          font-size: 22px;
-          line-height: 1.08;
-          letter-spacing: -.04em;
+          display: none;
         }
 
         @keyframes badgeA {
@@ -601,8 +549,8 @@ export default function Home() {
         }
 
         @keyframes sectionDepth {
-          from { opacity: .25; transform: translateY(80px) scale(.965) rotateX(7deg); filter: blur(8px); }
-          to { opacity: 1; transform: translateY(0) scale(1) rotateX(0); filter: blur(0); }
+          from { opacity: .35; transform: translateY(80px) scale(.965) rotateX(7deg); }
+          to { opacity: 1; transform: translateY(0) scale(1) rotateX(0); }
         }
 
         .section-head {
@@ -928,9 +876,7 @@ export default function Home() {
           }
           .phone-orbit { width: 420px; height: 420px; }
           .floating-badge { width: 178px; padding: 14px; }
-          .floating-badge.one { top: 50px; right: -4px; }
-          .floating-badge.two { left: -4px; bottom: 72px; }
-          .floating-badge strong { font-size: 18px; }
+          
           .services-grid, .process-line { grid-template-columns: 1fr; }
           .section, .showcase, .process, .final { padding: 88px 0; }
           .section-title, .showcase h2 { font-size: 45px; }
@@ -949,8 +895,7 @@ export default function Home() {
           .interface-preview,
           .phone-stage,
           .iphone,
-          .floating-badge.one,
-          .floating-badge.two {
+          .iphone {
             animation-timeline: auto;
           }
         }
@@ -1022,16 +967,6 @@ export default function Home() {
                     </div>
                   </div>
                 </div>
-              </div>
-
-              <div className="floating-badge one">
-                <small>Interface</small>
-                <strong>Clean, premium, conversion-ready.</strong>
-              </div>
-
-              <div className="floating-badge two">
-                <small>System</small>
-                <strong>Built to scale beyond the homepage.</strong>
               </div>
             </div>
           </div>
