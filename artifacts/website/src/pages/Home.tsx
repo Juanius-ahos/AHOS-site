@@ -1,3 +1,4 @@
+import { useEffect } from "react";
 import { Link } from "wouter";
 import { Footer } from "../components/Footer";
 
@@ -5,14 +6,14 @@ const services = [
   {
     number: "01",
     title: "Custom Software",
-    text: "Bespoke digital tools, dashboards, platforms, and internal systems built around your workflow.",
-    tags: ["Web Apps", "Dashboards", "APIs"],
+    text: "Tailored platforms, dashboards, internal tools, and business systems built around the way your company actually works.",
+    tags: ["Platforms", "Dashboards", "APIs"],
     href: "/services",
   },
   {
     number: "02",
     title: "Web Development",
-    text: "Premium websites, landing pages, and business platforms built to look sharp and convert clearly.",
+    text: "Premium websites, landing pages, and business platforms designed to look sharp, load fast, and convert clearly.",
     tags: ["Websites", "Landing Pages", "E-commerce"],
     href: "/services",
     featured: true,
@@ -20,14 +21,14 @@ const services = [
   {
     number: "03",
     title: "AI Automation",
-    text: "Workflow automations, AI tools, integrations, and operational systems that save time.",
+    text: "Workflow automations, AI tools, integrations, and operational systems that remove repetitive work and save time.",
     tags: ["AI Tools", "Workflows", "Integrations"],
     href: "/services",
   },
   {
     number: "04",
     title: "Web3 & Blockchain",
-    text: "Blockchain interfaces, token systems, smart contract experiences, and decentralized products.",
+    text: "Blockchain interfaces, token systems, smart contract experiences, and decentralized products built with clarity.",
     tags: ["Smart Contracts", "Web3", "DeFi"],
     href: "/blockchain-services",
   },
@@ -45,9 +46,9 @@ const projects = [
 ];
 
 const stats = [
-  ["50+", "Projects Delivered"],
-  ["100%", "Partner Satisfaction"],
+  ["Custom", "Built Around Your Business"],
   ["24/7", "Support Availability"],
+  ["Fast", "Launch-Focused Delivery"],
 ];
 
 const processSteps = [
@@ -60,7 +61,7 @@ const processSteps = [
   {
     number: "02",
     title: "Design & Build",
-    text: "We craft your interface, develop the system, and keep the work structured through clear milestones.",
+    text: "We craft your interface, develop the system, and keep the work structured through clean milestones.",
     bullets: ["Premium UI", "Clean code", "Milestone updates"],
   },
   {
@@ -83,6 +84,28 @@ const stackItems = [
 ];
 
 export default function Home() {
+  useEffect(() => {
+    const loadInstagram = () => {
+      const existingScript = document.querySelector<HTMLScriptElement>(
+        'script[src="https://www.instagram.com/embed.js"]'
+      );
+
+      if (!existingScript) {
+        const script = document.createElement("script");
+        script.src = "https://www.instagram.com/embed.js";
+        script.async = true;
+        document.body.appendChild(script);
+        return;
+      }
+
+      if ((window as any).instgrm?.Embeds) {
+        (window as any).instgrm.Embeds.process();
+      }
+    };
+
+    loadInstagram();
+  }, []);
+
   return (
     <>
       <style>{`
@@ -112,8 +135,8 @@ export default function Home() {
           overflow: hidden;
           color: var(--text);
           background:
-            radial-gradient(circle at 72% 8%, rgba(255,117,31,.18), transparent 34%),
-            radial-gradient(circle at 18% 78%, rgba(255,117,31,.075), transparent 30%),
+            radial-gradient(circle at 72% 8%, rgba(255,117,31,.14), transparent 34%),
+            radial-gradient(circle at 18% 78%, rgba(255,117,31,.055), transparent 30%),
             linear-gradient(180deg, #040404 0%, #090909 48%, #040404 100%);
           font-family: Inter, ui-sans-serif, system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
           -webkit-font-smoothing: antialiased;
@@ -140,14 +163,14 @@ export default function Home() {
 
         .noise {
           z-index: 1;
-          opacity: .05;
+          opacity: .035;
           mix-blend-mode: overlay;
           background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 220 220' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='.8' numOctaves='3' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)' opacity='.5'/%3E%3C/svg%3E");
         }
 
         .grid {
           z-index: 0;
-          opacity: .18;
+          opacity: .14;
           background:
             linear-gradient(rgba(255,255,255,.03) 1px, transparent 1px),
             linear-gradient(90deg, rgba(255,255,255,.026) 1px, transparent 1px);
@@ -157,21 +180,21 @@ export default function Home() {
 
         .aurora {
           z-index: 0;
-          opacity: .9;
+          opacity: .78;
           background:
-            radial-gradient(circle at 72% 28%, rgba(255,117,31,.17), transparent 30%),
-            linear-gradient(115deg, transparent 0 46%, rgba(255,117,31,.075) 50%, transparent 56%);
-          animation: auroraMove 10s ease-in-out infinite alternate;
+            radial-gradient(circle at 72% 28%, rgba(255,117,31,.13), transparent 30%),
+            linear-gradient(115deg, transparent 0 46%, rgba(255,117,31,.048) 50%, transparent 56%);
+          animation: auroraMove 12s ease-in-out infinite alternate;
         }
 
         .vignette {
           z-index: 2;
-          background: radial-gradient(circle at center, transparent 0 50%, rgba(0,0,0,.5) 100%);
+          background: radial-gradient(circle at center, transparent 0 48%, rgba(0,0,0,.54) 100%);
         }
 
         @keyframes auroraMove {
           from { transform: translate3d(-1%, -1%, 0) scale(1); }
-          to { transform: translate3d(1.4%, 1%, 0) scale(1.04); }
+          to { transform: translate3d(1.2%, 1%, 0) scale(1.035); }
         }
 
         .eyebrow,
@@ -220,7 +243,7 @@ export default function Home() {
           background: linear-gradient(135deg, var(--orange), var(--orange-2));
           color: #070707;
           border-color: rgba(255,117,31,.95);
-          box-shadow: 0 18px 60px rgba(255,117,31,.23);
+          box-shadow: 0 18px 60px rgba(255,117,31,.2);
         }
 
         .btn:hover {
@@ -231,7 +254,7 @@ export default function Home() {
 
         .btn-primary:hover {
           background: linear-gradient(135deg, #ff8731, #ffb06b);
-          box-shadow: 0 24px 80px rgba(255,117,31,.33);
+          box-shadow: 0 24px 80px rgba(255,117,31,.3);
         }
 
         .reveal {
@@ -250,7 +273,6 @@ export default function Home() {
           to { opacity: 1; transform: translateY(0); }
         }
 
-        /* HERO */
         .hero {
           min-height: 100vh;
           display: flex;
@@ -318,10 +340,10 @@ export default function Home() {
         }
 
         .hero-title {
-          max-width: 850px;
+          max-width: 880px;
           margin: 0;
-          font-size: clamp(56px, 8vw, 112px);
-          line-height: .86;
+          font-size: clamp(54px, 7.6vw, 104px);
+          line-height: .88;
           letter-spacing: -.075em;
           text-transform: uppercase;
           font-weight: 950;
@@ -331,7 +353,7 @@ export default function Home() {
         .hero-title .muted-word { color: rgba(255,255,255,.56); }
         .hero-title .accent-word {
           color: var(--orange);
-          text-shadow: 0 0 48px rgba(255,117,31,.36);
+          text-shadow: 0 0 48px rgba(255,117,31,.32);
         }
 
         .hero-copy {
@@ -382,27 +404,26 @@ export default function Home() {
 
         .phone-glow {
           position: absolute;
-          width: 520px;
-          height: 520px;
+          width: 500px;
+          height: 500px;
           border-radius: 50%;
-          background: radial-gradient(circle, rgba(255,117,31,.2), transparent 62%);
+          background: radial-gradient(circle, rgba(255,117,31,.17), transparent 64%);
           filter: blur(8px);
-          animation: glowPulse 4.8s ease-in-out infinite;
+          animation: glowPulse 5.8s ease-in-out infinite;
         }
 
         @keyframes glowPulse {
-          0%,100% { transform: scale(.96); opacity: .72; }
-          50% { transform: scale(1.06); opacity: .98; }
+          0%,100% { transform: scale(.96); opacity: .68; }
+          50% { transform: scale(1.04); opacity: .9; }
         }
 
         .phone-orbit {
           position: absolute;
-          width: 560px;
-          height: 560px;
+          width: 540px;
+          height: 540px;
           border-radius: 50%;
-          border: 1px solid rgba(255,117,31,.16);
-          box-shadow: inset 0 0 90px rgba(255,117,31,.035);
-          animation: rotate 28s linear infinite;
+          border: 1px solid rgba(255,117,31,.12);
+          box-shadow: inset 0 0 90px rgba(255,117,31,.028);
         }
 
         .phone-orbit::before,
@@ -413,44 +434,71 @@ export default function Home() {
           height: 8px;
           border-radius: 50%;
           background: var(--orange);
-          box-shadow: 0 0 22px rgba(255,117,31,.8);
+          box-shadow: 0 0 22px rgba(255,117,31,.75);
         }
 
         .phone-orbit::before { top: 46px; left: 130px; }
         .phone-orbit::after { right: 92px; bottom: 78px; }
-        @keyframes rotate { to { transform: rotate(360deg); } }
 
         .iphone {
           position: relative;
           z-index: 4;
-          width: 310px;
-          height: 628px;
-          border-radius: 50px;
-          padding: 13px;
-          background: linear-gradient(145deg, #34363b, #050505 44%, #1c1e22);
-          border: 1px solid rgba(255,255,255,.22);
+          width: 318px;
+          height: 646px;
+          border-radius: 54px;
+          padding: 12px;
+          background:
+            linear-gradient(145deg, #5a5d64 0%, #1c1d20 28%, #050505 52%, #2d3036 100%);
+          border: 1px solid rgba(255,255,255,.28);
           box-shadow:
-            0 46px 130px rgba(0,0,0,.66),
-            0 0 0 8px rgba(255,255,255,.024),
-            inset 0 0 0 1px rgba(255,255,255,.16);
-          transform: rotateX(7deg) rotateY(-12deg) rotateZ(2deg);
-          animation: phoneFloat 5.8s ease-in-out infinite;
+            0 55px 140px rgba(0,0,0,.72),
+            0 0 0 8px rgba(255,255,255,.022),
+            inset 0 0 0 1px rgba(255,255,255,.18),
+            inset 10px 0 24px rgba(255,255,255,.08),
+            inset -12px 0 28px rgba(0,0,0,.7);
+          transform: rotateX(5deg) rotateY(-9deg) rotateZ(1deg);
+          animation: phoneFloat 6s ease-in-out infinite;
+        }
+
+        .iphone::before {
+          content: "";
+          position: absolute;
+          top: 110px;
+          left: -4px;
+          width: 4px;
+          height: 76px;
+          border-radius: 6px 0 0 6px;
+          background: linear-gradient(#333, #111);
+        }
+
+        .iphone::after {
+          content: "";
+          position: absolute;
+          top: 150px;
+          right: -4px;
+          width: 4px;
+          height: 96px;
+          border-radius: 0 6px 6px 0;
+          background: linear-gradient(#333, #111);
         }
 
         @keyframes phoneFloat {
-          0%,100% { transform: rotateX(7deg) rotateY(-12deg) rotateZ(2deg) translateY(0); }
-          50% { transform: rotateX(7deg) rotateY(-12deg) rotateZ(2deg) translateY(-14px); }
+          0%,100% { transform: rotateX(5deg) rotateY(-9deg) rotateZ(1deg) translateY(0); }
+          50% { transform: rotateX(5deg) rotateY(-9deg) rotateZ(1deg) translateY(-12px); }
         }
 
         .iphone-screen {
           position: relative;
           height: 100%;
           overflow: hidden;
-          border-radius: 39px;
+          border-radius: 43px;
           background:
-            radial-gradient(circle at 76% 18%, rgba(255,117,31,.24), transparent 33%),
-            linear-gradient(180deg, #151515, #070707 55%, #111);
-          border: 1px solid rgba(255,255,255,.095);
+            radial-gradient(circle at 72% 12%, rgba(255,117,31,.18), transparent 30%),
+            linear-gradient(180deg, #171717 0%, #070707 58%, #111 100%);
+          border: 1px solid rgba(255,255,255,.13);
+          box-shadow:
+            inset 0 0 0 1px rgba(255,255,255,.06),
+            inset 0 20px 50px rgba(255,255,255,.035);
         }
 
         .iphone-screen::before {
@@ -458,30 +506,41 @@ export default function Home() {
           position: absolute;
           inset: 0;
           background:
-            linear-gradient(rgba(255,255,255,.026) 1px, transparent 1px),
-            linear-gradient(90deg, rgba(255,255,255,.022) 1px, transparent 1px);
-          background-size: 36px 36px;
-          opacity: .36;
+            linear-gradient(rgba(255,255,255,.02) 1px, transparent 1px),
+            linear-gradient(90deg, rgba(255,255,255,.018) 1px, transparent 1px);
+          background-size: 38px 38px;
+          opacity: .22;
+        }
+
+        .iphone-screen::after {
+          content: "";
+          position: absolute;
+          inset: 0;
+          background: linear-gradient(115deg, rgba(255,255,255,.12), transparent 26%, transparent 62%, rgba(255,255,255,.035));
+          opacity: .22;
+          pointer-events: none;
         }
 
         .dynamic-island {
           position: absolute;
           left: 50%;
-          top: 13px;
-          width: 94px;
-          height: 28px;
+          top: 14px;
+          width: 104px;
+          height: 30px;
           transform: translateX(-50%);
           border-radius: 999px;
-          background: #050505;
-          z-index: 5;
-          box-shadow: inset 0 0 0 1px rgba(255,255,255,.06);
+          background: #030303;
+          z-index: 6;
+          box-shadow:
+            inset 0 0 0 1px rgba(255,255,255,.08),
+            0 8px 18px rgba(0,0,0,.45);
         }
 
         .phone-content {
           position: relative;
           z-index: 3;
           height: 100%;
-          padding: 62px 20px 22px;
+          padding: 62px 18px 20px;
           display: flex;
           flex-direction: column;
           justify-content: space-between;
@@ -491,7 +550,7 @@ export default function Home() {
           display: flex;
           align-items: center;
           justify-content: space-between;
-          color: rgba(255,255,255,.5);
+          color: rgba(255,255,255,.62);
           font-size: 10px;
           text-transform: uppercase;
           letter-spacing: .16em;
@@ -506,8 +565,8 @@ export default function Home() {
           margin-top: 24px;
           padding: 9px 12px;
           border-radius: 999px;
-          border: 1px solid rgba(255,117,31,.3);
-          background: rgba(255,117,31,.1);
+          border: 1px solid rgba(255,117,31,.34);
+          background: rgba(255,117,31,.12);
           color: var(--orange);
           text-transform: uppercase;
           letter-spacing: .14em;
@@ -526,44 +585,52 @@ export default function Home() {
 
         .phone-title {
           margin-top: 22px;
-          font-size: 37px;
-          line-height: .96;
+          font-size: 34px;
+          line-height: .98;
           letter-spacing: -.05em;
           font-weight: 950;
+          text-wrap: balance;
         }
 
         .phone-subtitle {
           max-width: 250px;
-          margin-top: 16px;
-          color: rgba(255,255,255,.68);
-          font-size: 13px;
+          margin-top: 14px;
+          color: rgba(255,255,255,.76);
+          font-size: 12.5px;
           line-height: 1.58;
         }
 
         .phone-list {
           display: grid;
           gap: 10px;
-          margin-top: 24px;
+          margin-top: 22px;
         }
 
         .phone-card {
           display: grid;
-          grid-template-columns: auto 1fr auto;
+          grid-template-columns: 30px 1fr auto;
           align-items: center;
-          gap: 12px;
-          padding: 13px 14px;
+          gap: 10px;
+          padding: 12px;
           border-radius: 18px;
-          background: rgba(255,255,255,.06);
-          border: 1px solid rgba(255,255,255,.095);
-          color: rgba(255,255,255,.88);
-          font-size: 13px;
-          font-weight: 800;
+          background: rgba(8,8,8,.72);
+          border: 1px solid rgba(255,255,255,.15);
+          color: rgba(255,255,255,.95);
+          font-size: 12.5px;
+          font-weight: 850;
+          backdrop-filter: blur(18px);
         }
 
         .phone-card small {
-          color: rgba(255,255,255,.36);
+          color: rgba(255,255,255,.48);
           font-size: 10px;
-          font-weight: 900;
+          font-weight: 950;
+        }
+
+        .phone-card strong {
+          white-space: nowrap;
+          overflow: hidden;
+          text-overflow: ellipsis;
         }
 
         .phone-card i {
@@ -577,13 +644,14 @@ export default function Home() {
         .phone-bottom {
           padding: 16px;
           border-radius: 24px;
-          background: linear-gradient(135deg, rgba(255,117,31,.18), rgba(255,255,255,.045));
-          border: 1px solid rgba(255,117,31,.22);
+          background: linear-gradient(135deg, rgba(255,117,31,.2), rgba(0,0,0,.5));
+          border: 1px solid rgba(255,117,31,.25);
+          box-shadow: inset 0 1px 0 rgba(255,255,255,.08);
         }
 
         .phone-bottom small {
           display: block;
-          color: rgba(255,255,255,.48);
+          color: rgba(255,255,255,.56);
           text-transform: uppercase;
           letter-spacing: .16em;
           font-size: 9px;
@@ -593,31 +661,30 @@ export default function Home() {
 
         .phone-bottom strong {
           display: block;
-          font-size: 20px;
-          line-height: 1.12;
+          font-size: 19px;
+          line-height: 1.14;
           letter-spacing: -.035em;
         }
 
-        /* TICKER */
         .ticker {
           position: relative;
           z-index: 4;
           overflow: hidden;
-          border-block: 1px solid rgba(255,255,255,.1);
-          background: rgba(255,255,255,.025);
+          border-block: 1px solid rgba(255,255,255,.09);
+          background: rgba(255,255,255,.022);
           backdrop-filter: blur(10px);
         }
 
         .ticker-track {
           display: flex;
           width: max-content;
-          animation: marquee 26s linear infinite;
+          animation: marquee 34s linear infinite;
         }
 
         .ticker span {
           padding: 24px 34px;
           white-space: nowrap;
-          color: rgba(255,255,255,.64);
+          color: rgba(255,255,255,.58);
           text-transform: uppercase;
           letter-spacing: .18em;
           font-size: 13px;
@@ -627,7 +694,6 @@ export default function Home() {
         .ticker b { color: var(--orange); }
         @keyframes marquee { to { transform: translateX(-50%); } }
 
-        /* LOGOS */
         .logo-strip {
           position: relative;
           z-index: 4;
@@ -663,7 +729,7 @@ export default function Home() {
           display: flex;
           width: max-content;
           gap: 18px;
-          animation: logoMove 34s linear infinite;
+          animation: logoMove 42s linear infinite;
         }
 
         @keyframes logoMove { to { transform: translateX(-50%); } }
@@ -676,7 +742,7 @@ export default function Home() {
           padding: 16px 18px;
           border: 1px solid rgba(255,255,255,.1);
           border-radius: 18px;
-          background: rgba(255,255,255,.035);
+          background: rgba(255,255,255,.032);
         }
 
         .project-mark {
@@ -705,7 +771,6 @@ export default function Home() {
           letter-spacing: .12em;
         }
 
-        /* SERVICES */
         .section {
           position: relative;
           z-index: 4;
@@ -757,8 +822,8 @@ export default function Home() {
           position: relative;
           border: 1px solid rgba(255,255,255,.11);
           background:
-            radial-gradient(circle at 80% 0%, rgba(255,117,31,.12), transparent 34%),
-            linear-gradient(145deg, rgba(255,255,255,.075), rgba(255,255,255,.024));
+            radial-gradient(circle at 80% 0%, rgba(255,117,31,.105), transparent 34%),
+            linear-gradient(145deg, rgba(255,255,255,.068), rgba(255,255,255,.023));
           box-shadow: 0 26px 90px rgba(0,0,0,.32);
           overflow: hidden;
         }
@@ -868,7 +933,6 @@ export default function Home() {
           font-weight: 950;
         }
 
-        /* STATS */
         .stats-section {
           position: relative;
           z-index: 4;
@@ -893,7 +957,7 @@ export default function Home() {
           line-height: 1;
           letter-spacing: -.045em;
           font-weight: 950;
-          text-shadow: 0 0 32px rgba(255,117,31,.3);
+          text-shadow: 0 0 32px rgba(255,117,31,.28);
         }
 
         .stat-label {
@@ -905,7 +969,6 @@ export default function Home() {
           font-weight: 900;
         }
 
-        /* SHOWCASE */
         .showcase {
           position: relative;
           z-index: 4;
@@ -946,7 +1009,7 @@ export default function Home() {
           backdrop-filter: blur(20px);
           box-shadow: 0 30px 120px rgba(0,0,0,.52);
           overflow: hidden;
-          transform: rotateX(5deg) rotateY(-6deg);
+          transform: rotateX(4deg) rotateY(-5deg);
         }
 
         .preview-top {
@@ -979,6 +1042,7 @@ export default function Home() {
         }
 
         .preview-block.large { min-height: 170px; }
+
         .preview-label {
           color: rgba(255,255,255,.48);
           text-transform: uppercase;
@@ -1010,7 +1074,6 @@ export default function Home() {
           background: linear-gradient(90deg, var(--orange), var(--orange-2));
         }
 
-        /* PROCESS */
         .process {
           position: relative;
           z-index: 4;
@@ -1081,7 +1144,6 @@ export default function Home() {
           box-shadow: 0 0 14px rgba(255,117,31,.7);
         }
 
-        /* SOCIAL / CTA */
         .social-section {
           position: relative;
           z-index: 4;
@@ -1136,55 +1198,40 @@ export default function Home() {
         }
 
         .reel-box {
-          min-height: 520px;
+          min-height: 560px;
           display: grid;
           place-items: center;
           border-radius: 36px;
           border: 1px solid rgba(255,255,255,.12);
           background:
-            radial-gradient(circle at 50% 30%, rgba(255,117,31,.17), transparent 38%),
+            radial-gradient(circle at 50% 30%, rgba(255,117,31,.16), transparent 38%),
             linear-gradient(145deg, rgba(255,255,255,.075), rgba(255,255,255,.024));
           box-shadow: var(--shadow);
           overflow: hidden;
+          padding: 28px;
         }
 
-        .reel-inner-card {
-          width: min(280px, 70%);
-          aspect-ratio: 9 / 16;
-          border-radius: 34px;
-          border: 1px solid rgba(255,255,255,.14);
-          background:
-            radial-gradient(circle at 50% 20%, rgba(255,117,31,.22), transparent 36%),
-            linear-gradient(180deg, #161616, #070707);
-          box-shadow: 0 32px 110px rgba(0,0,0,.54);
-          display: flex;
-          flex-direction: column;
-          justify-content: flex-end;
-          padding: 24px;
+        .instagram-frame {
+          width: min(390px, 100%);
+          min-height: 500px;
+          display: grid;
+          place-items: center;
+          border-radius: 28px;
+          background: rgba(0,0,0,.38);
+          border: 1px solid rgba(255,255,255,.1);
+          padding: 14px;
         }
 
-        .reel-badge {
-          width: fit-content;
-          padding: 9px 12px;
-          border-radius: 999px;
-          background: rgba(255,117,31,.1);
-          border: 1px solid rgba(255,117,31,.25);
-          color: var(--orange);
-          text-transform: uppercase;
-          letter-spacing: .14em;
-          font-size: 10px;
-          font-weight: 950;
-          margin-bottom: 16px;
+        .instagram-media {
+          background: #fff !important;
+          border: 0 !important;
+          border-radius: 22px !important;
+          margin: 0 auto !important;
+          max-width: 360px !important;
+          min-width: 260px !important;
+          width: 100% !important;
         }
 
-        .reel-title {
-          font-size: 34px;
-          line-height: 1;
-          letter-spacing: -.05em;
-          font-weight: 950;
-        }
-
-        /* FINAL */
         .final {
           position: relative;
           z-index: 4;
@@ -1201,7 +1248,7 @@ export default function Home() {
           height: min(1000px, 92vw);
           transform: translate(-50%, -50%);
           border-radius: 50%;
-          background: radial-gradient(circle, rgba(255,117,31,.14), transparent 62%);
+          background: radial-gradient(circle, rgba(255,117,31,.13), transparent 62%);
           z-index: -1;
         }
 
@@ -1254,7 +1301,7 @@ export default function Home() {
           .wrap { width: min(100% - 28px, 1180px); }
 
           .hero { padding: 118px 0 74px; }
-          .hero-title { font-size: 52px; letter-spacing: -.065em; }
+          .hero-title { font-size: 50px; letter-spacing: -.065em; }
           .hero-copy, .section-copy, .showcase-copy, .final p { font-size: 15px; }
 
           .actions { width: 100%; }
@@ -1266,15 +1313,16 @@ export default function Home() {
             font-size: 10px;
           }
 
-          .phone-stage { min-height: 535px; }
+          .phone-stage { min-height: 540px; }
           .phone-glow { width: 390px; height: 390px; }
           .phone-orbit { width: 390px; height: 390px; }
 
           .iphone {
-            width: 260px;
-            height: 530px;
+            width: 264px;
+            height: 538px;
             transform: none;
             animation: phoneFloatMobile 5s ease-in-out infinite;
+            border-radius: 46px;
           }
 
           @keyframes phoneFloatMobile {
@@ -1282,9 +1330,13 @@ export default function Home() {
             50% { transform: translateY(-10px); }
           }
 
-          .phone-title { font-size: 31px; }
-          .phone-subtitle { font-size: 12px; }
-          .phone-card { padding: 12px; font-size: 12px; }
+          .iphone-screen { border-radius: 36px; }
+          .dynamic-island { width: 88px; height: 27px; }
+          .phone-content { padding: 58px 15px 17px; }
+          .phone-title { font-size: 28px; }
+          .phone-subtitle { font-size: 11.5px; }
+          .phone-card { padding: 10px; font-size: 11.5px; grid-template-columns: 26px 1fr auto; }
+          .phone-bottom strong { font-size: 17px; }
 
           .section, .showcase, .process, .social-section, .final { padding: 88px 0; }
           .section-title, .showcase-title { font-size: 43px; }
@@ -1316,7 +1368,8 @@ export default function Home() {
 
           .project-logo { min-width: 210px; }
           .process-step { min-height: auto; }
-          .reel-box { min-height: 430px; }
+          .reel-box { min-height: 560px; padding: 16px; }
+          .instagram-frame { min-height: 500px; padding: 10px; }
         }
 
         @supports not (animation-timeline: view()) {
@@ -1343,12 +1396,12 @@ export default function Home() {
               <div className="hero-badge"><i /> Available for new projects</div>
               <div className="eyebrow">AHOS / Digital Studio</div>
               <h1 className="hero-title">
-                Digital systems <span className="muted-word">that</span> <span className="accent-word">scale.</span>
+                Premium digital products <span className="muted-word">built to</span> <span className="accent-word">perform.</span>
               </h1>
               <p className="hero-copy">
-                We build premium websites, e-commerce platforms, automation systems,
-                Web3 products, and custom digital tools for brands that want to look serious,
-                move faster, and launch with confidence.
+                AHOS designs and builds high-performing websites, e-commerce platforms,
+                automation systems, Web3 interfaces, and custom software for businesses
+                that need a serious digital presence.
               </p>
 
               <div className="actions">
@@ -1374,19 +1427,19 @@ export default function Home() {
                   <div className="phone-content">
                     <div>
                       <div className="phone-top-label">
-                        <span>AHOS System</span>
+                        <span>AHOS OS</span>
                         <span>Live</span>
                       </div>
                       <div className="phone-status-pill">Project Mode</div>
-                      <div className="phone-title">Build your digital system.</div>
+                      <div className="phone-title">Your digital launch system.</div>
                       <div className="phone-subtitle">
-                        Websites, stores, automations, and platforms engineered under one clean brand experience.
+                        Websites, stores, automations, and platforms designed under one premium brand experience.
                       </div>
                       <div className="phone-list">
                         {services.map((service) => (
                           <div className="phone-card" key={service.title}>
                             <small>{service.number}</small>
-                            <strong>{service.title.split(" ").slice(0, 2).join(" ")}</strong>
+                            <strong>{service.title}</strong>
                             <i />
                           </div>
                         ))}
@@ -1436,11 +1489,11 @@ export default function Home() {
             <div className="section-head">
               <div>
                 <div className="section-kicker">What We Do</div>
-                <h2 className="section-title">Five capabilities. <span>One studio.</span></h2>
+                <h2 className="section-title">Four capabilities. <span>One studio.</span></h2>
               </div>
               <p className="section-copy">
-                Stop juggling disconnected providers. Software, websites, branding, Web3,
-                and automation are planned together, designed together, and built to work together.
+                Stop juggling disconnected providers. Software, websites, automation,
+                and Web3 systems are planned together, designed together, and built to work together.
               </p>
             </div>
 
@@ -1588,10 +1641,13 @@ export default function Home() {
               </div>
             </div>
 
-            <div className="reel-box" aria-hidden="true">
-              <div className="reel-inner-card">
-                <div className="reel-badge">Latest Short</div>
-                <div className="reel-title">Building digital products that move.</div>
+            <div className="reel-box">
+              <div className="instagram-frame">
+                <blockquote
+                  className="instagram-media"
+                  data-instgrm-permalink="https://www.instagram.com/p/DYCHbRttmb2/"
+                  data-instgrm-version="14"
+                />
               </div>
             </div>
           </div>
@@ -1600,7 +1656,7 @@ export default function Home() {
         <section className="final reveal">
           <div className="wrap">
             <div className="section-kicker">Start With AHOS</div>
-            <h2>Build something <span>serious.</span></h2>
+            <h2>Launch a digital presence that feels <span>premium.</span></h2>
             <p>
               Whether you need a premium website, an e-commerce platform, a custom tool,
               or a full digital system, AHOS turns the idea into a product that looks sharp and works with purpose.
