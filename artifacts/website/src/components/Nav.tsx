@@ -6,6 +6,7 @@ const links = [
   { href: "/services", label: "Services" },
   { href: "/web3", label: "Blockchain" },
   { href: "/careers", label: "Careers" },
+  { href: "/faq", label: "FAQ" },
   { href: "/aria-ai", label: "ARIA AI" },
 ];
 

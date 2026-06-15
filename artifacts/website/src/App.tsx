@@ -1,19 +1,21 @@
 import { Switch, Route, Router as WouterRouter } from "wouter";
 import { Nav } from "@/components/Nav";
 import { GlobalBackground } from "@/components/GlobalBackground";
+import { OrganizationSchema } from "@/seo/SEOHead";
 import Home from "@/pages/Home";
 import Services from "@/pages/Services";
 import Web3 from "@/pages/Web3";
 import Careers from "@/pages/Careers";
 import Contact from "@/pages/Contact";
 import AriaAI from "@/pages/AriaAI";
+import FAQ from "@/pages/FAQ";
 
 function NotFound() {
   return (
-    <div style={{ color: "rgba(255,255,255,0.6)", textAlign: "center", padding: "120px 24px", fontFamily: "Actor, sans-serif" }}>
-      <h1 style={{ fontSize: 48, color: "#ff751f" }}>404</h1>
-      <p>Page not found</p>
-      <a href="/" style={{ color: "#ff751f" }}>Go home →</a>
+    <div style={{ color: "rgba(255,255,255,0.6)", textAlign: "center", padding: "120px 24px", fontFamily: "var(--font-sans)" }}>
+      <h1 style={{ fontSize: 48, color: "var(--orange)", marginBottom: 12 }}>404</h1>
+      <p style={{ marginBottom: 24 }}>Page not found</p>
+      <a href="/" style={{ color: "var(--orange)", fontWeight: 600 }}>Go home →</a>
     </div>
   );
 }
@@ -27,6 +29,7 @@ function Router() {
       <Route path="/careers" component={Careers} />
       <Route path="/contact" component={Contact} />
       <Route path="/aria-ai" component={AriaAI} />
+      <Route path="/faq" component={FAQ} />
       <Route component={NotFound} />
     </Switch>
   );
@@ -35,6 +38,7 @@ function Router() {
 export default function App() {
   return (
     <WouterRouter base={import.meta.env.BASE_URL.replace(/\/$/, "")}>
+      <OrganizationSchema />
       <GlobalBackground />
       <Nav />
       <main style={{ paddingTop: 64 }}>
